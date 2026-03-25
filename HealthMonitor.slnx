@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="HealthMonitor.Api/HealthMonitor.Api.csproj" />
+  <Project Path="HealthMonitor.BusinessLayer/HealthMonitor.BusinessLayer.csproj" />
+  <Project Path="HealthMonitor.DataAccesLayer/HealthMonitor.DataAccesLayer.csproj" />
+  <Project Path="HealthMonitor.Domain/HealthMonitor.Domain.csproj" />
+</Solution>
