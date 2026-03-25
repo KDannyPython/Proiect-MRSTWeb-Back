@@ -7,6 +7,7 @@ namespace HealthMonitor.BusinessLayer.Core;
 
 public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
 {
+    // CREATE (C)
     public ServiceResponse CreateDailyRecord(DailyRecordCreateDto dailyRecordDto)
     {
         var result = CreateDailyRecordAction(dailyRecordDto);
@@ -26,6 +27,7 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         };
     }
 
+    // READ BY ID (R)
     public ServiceResponse GetDailyRecordById(int id)
     {
         var dailyRecord = GetDailyRecordByIdAction(id);
@@ -45,6 +47,7 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         };
     }
 
+    // READ ALL (R)
     public ServiceResponse GetDailyRecordList()
     {
         return new ServiceResponse
@@ -53,4 +56,45 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
             Data = GetDailyRecordListAction()
         };
     }
+
+    
+    public ServiceResponse UpdateDailyRecord(int id, DailyRecordCreateDto dto)
+    {
+        var success = UpdateDailyRecordAction(id, dto);
+        if (!success)
+        {
+            return new ServiceResponse
+            {
+                IsSucces = false,
+                Message = "Actualizarea recordului zilnic a eșuat."
+            };
+        }
+
+        return new ServiceResponse
+        {
+            IsSucces = true,
+            Message = "Recordul zilnic a fost actualizat cu succes!"
+        };
+    }
+
+    // DELETE (D)
+    public ServiceResponse DeleteDailyRecord(int id)
+    {
+        var success = DeleteDailyRecordAction(id);
+        if (!success)
+        {
+            return new ServiceResponse
+            {
+                IsSucces = false,
+                Message = "Ștergerea recordului zilnic a eșuat."
+            };
+        }
+
+        return new ServiceResponse
+        {
+            IsSucces = true,
+            Message = "Recordul zilnic a fost șters cu succes!"
+        };
+    }
+
 }

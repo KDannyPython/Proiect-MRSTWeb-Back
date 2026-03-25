@@ -8,4 +8,6 @@ public interface IExerciseLogic
     ServiceResponse CreateExercise(ExerciseCreateDto exerciseDto);
     ServiceResponse GetExerciseById(int id);
     ServiceResponse GetExerciseList();
+    ServiceResponse UpdateExercise(int id, ExerciseCreateDto exerciseDto);
+    ServiceResponse DeleteExercise(int id);
 }

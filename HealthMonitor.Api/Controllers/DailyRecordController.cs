@@ -17,6 +17,16 @@ public class DailyRecordController : ControllerBase
         _dailyRecordLogic = bl.GetDailyRecordLogic();
     }
 
+    // CREATE (C)
+    [HttpPost("create")]
+    public IActionResult CreateDailyRecord([FromBody] DailyRecordCreateDto record)
+    {
+        var result = _dailyRecordLogic.CreateDailyRecord(record);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
+    // READ BY ID (R)
     [HttpGet("{id}")]
     public IActionResult GetDailyRecordById(int id)
     {
@@ -25,6 +35,7 @@ public class DailyRecordController : ControllerBase
         return Ok(result.Data);
     }
 
+    // READ ALL (R)
     [HttpGet("list")]
     public IActionResult GetDailyRecordList()
     {
@@ -33,10 +44,20 @@ public class DailyRecordController : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpPost("create")]
-    public IActionResult CreateDailyRecord([FromBody] DailyRecordCreateDto record)
+    // UPDATE (U)
+    [HttpPut("update/{id}")]
+    public IActionResult UpdateDailyRecord(int id, [FromBody] DailyRecordCreateDto record)
     {
-        var result = _dailyRecordLogic.CreateDailyRecord(record);
+        var result = _dailyRecordLogic.UpdateDailyRecord(id, record);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
+    // DELETE (D)
+    [HttpDelete("delete/{id}")]
+    public IActionResult DeleteDailyRecord(int id)
+    {
+        var result = _dailyRecordLogic.DeleteDailyRecord(id);
         if (!result.IsSucces) return BadRequest(result.Message);
         return Ok(result.Message);
     }

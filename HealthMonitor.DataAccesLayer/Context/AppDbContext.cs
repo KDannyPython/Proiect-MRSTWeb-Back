@@ -1,4 +1,4 @@
-﻿using HealthMonitor.Domain.Entities.Food;
+using HealthMonitor.Domain.Entities.Food;
 using HealthMonitor.Domain.Entities.Workout;
 using HealthMonitor.Domain.Entities.Exercise;
 using HealthMonitor.Domain.Entities.DailyRecord;

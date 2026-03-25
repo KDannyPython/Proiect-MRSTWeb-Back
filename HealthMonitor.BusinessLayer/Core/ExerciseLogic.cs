@@ -7,6 +7,7 @@ namespace HealthMonitor.BusinessLayer.Core;
 
 public class ExerciseLogic : ExerciseActions, IExerciseLogic
 {
+    // CREATE (C)
     public ServiceResponse CreateExercise(ExerciseCreateDto exerciseDto)
     {
         var result = CreateExerciseAction(exerciseDto);
@@ -26,6 +27,7 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         };
     }
 
+    // READ BY ID (R)
     public ServiceResponse GetExerciseById(int id)
     {
         var exercise = GetExerciseByIdAction(id);
@@ -45,6 +47,7 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         };
     }
 
+    // READ ALL (R)
     public ServiceResponse GetExerciseList()
     {
         return new ServiceResponse
@@ -53,4 +56,45 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
             Data = GetExerciseListAction()
         };
     }
+
+    // UPDATE (U)
+    public ServiceResponse UpdateExercise(int id, ExerciseCreateDto exerciseDto)
+    {
+        var result = UpdateExerciseAction(id, exerciseDto);
+        if (result == false)
+        {
+            return new ServiceResponse 
+            {
+                IsSucces = false, 
+                Message = "Eșec la modificare (Id invalid?)."
+            };
+        }
+
+        return new ServiceResponse 
+        {
+            IsSucces = true, 
+            Message = "Exercițiul a fost modificat!"
+        };
+    }
+
+    // DELETE (D)
+    public ServiceResponse DeleteExercise(int id)
+    {
+        var result = DeleteExerciseAction(id);
+        if (result == false)
+        {
+            return new ServiceResponse 
+            {
+                IsSucces = false, 
+                Message = "Eșec la ștergere (Id invalid?)."
+            };
+        }
+
+        return new ServiceResponse 
+        {
+            IsSucces = true, 
+            Message = "Exercițiul a fost șters permanent!"
+        };
+    }
+
 }

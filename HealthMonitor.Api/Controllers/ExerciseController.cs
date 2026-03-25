@@ -17,6 +17,16 @@ public class ExerciseController : ControllerBase
         _exerciseLogic = bl.GetExerciseLogic();
     }
 
+    // CREATE (C)
+    [HttpPost("create")]
+    public IActionResult CreateExercise([FromBody] ExerciseCreateDto exercise)
+    {
+        var result = _exerciseLogic.CreateExercise(exercise);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
+    // READ BY ID (R)
     [HttpGet("{id}")]
     public IActionResult GetExerciseById(int id)
     {
@@ -25,6 +35,7 @@ public class ExerciseController : ControllerBase
         return Ok(result.Data);
     }
 
+    // READ ALL (R)
     [HttpGet("list")]
     public IActionResult GetExerciseList()
     {
@@ -33,10 +44,20 @@ public class ExerciseController : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpPost("create")]
-    public IActionResult CreateExercise([FromBody] ExerciseCreateDto exercise)
+    // UPDATE (U)
+    [HttpPut("update/{id}")]
+    public IActionResult UpdateExercise(int id, [FromBody] ExerciseCreateDto exercise)
     {
-        var result = _exerciseLogic.CreateExercise(exercise);
+        var result = _exerciseLogic.UpdateExercise(id, exercise);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
+    // DELETE (D)
+    [HttpDelete("delete/{id}")]
+    public IActionResult DeleteExercise(int id)
+    {
+        var result = _exerciseLogic.DeleteExercise(id);
         if (!result.IsSucces) return BadRequest(result.Message);
         return Ok(result.Message);
     }

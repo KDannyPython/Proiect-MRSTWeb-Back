@@ -15,6 +15,8 @@ public class WorkoutActions
     {
         _context = new AppDbContext();
     }
+
+    //CREATE (C)
     public bool CreateWorkoutAction(WorkoutCreateDto workoutDto)
     {
         var workoutEntity = new Workout
@@ -39,6 +41,7 @@ public class WorkoutActions
         }
     }
 
+    //READ by id (R)
     public WorkoutInfoDto? GetWorkoutByIdAction(int id)
     {
         var workoutEntity = _context.Workouts.Find(id);
@@ -58,7 +61,7 @@ public class WorkoutActions
             CaloriesBurned = workoutEntity.CaloriesBurned
         };
     }
-
+    //READ ALL (R)
     public List<WorkoutInfoDto> GetWorkoutListAction()
     {
         return _context.Workouts.Select(w => new WorkoutInfoDto
@@ -72,4 +75,32 @@ public class WorkoutActions
             CaloriesBurned = w.CaloriesBurned
         }).ToList();
     }
+
+    //UPDATE (U)
+        public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto)
+    {
+        var workoutEntity = _context.Workouts.Find(id); // Cautam antrenamentul vechi
+        if (workoutEntity == null) return false;
+
+        // Suprascriem cu datele noi
+        workoutEntity.Date = workoutDto.Date;
+        workoutEntity.Duration = workoutDto.Duration;
+        workoutEntity.Type = workoutDto.Type;
+        workoutEntity.Label = workoutDto.Label;
+        workoutEntity.CaloriesBurned = workoutDto.CaloriesBurned;
+
+        try { _context.SaveChanges(); return true; }
+        catch (Exception) { return false; }
+    }
+
+    //DELETE (D)
+    public bool DeleteWorkoutAction(int id)
+    {
+        var workoutEntity = _context.Workouts.Find(id); // Gasim id-ul
+        if (workoutEntity == null) return false;
+
+        try { _context.Workouts.Remove(workoutEntity); _context.SaveChanges(); return true; }
+        catch (Exception) { return false; }
+    }
+
 }

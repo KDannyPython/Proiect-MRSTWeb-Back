@@ -16,6 +16,7 @@ public class DailyRecordActions
         _context = new AppDbContext();
     }
 
+    // CREATE (C)
     public bool CreateDailyRecordAction(DailyRecordCreateDto dailyRecordDto)
     {
         var dailyRecordEntity = new DailyRecord
@@ -42,6 +43,7 @@ public class DailyRecordActions
         }
     }
 
+    // READ BY ID (R)
     public DailyRecordInfoDto? GetDailyRecordByIdAction(int id)
     {
         var dailyRecordEntity = _context.DailyRecords.Find(id);
@@ -64,6 +66,7 @@ public class DailyRecordActions
         };
     }
 
+    // READ ALL (R)
     public List<DailyRecordInfoDto> GetDailyRecordListAction()
     {
         return _context.DailyRecords.Select(d => new DailyRecordInfoDto
@@ -79,4 +82,42 @@ public class DailyRecordActions
             WaterGoalMl = d.WaterGoalMl
         }).ToList();
     }
+
+    // UPDATE (U)
+    public bool UpdateDailyRecordAction(int id, DailyRecordCreateDto dto)
+    {
+        var entity = _context.DailyRecords.Find(id);
+        if (entity == null) return false;
+
+        // Suprascriem cu datele noi
+        entity.Date = dto.Date;
+        entity.CaloriesConsumed = dto.CaloriesConsumed;
+        entity.CaloriesBurned = dto.CaloriesBurned;
+        entity.CaloriesGoal = dto.CaloriesGoal;
+        entity.Weight = dto.Weight;
+        entity.WaterConsumedMl = dto.WaterConsumedMl;
+        entity.WaterGoalMl = dto.WaterGoalMl;
+
+        try { _context.SaveChanges(); return true; }
+        catch (Exception) { return false; }
+    }
+
+    // DELETE (D)
+    public bool DeleteDailyRecordAction(int id)
+    {
+        var entity = _context.DailyRecords.Find(id);
+        if (entity == null) return false;
+
+        try 
+        {
+            _context.DailyRecords.Remove(entity);
+            _context.SaveChanges(); 
+            return true;
+        }
+        catch (Exception) 
+        {
+            return false;
+        }
+    }
+
 }

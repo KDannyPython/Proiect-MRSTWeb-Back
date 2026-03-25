@@ -17,6 +17,16 @@ public class WorkoutController : ControllerBase
         _workoutLogic = bl.GetWorkoutLogic();
     }
 
+    //CREATE (C)
+    [HttpPost("create")]
+    public IActionResult CreateWorkout([FromBody] WorkoutCreateDto workout)
+    {
+        var result = _workoutLogic.CreateWorkout(workout);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
+    //READ by id (R)
     [HttpGet("{id}")]
     public IActionResult GetWorkoutById(int id)
     {
@@ -25,6 +35,7 @@ public class WorkoutController : ControllerBase
         return Ok(result.Data);
     }
 
+    //READ ALL (R)
     [HttpGet("list")]
     public IActionResult GetWorkoutList()
     {
@@ -33,11 +44,22 @@ public class WorkoutController : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpPost("create")]
-    public IActionResult CreateWorkout([FromBody] WorkoutCreateDto workout)
+    //UPDATE (U)
+    [HttpPut("update/{id}")]
+    public IActionResult UpdateWorkout(int id, [FromBody] WorkoutCreateDto workout)
     {
-        var result = _workoutLogic.CreateWorkout(workout);
+        var result = _workoutLogic.UpdateWorkout(id, workout);
         if (!result.IsSucces) return BadRequest(result.Message);
         return Ok(result.Message);
     }
+
+    //DELETE (D)
+    [HttpDelete("delete/{id}")]
+    public IActionResult DeleteWorkout(int id)
+    {
+        var result = _workoutLogic.DeleteWorkout(id);
+        if (!result.IsSucces) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
 }

@@ -16,6 +16,7 @@ public class ExerciseActions
         _context = new AppDbContext();
     }
 
+    //CREATE (C)
     public bool CreateExerciseAction(ExerciseCreateDto exerciseDto)
     {
         var exerciseEntity = new Exercise
@@ -38,6 +39,7 @@ public class ExerciseActions
         }
     }
 
+    //READ BY ID (R)
     public ExerciseInfoDto? GetExerciseByIdAction(int id)
     {
         var exerciseEntity = _context.Exercises.Find(id);
@@ -57,6 +59,7 @@ public class ExerciseActions
         };
     }
 
+    //READ ALL (R)
     public List<ExerciseInfoDto> GetExerciseListAction()
     {
         return _context.Exercises.Select(e => new ExerciseInfoDto
@@ -69,4 +72,45 @@ public class ExerciseActions
             Weight = e.Weight
         }).ToList();
     }
+
+    // UPDATE (U)
+    public bool UpdateExerciseAction(int id, ExerciseCreateDto exerciseDto)
+    {
+        var exerciseEntity = _context.Exercises.Find(id);
+        if (exerciseEntity == null) return false;
+
+        exerciseEntity.Name = exerciseDto.Name;
+        exerciseEntity.Sets = exerciseDto.Sets;
+        exerciseEntity.Reps = exerciseDto.Reps;
+        exerciseEntity.Weight = exerciseDto.Weight;
+
+        try 
+        {
+            _context.SaveChanges(); 
+            return true;
+        }
+        catch (Exception) 
+        {
+            return false;
+        }
+    }
+
+    // DELETE (D)
+    public bool DeleteExerciseAction(int id)
+    {
+        var exerciseEntity = _context.Exercises.Find(id);
+        if (exerciseEntity == null) return false;
+
+        try 
+        {
+            _context.Exercises.Remove(exerciseEntity);
+            _context.SaveChanges(); 
+            return true;
+        }
+        catch (Exception) 
+        {
+            return false;
+        }
+    }
+
 }
