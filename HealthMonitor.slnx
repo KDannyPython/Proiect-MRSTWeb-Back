@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="HealthMonitor.Api/HealthMonitor.Api.csproj" />
   <Project Path="HealthMonitor.BusinessLayer/HealthMonitor.BusinessLayer.csproj" />
   <Project Path="HealthMonitor.DataAccesLayer/HealthMonitor.DataAccesLayer.csproj" />

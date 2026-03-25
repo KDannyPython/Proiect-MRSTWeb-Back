@@ -19,7 +19,10 @@ public class FoodActions
             name = food.name,
             calories = food.calories,
             protein = food.protein,
-            carbohydrates = food.carbohydrates
+            carbohydrates = food.carbohydrates,
+            fat = food.fat,
+            fiber = food.fiber,
+            vitaminC = food.vitaminC
         };
 
         try
@@ -50,7 +53,10 @@ public class FoodActions
             name = foodEntity.name,
             calories = foodEntity.calories,
             protein = foodEntity.protein,
-            carbohydrates = foodEntity.carbohydrates
+            carbohydrates = foodEntity.carbohydrates,
+            fat = foodEntity.fat,
+            fiber = foodEntity.fiber,
+            vitaminC = foodEntity.vitaminC
         };
 
         return foodInfoDto;
@@ -64,8 +70,11 @@ public class FoodActions
                 name = FoodEntity.name,
                 calories = FoodEntity.calories,
                 protein = FoodEntity.protein,
-                carbohydrates = FoodEntity.carbohydrates
-            })
+                carbohydrates = FoodEntity.carbohydrates,
+                fat = FoodEntity.fat,
+                fiber = FoodEntity.fiber,
+                vitaminC = FoodEntity.vitaminC
+        })
             .ToList();
         return foodList;
     }
