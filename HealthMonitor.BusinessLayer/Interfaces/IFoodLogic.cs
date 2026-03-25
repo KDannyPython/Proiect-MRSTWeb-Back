@@ -8,6 +8,4 @@ public interface IFoodLogic
     ServiceResponse CreateFood(FoodCreateDto food);
     ServiceResponse GetFoodById(int id);
     ServiceResponse GetFoodList();
-
-
 }
