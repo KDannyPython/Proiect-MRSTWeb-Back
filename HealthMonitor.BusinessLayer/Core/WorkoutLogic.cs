@@ -26,6 +26,7 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
             Message = "Antrenamentul a fost salvat cu succes în Postgres!"
         };
     }
+    
     //READ by id (R)
     public ServiceResponse GetWorkoutById(int id)
     {
