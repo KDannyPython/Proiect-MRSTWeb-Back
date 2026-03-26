@@ -1,6 +1,6 @@
 using System;
 
-namespace HealthMonitor.Domain.Entities
+namespace HealthMonitor.Domain.Entities.Admin
 {
     public class Admin
     {

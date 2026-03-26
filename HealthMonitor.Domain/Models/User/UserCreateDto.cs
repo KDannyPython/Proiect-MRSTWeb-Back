@@ -1,10 +1,9 @@
 using System;
 
-namespace HealthMonitor.Domain.Entities.User
+namespace HealthMonitor.Domain.Models
 {
-    public class UserEntity
+    public class UserCreateDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
@@ -12,7 +11,7 @@ namespace HealthMonitor.Domain.Entities.User
         public int Age { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }
-        public string Goal { get; set; } // lose weight, gain muscle, maintain weight 
+        public string Goal { get; set; }
         public string Role { get; set; } = "User"; 
     }
 }
