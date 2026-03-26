@@ -15,6 +15,6 @@ namespace HealthMonitor.Domain.Models.Workout
         public int CaloriesBurned { get; set; }
 
         public List<ExerciseInfoDto> Exercises { get; set; } =
-        new List<ExerciseInfoDto>();
+         new List<ExerciseInfoDto>();
     }
 }
