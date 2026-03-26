@@ -12,7 +12,7 @@ namespace HealthMonitor.Domain.Models.Workout
         public int Duration { get; set; }
         public string Type { get; set; }
         public string Label{ get; set; }
-        public int CaloriesBurned { get; set; }
+        public int CaloriesBurned { get; set; } //asta as scoatem phd
 
         public List<ExerciseInfoDto> Exercises { get; set; } =
          new List<ExerciseInfoDto>();
