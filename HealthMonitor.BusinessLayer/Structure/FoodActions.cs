@@ -34,7 +34,28 @@ public class FoodActions
         }
         catch (Exception e)
         {
-            // Log the exception (ex) here if needed
+            return false;
+        }
+    }
+
+    public bool DeleteFoodAction(int Id)
+    {
+        var foodEntity = _context.Foods.FirstOrDefault(f => f.id == Id);
+
+        if (foodEntity == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            _context.Remove(foodEntity);
+            _context.SaveChanges();
+            return true;
+        }
+
+        catch (Exception e)
+        {
             return false;
         }
     }

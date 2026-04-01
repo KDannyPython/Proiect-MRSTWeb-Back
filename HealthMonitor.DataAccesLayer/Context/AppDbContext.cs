@@ -1,5 +1,6 @@
 ﻿using HealthMonitor.Domain.Entities.Food;
 using Microsoft.EntityFrameworkCore;
+
 namespace HealthMonitor.DataAccesLayer.Context;
 
 public class AppDbContext: DbContext
@@ -14,3 +15,12 @@ public class AppDbContext: DbContext
         }
     }
 }
+
+//public class FoodDbContext : DbContext
+//{
+
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//    {
+//        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=healthmonitor;Username=postgres;Password=postgres");
+//    }
+//}

@@ -7,7 +7,4 @@ public interface IUsdaFoodLogic
 {
     Task<UsdaFoodSearchResponseDto> SearchUsdaFoodAsync(string query);
 
-    //Task<ServiceResponse<List<FoodInfoDto>>> GetAllFoodsAsync();
-    //Task<ServiceResponse<FoodInfoDto>> GetFoodByIdAsync(int id);
-    //Task<ServiceResponse> CreateFoodAsync(FoodCreateDto food);
 }

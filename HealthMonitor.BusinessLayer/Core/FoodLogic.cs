@@ -25,6 +25,24 @@ public class FoodLogic : FoodActions, IFoodLogic
         };
     }
 
+    public ServiceResponse DeleteFoodById(int Id)
+    {
+        var result = DeleteFoodAction(Id);
+        if (result == false)
+        {
+            return new ServiceResponse
+            {
+                IsSucces = false,
+                Message = "Food item not found or failed to delete."
+            };
+        }
+        return new ServiceResponse
+        {
+            IsSucces = true,
+            Message = "Food deleted successfully."
+        };
+    }
+
     public ServiceResponse GetFoodById(int id)
     {
         var food = GetFoodByIdAction(id);

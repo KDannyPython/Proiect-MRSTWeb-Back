@@ -50,6 +50,16 @@ public class FoodController: ControllerBase
         return Ok(result.Message);
     }
 
+    [HttpGet("{id}")]
+    public IActionResult DeleteFoodById(int id)
+    {
+        var result = _foodLogic.DeleteFoodById(id);
+        if (!result.IsSucces)
+        {
+            return BadRequest(result.Message);
+        }
+        return Ok(result.Message);
+    }
     //HttpPut / HttpPatch
     //HttpDelete
 }
