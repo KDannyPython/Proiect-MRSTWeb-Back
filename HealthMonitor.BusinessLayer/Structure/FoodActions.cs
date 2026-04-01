@@ -38,9 +38,9 @@ public class FoodActions
         }
     }
 
-    public bool DeleteFoodAction(int Id)
+    public bool DeleteFoodAction(int id)
     {
-        var foodEntity = _context.Foods.FirstOrDefault(f => f.id == Id);
+        var foodEntity = _context.Foods.FirstOrDefault(f => f.id == id);
 
         if (foodEntity == null)
         {

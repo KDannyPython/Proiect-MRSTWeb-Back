@@ -6,7 +6,7 @@ namespace HealthMonitor.BusinessLayer.Interfaces;
 public interface IFoodLogic
 {
     ServiceResponse CreateFood(FoodCreateDto food);
-    ServiceResponse DeleteFoodById(int Id);
+    ServiceResponse DeleteFoodById(int id);
     ServiceResponse GetFoodById(int id);
     ServiceResponse GetFoodList();
 
