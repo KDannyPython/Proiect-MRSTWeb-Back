@@ -61,6 +61,39 @@ public class FoodActions
         return foodInfoDto;
     }
 
+    public List<FoodInfoDto> GetFoodByNameAction(string Name)
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+            return new List<FoodInfoDto>();
+
+        var foodList = GetFoodListAction();
+
+        return foodList
+            .Where(f => !string.IsNullOrWhiteSpace(f.Name) &&
+                        f.Name.Contains(Name, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        //{
+        //    return new List<FoodInfoDto>();
+        //}
+        //var foodList = _context.Foods
+        //    .Where(f => f.Name.Contains(Name.ToLower()))
+        //    .Select(FoodEntity => new FoodInfoDto
+        //{
+        //    Id = FoodEntity.Id,
+        //    Name = FoodEntity.Name,
+        //    Calories = FoodEntity.Calories,
+        //    Protein = FoodEntity.Protein,
+        //    Carbohydrates = FoodEntity.Carbohydrates,
+        //    Fat = FoodEntity.Fat,
+        //    Fiber = FoodEntity.Fiber,
+        //    VitaminC = FoodEntity.VitaminC
+        //})
+        //.ToList();
+
+        //return foodList;
+    }
+
     public List<FoodInfoDto> GetFoodListAction()
     {
         var foodList = _context.Foods.Select(FoodEntity => new FoodInfoDto

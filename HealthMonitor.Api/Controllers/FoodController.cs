@@ -28,6 +28,17 @@ public class FoodController : ControllerBase
         return Ok(result.Data);
     }
 
+    [HttpGet("search")]
+    public IActionResult GetFoodByName(string Name)
+    {
+        var result = _foodLogic.GetFoodByName(Name);
+        if (!result.IsSucces)
+        {
+            return NotFound(result.Message);
+        }
+        return Ok(result.Data);
+    }
+
     [HttpGet("list")]
     public IActionResult GetFoodList()
     {

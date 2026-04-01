@@ -7,6 +7,7 @@ public interface IFoodLogic
 {
     ServiceResponse CreateFood(FoodCreateDto food);
     ServiceResponse GetFoodById(int Id);
+    ServiceResponse GetFoodByName(string Name);
     ServiceResponse GetFoodList();
     ServiceResponse DeleteFoodById(int Id);
     ServiceResponse UpdateFoodById(int Id, FoodUpdateDto food);

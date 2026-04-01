@@ -44,6 +44,25 @@ public class FoodLogic : FoodActions, IFoodLogic
         };
     }
 
+    public ServiceResponse GetFoodByName(string Name)
+    {
+        var food = GetFoodByNameAction(Name);
+        if (food == null)
+        {
+            return new ServiceResponse
+            {
+                IsSucces = false,
+                Message = "Food item not found with this name."
+            };
+        }
+
+        return new ServiceResponse
+        {
+            IsSucces = true,
+            Data = food
+        };
+    }
+
     public ServiceResponse GetFoodList()
     {
         var foodList = GetFoodListAction();
