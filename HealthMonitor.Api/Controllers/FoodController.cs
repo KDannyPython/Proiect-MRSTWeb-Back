@@ -7,7 +7,7 @@ namespace HealthMonitor.Api.Controllers;
 
 [ApiController]
 [Route("api/food")]
-public class FoodController: ControllerBase
+public class FoodController : ControllerBase
 {
     private readonly IFoodLogic _foodLogic;
 
@@ -60,6 +60,20 @@ public class FoodController: ControllerBase
         }
         return Ok(result.Message);
     }
+
+    [HttpPut("{Id}")]
+    public IActionResult UpdateFoodById(int Id, FoodUpdateDto food)
+    {
+        var result = _foodLogic.UpdateFoodById(Id, food);
+        if (!result.IsSucces)
+        {
+            return BadRequest(result.Message);
+        }
+        return Ok(result.Message);
+    }
+
+
+
     //HttpPut / HttpPatch
     //HttpDelete
 }

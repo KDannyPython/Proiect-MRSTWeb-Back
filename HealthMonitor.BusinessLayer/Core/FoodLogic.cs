@@ -25,9 +25,9 @@ public class FoodLogic : FoodActions, IFoodLogic
         };
     }
 
-    public ServiceResponse GetFoodById(int id)
+    public ServiceResponse GetFoodById(int Id)
     {
-        var food = GetFoodByIdAction(id);
+        var food = GetFoodByIdAction(Id);
         if (food==null)
         {
             return new ServiceResponse
@@ -70,6 +70,24 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             IsSucces = true,
             Message = "Food deleted successfully."
+        };
+    }
+
+    public ServiceResponse UpdateFoodById(int Id, FoodUpdateDto food)
+    {
+        var result = UpdateFoodAction(Id, food);
+        if (result == false)
+        {
+            return new ServiceResponse
+            {
+                IsSucces = false,
+                Message = "Food item not found or failed to update."
+            };
+        }
+        return new ServiceResponse
+        {
+            IsSucces = true,
+            Message = "Food updated successfully."
         };
     }
 }

@@ -20,7 +20,7 @@ public class FoodActions
             Calories = food.Calories,
             Protein = food.Protein,
             Carbohydrates = food.Carbohydrates,
-            Fat = food.Fat, 
+            Fat = food.Fat,
             Fiber = food.Fiber,
             VitaminC = food.VitaminC
         };
@@ -64,15 +64,15 @@ public class FoodActions
     public List<FoodInfoDto> GetFoodListAction()
     {
         var foodList = _context.Foods.Select(FoodEntity => new FoodInfoDto
-            {
-                Id = FoodEntity.Id,
-                Name = FoodEntity.Name,
-                Calories = FoodEntity.Calories,
-                Protein = FoodEntity.Protein,
-                Carbohydrates = FoodEntity.Carbohydrates,
-                Fat = FoodEntity.Fat,
-                Fiber = FoodEntity.Fiber,
-                VitaminC = FoodEntity.VitaminC
+        {
+            Id = FoodEntity.Id,
+            Name = FoodEntity.Name,
+            Calories = FoodEntity.Calories,
+            Protein = FoodEntity.Protein,
+            Carbohydrates = FoodEntity.Carbohydrates,
+            Fat = FoodEntity.Fat,
+            Fiber = FoodEntity.Fiber,
+            VitaminC = FoodEntity.VitaminC
         })
             .ToList();
         return foodList;
@@ -100,4 +100,31 @@ public class FoodActions
         }
     }
 
+    public bool UpdateFoodAction(int Id, FoodUpdateDto food)
+    {
+        try
+        {
+            var foodEntity = _context.Foods.FirstOrDefault(f => f.Id == Id);
+
+            if (foodEntity == null)
+            {
+                return false;
+            }
+
+            foodEntity.Name = food.Name;
+            foodEntity.Calories = food.Calories;
+            foodEntity.Protein = food.Protein;
+            foodEntity.Carbohydrates = food.Carbohydrates;
+            foodEntity.Fat = food.Fat;
+            foodEntity.Fiber = food.Fiber;
+            foodEntity.VitaminC = food.VitaminC;
+
+            _context.SaveChanges();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
