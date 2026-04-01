@@ -19,12 +19,13 @@ public class DailyRecordActions
     // CREATE (C)
     public bool CreateDailyRecordAction(DailyRecordCreateDto dailyRecordDto)
     {
+        var currentUserId = "mock-user-123"; //o sa dam replace dupa ce avem JWT
+
         var dailyRecordEntity = new DailyRecord
         {
-            UserId = dailyRecordDto.UserId,
+            UserId = currentUserId,
             Date = dailyRecordDto.Date,
             CaloriesConsumed = dailyRecordDto.CaloriesConsumed,
-            CaloriesBurned = dailyRecordDto.CaloriesBurned,
             CaloriesGoal = dailyRecordDto.CaloriesGoal,
             Weight = dailyRecordDto.Weight,
             WaterConsumedMl = dailyRecordDto.WaterConsumedMl,
@@ -58,7 +59,6 @@ public class DailyRecordActions
             UserId = dailyRecordEntity.UserId,
             Date = dailyRecordEntity.Date,
             CaloriesConsumed = dailyRecordEntity.CaloriesConsumed,
-            CaloriesBurned = dailyRecordEntity.CaloriesBurned,
             CaloriesGoal = dailyRecordEntity.CaloriesGoal,
             Weight = dailyRecordEntity.Weight,
             WaterConsumedMl = dailyRecordEntity.WaterConsumedMl,
@@ -75,7 +75,6 @@ public class DailyRecordActions
             UserId = d.UserId,
             Date = d.Date,
             CaloriesConsumed = d.CaloriesConsumed,
-            CaloriesBurned = d.CaloriesBurned,
             CaloriesGoal = d.CaloriesGoal,
             Weight = d.Weight,
             WaterConsumedMl = d.WaterConsumedMl,
@@ -89,10 +88,8 @@ public class DailyRecordActions
         var entity = _context.DailyRecords.Find(id);
         if (entity == null) return false;
 
-        // Suprascriem cu datele noi
         entity.Date = dto.Date;
         entity.CaloriesConsumed = dto.CaloriesConsumed;
-        entity.CaloriesBurned = dto.CaloriesBurned;
         entity.CaloriesGoal = dto.CaloriesGoal;
         entity.Weight = dto.Weight;
         entity.WaterConsumedMl = dto.WaterConsumedMl;

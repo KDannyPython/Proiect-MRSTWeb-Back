@@ -57,7 +57,7 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         };
     }
 
-    
+    //UPDATE (U)
     public ServiceResponse UpdateDailyRecord(int id, DailyRecordCreateDto dto)
     {
         var success = UpdateDailyRecordAction(id, dto);
