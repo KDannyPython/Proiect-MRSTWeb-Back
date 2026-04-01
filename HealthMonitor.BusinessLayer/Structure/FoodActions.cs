@@ -16,13 +16,13 @@ public class FoodActions
     {
         var foodEntity = new FoodEntity
         {
-            name = food.name,
-            calories = food.calories,
-            protein = food.protein,
-            carbohydrates = food.carbohydrates,
-            fat = food.fat,
-            fiber = food.fiber,
-            vitaminC = food.vitaminC
+            Name = food.Name,
+            Calories = food.Calories,
+            Protein = food.Protein,
+            Carbohydrates = food.Carbohydrates,
+            Fat = food.Fat, 
+            Fiber = food.Fiber,
+            VitaminC = food.VitaminC
         };
 
         try
@@ -38,9 +38,49 @@ public class FoodActions
         }
     }
 
-    public bool DeleteFoodAction(int id)
+    public FoodInfoDto? GetFoodByIdAction(int Id)
     {
-        var foodEntity = _context.Foods.FirstOrDefault(f => f.id == id);
+        var foodEntity = _context.Foods.Find(Id);
+        if (foodEntity == null)
+        {
+            return null;
+        }
+
+        var foodInfoDto = new FoodInfoDto
+        {
+            Id = foodEntity.Id,
+            Name = foodEntity.Name,
+            Calories = foodEntity.Calories,
+            Protein = foodEntity.Protein,
+            Carbohydrates = foodEntity.Carbohydrates,
+            Fat = foodEntity.Fat,
+            Fiber = foodEntity.Fiber,
+            VitaminC = foodEntity.VitaminC
+        };
+
+        return foodInfoDto;
+    }
+
+    public List<FoodInfoDto> GetFoodListAction()
+    {
+        var foodList = _context.Foods.Select(FoodEntity => new FoodInfoDto
+            {
+                Id = FoodEntity.Id,
+                Name = FoodEntity.Name,
+                Calories = FoodEntity.Calories,
+                Protein = FoodEntity.Protein,
+                Carbohydrates = FoodEntity.Carbohydrates,
+                Fat = FoodEntity.Fat,
+                Fiber = FoodEntity.Fiber,
+                VitaminC = FoodEntity.VitaminC
+        })
+            .ToList();
+        return foodList;
+    }
+
+    public bool DeleteFoodAction(int Id)
+    {
+        var foodEntity = _context.Foods.FirstOrDefault(f => f.Id == Id);
 
         if (foodEntity == null)
         {
@@ -60,43 +100,4 @@ public class FoodActions
         }
     }
 
-    public FoodInfoDto? GetFoodByIdAction(int id)
-    {
-        var foodEntity = _context.Foods.Find(id);
-        if (foodEntity == null)
-        {
-            return null;
-        }
-
-        var foodInfoDto = new FoodInfoDto
-        {
-            id = foodEntity.id,
-            name = foodEntity.name,
-            calories = foodEntity.calories,
-            protein = foodEntity.protein,
-            carbohydrates = foodEntity.carbohydrates,
-            fat = foodEntity.fat,
-            fiber = foodEntity.fiber,
-            vitaminC = foodEntity.vitaminC
-        };
-
-        return foodInfoDto;
-    }
-
-    public List<FoodInfoDto> GetFoodListAction()
-    {
-        var foodList = _context.Foods.Select(FoodEntity => new FoodInfoDto
-            {
-                id = FoodEntity.id,
-                name = FoodEntity.name,
-                calories = FoodEntity.calories,
-                protein = FoodEntity.protein,
-                carbohydrates = FoodEntity.carbohydrates,
-                fat = FoodEntity.fat,
-                fiber = FoodEntity.fiber,
-                vitaminC = FoodEntity.vitaminC
-        })
-            .ToList();
-        return foodList;
-    }
 }

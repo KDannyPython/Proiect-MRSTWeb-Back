@@ -17,10 +17,10 @@ public class FoodController: ControllerBase
         _foodLogic = bl.GetFoodLogic();
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetFoodById(int id)
+    [HttpGet("{Id}")]
+    public IActionResult GetFoodById(int Id)
     {
-        var result = _foodLogic.GetFoodById(id);
+        var result = _foodLogic.GetFoodById(Id);
         if (!result.IsSucces)
         {
             return BadRequest(result.Message);
@@ -50,10 +50,10 @@ public class FoodController: ControllerBase
         return Ok(result.Message);
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteFoodById(int id)
+    [HttpDelete("{Id}")]
+    public IActionResult DeleteFoodById(int Id)
     {
-        var result = _foodLogic.DeleteFoodById(id);
+        var result = _foodLogic.DeleteFoodById(Id);
         if (!result.IsSucces)
         {
             return BadRequest(result.Message);
