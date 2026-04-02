@@ -30,4 +30,10 @@ public class BusinessLogic
     {
         return new DailyRecordLogic();
     }
+    // UserLogic
+    public IUserLogic GetUserLogic()
+    {
+        return new UserLogic();
+    }
+
 }

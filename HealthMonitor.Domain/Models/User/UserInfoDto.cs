@@ -1,6 +1,6 @@
 using System;
 
-namespace HealthMonitor.Domain.Models
+namespace HealthMonitor.Domain.Models.User
 {
     public class UserInfoDto
     {
