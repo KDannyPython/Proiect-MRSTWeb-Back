@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HealthMonitor.Domain.Entities.Food
+﻿namespace HealthMonitor.Domain.Entities.Food
 {
     public class FoodEntity
     {

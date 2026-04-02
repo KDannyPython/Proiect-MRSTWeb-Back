@@ -12,4 +12,10 @@ public class BusinessLogic
     {
         return new FoodLogic();
     }
+
+    //NotificationLogic
+    public INotificationLogic GetNotificationLogic()
+    {
+        return new NotificationLogic();
+    }
 }

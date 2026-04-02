@@ -1,4 +1,5 @@
 ﻿using HealthMonitor.Domain.Entities.Food;
+using HealthMonitor.Domain.Entities.Notification;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthMonitor.DataAccesLayer.Context;
@@ -6,6 +7,7 @@ namespace HealthMonitor.DataAccesLayer.Context;
 public class AppDbContext: DbContext
 {
     public DbSet<FoodEntity> Foods { get; set; }
+    public DbSet<NotificationEntity> Notification { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
