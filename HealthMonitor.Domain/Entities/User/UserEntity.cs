@@ -13,6 +13,6 @@ namespace HealthMonitor.Domain.Entities.User
         public int Height { get; set; }
         public int Weight { get; set; }
         public string Goal { get; set; } // lose weight, gain muscle, maintain weight 
-        public string Role { get; set; } = "User"; 
+
     }
 }

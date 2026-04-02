@@ -12,6 +12,6 @@ namespace HealthMonitor.Domain.Models
         public int Height { get; set; }
         public int Weight { get; set; }
         public string Goal { get; set; }
-        public string Role { get; set; } = "User"; 
+
     }
 }
