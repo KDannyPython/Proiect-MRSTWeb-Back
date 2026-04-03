@@ -35,5 +35,10 @@ public class BusinessLogic
     {
         return new UserLogic();
     }
+    // AdminLogic
+    public IAdminLogic GetAdminLogic()
+    {
+        return new AdminLogic();
+    }
 
 }
