@@ -7,8 +7,8 @@ namespace HealthMonitor.BusinessLayer.Interfaces
     {
         ServiceResponse CreateNotification(CreateNotificationDto notification);
         ServiceResponse GetNotificationById(int Id);
-        ServiceResponse GetNotificationByUserId(int userId);
-        ServiceResponse MarkAllAsRead(int userId);
+        ServiceResponse GetNotificationByUserId(int UserId);
+        ServiceResponse MarkAllAsRead(int UserId);
         ServiceResponse MarkAsRead(int Id);
         ServiceResponse DeleteNotification(int Id);
     }

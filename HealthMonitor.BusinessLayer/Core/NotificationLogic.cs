@@ -60,9 +60,9 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         };
     }
 
-    public ServiceResponse MarkAllAsRead(int userId)
+    public ServiceResponse MarkAllAsRead(int UserId)
     {
-        var result = MarkAllAsReadAction(userId);
+        var result = MarkAllAsReadAction(UserId);
         if (result == false)
         {
             return new ServiceResponse

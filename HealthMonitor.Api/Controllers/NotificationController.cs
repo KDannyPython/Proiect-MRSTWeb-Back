@@ -51,9 +51,9 @@ public class NotificationController : ControllerBase
     }
 
     [HttpPut("markAllAsRead/{UserId}")]
-    public IActionResult MarkAllAsRead(int UserID)
+    public IActionResult MarkAllAsRead([FromRoute] int UserId)
     {
-        var result = _notificationLogic.MarkAllAsRead(UserID);
+        var result = _notificationLogic.MarkAllAsRead(UserId);
         if (!result.IsSucces)
         {
             return BadRequest(result.Message);

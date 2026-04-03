@@ -74,9 +74,9 @@ public class NotificationActions
         return notificationList;
     }
 
-    public bool MarkAllAsReadAction(int userId)
+    public bool MarkAllAsReadAction(int UserId)
     {
-        var notifications = _context.Notification.Where(n => n.UserId == userId && !n.IsRead).ToList();
+        var notifications = _context.Notification.Where(n => n.UserId == UserId && !n.IsRead).ToList();
         if (!notifications.Any())
         {
             return false;
