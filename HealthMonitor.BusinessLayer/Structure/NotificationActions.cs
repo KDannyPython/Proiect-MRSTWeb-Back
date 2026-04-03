@@ -44,6 +44,7 @@ public class NotificationActions
             return null;
         }
 
+        var moldovaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Chisinau");
         var notificationInfoDto = new NotificationInfoDto
         {
             Id = notificationEntity.Id,
@@ -51,7 +52,10 @@ public class NotificationActions
             Name = notificationEntity.Name,
             Description = notificationEntity.Description,
             IsRead = notificationEntity.IsRead,
-            CreatedAt = notificationEntity.CreatedAt
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(
+                notificationEntity.CreatedAt,
+                moldovaTimeZone
+                ),
         };
 
         return notificationInfoDto;
@@ -59,16 +63,20 @@ public class NotificationActions
 
     public List<NotificationInfoDto> GetNotificationByUserIdAction(int userId)
     {
+        var moldovaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Chisinau");
         var notificationList = _context.Notification
-            .Where(n => n.UserId == userId)
-            .Select(n => new NotificationInfoDto
+            .Where(notificationEntity => notificationEntity.UserId == userId)
+            .Select(notificationEntity => new NotificationInfoDto
             {
-                Id = n.Id,
-                UserId = n.UserId,
-                Name = n.Name,
-                Description = n.Description,
-                IsRead = n.IsRead,
-                CreatedAt = n.CreatedAt
+                Id = notificationEntity.Id,
+                UserId = notificationEntity.UserId,
+                Name = notificationEntity.Name,
+                Description = notificationEntity.Description,
+                IsRead = notificationEntity.IsRead,
+                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(
+                    notificationEntity.CreatedAt,
+                    moldovaTimeZone
+                    ),
             })
             .ToList();
         return notificationList;
