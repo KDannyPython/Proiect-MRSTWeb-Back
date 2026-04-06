@@ -18,4 +18,22 @@ public class BusinessLogic
     {
         return new NotificationLogic();
     }
+
+    // WorkoutLogic
+    public IWorkoutLogic GetWorkoutLogic()
+    {
+        return new WorkoutLogic();
+    }
+
+    // ExerciseLogic
+    public IExerciseLogic GetExerciseLogic()
+    {
+        return new ExerciseLogic();
+    }
+
+    // DailyRecordLogic
+    public IDailyRecordLogic GetDailyRecordLogic()
+    {
+        return new DailyRecordLogic();
+    }
 }

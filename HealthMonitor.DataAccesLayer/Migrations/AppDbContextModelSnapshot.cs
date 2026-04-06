@@ -22,70 +22,220 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.DailyRecord.DailyRecord", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                b.Property<int?>("CaloriesConsumed")
+                    .HasColumnType("integer");
+
+                b.Property<int?>("CaloriesGoal")
+                    .HasColumnType("integer");
+
+                b.Property<DateTime>("Date")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("UserId")
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnType("character varying(450)");
+
+                b.Property<int?>("WaterConsumedMl")
+                    .HasColumnType("integer");
+
+                b.Property<int?>("WaterGoalMl")
+                    .HasColumnType("integer");
+
+                b.Property<int?>("Weight")
+                    .HasColumnType("integer");
+
+                b.HasKey("Id");
+
+                b.ToTable("DailyRecords");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.Exercise.Exercise", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                b.Property<string>("MuscleTarget")
+                    .HasMaxLength(50)
+                    .HasColumnType("character varying(50)");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("character varying(100)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Exercises");
+            });
+
             modelBuilder.Entity("HealthMonitor.Domain.Entities.Food.FoodEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Calories")
-                        .HasColumnType("real");
+                b.Property<float>("Calories")
+                    .HasColumnType("real");
 
-                    b.Property<float>("Carbohydrates")
-                        .HasColumnType("real");
+                b.Property<float>("Carbohydrates")
+                    .HasColumnType("real");
 
-                    b.Property<float>("Fat")
-                        .HasColumnType("real");
+                b.Property<float>("Fat")
+                    .HasColumnType("real");
 
-                    b.Property<float>("Fiber")
-                        .HasColumnType("real");
+                b.Property<float>("Fiber")
+                    .HasColumnType("real");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<float>("Protein")
-                        .HasColumnType("real");
+                b.Property<float>("Protein")
+                    .HasColumnType("real");
 
-                    b.Property<float>("VitaminC")
-                        .HasColumnType("real");
+                b.Property<float>("VitaminC")
+                    .HasColumnType("real");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Foods");
-                });
+                b.ToTable("Foods");
+            });
 
             modelBuilder.Entity("HealthMonitor.Domain.Entities.Notification.NotificationEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsRead")
+                    .HasColumnType("boolean");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                b.Property<int>("UserId")
+                    .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Notification");
-                });
+                b.ToTable("Notification");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.Workout.Workout", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                b.Property<DateTime>("Date")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<int>("Duration")
+                    .HasColumnType("integer");
+
+                b.Property<string>("Label")
+                    .HasMaxLength(100)
+                    .HasColumnType("character varying(100)");
+
+                b.Property<int>("Type")
+                    .HasColumnType("integer");
+
+                b.Property<string>("UserId")
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnType("character varying(450)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Workouts");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.WorkoutExercise.WorkoutExercise", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                b.Property<int>("ExerciseId")
+                    .HasColumnType("integer");
+
+                b.Property<int>("Reps")
+                    .HasColumnType("integer");
+
+                b.Property<int>("Sets")
+                    .HasColumnType("integer");
+
+                b.Property<float>("Weight")
+                    .HasColumnType("real");
+
+                b.Property<int>("WorkoutId")
+                    .HasColumnType("integer");
+
+                b.HasKey("Id");
+
+                b.HasIndex("ExerciseId");
+
+                b.HasIndex("WorkoutId");
+
+                b.ToTable("WorkoutExercises");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.WorkoutExercise.WorkoutExercise", b =>
+            {
+                b.HasOne("HealthMonitor.Domain.Entities.Exercise.Exercise", "Exercise")
+                    .WithMany("WorkoutExercises")
+                    .HasForeignKey("ExerciseId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("HealthMonitor.Domain.Entities.Workout.Workout", "Workout")
+                    .WithMany("WorkoutExercises")
+                    .HasForeignKey("WorkoutId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Exercise");
+
+                b.Navigation("Workout");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.Exercise.Exercise", b =>
+            {
+                b.Navigation("WorkoutExercises");
+            });
+
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.Workout.Workout", b =>
+            {
+                b.Navigation("WorkoutExercises");
+            });
 #pragma warning restore 612, 618
         }
     }
