@@ -1,3 +1,6 @@
+using HealthMonitor.BusinessLayer.Interfaces;
+using HealthMonitor.BusinessLayer.Core;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -6,6 +9,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<IUsdaFoodLogic, UsdaFoodLogic>();
 
 //AddScoped
 //AddTransient
