@@ -3,6 +3,7 @@ using System;
 using HealthMonitor.DataAccesLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthMonitor.DataAccesLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260325151318_AddWorkoutEntities")]
+    partial class AddWorkoutEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,13 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CaloriesConsumed")
+                    b.Property<int>("CaloriesBurned")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CaloriesGoal")
+                    b.Property<int>("CaloriesConsumed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CaloriesGoal")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Date")
@@ -41,16 +47,15 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .HasColumnType("text");
 
-                    b.Property<int?>("WaterConsumedMl")
+                    b.Property<int>("WaterConsumedMl")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("WaterGoalMl")
+                    b.Property<int>("WaterGoalMl")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Weight")
+                    b.Property<int>("Weight")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -66,16 +71,25 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("MuscleTarget")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
+
+                    b.Property<int>("Reps")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Sets")
+                        .HasColumnType("integer");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Exercises");
                 });
@@ -114,6 +128,9 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CaloriesBurned")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -121,81 +138,36 @@ namespace HealthMonitor.DataAccesLayer.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Label")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("HealthMonitor.Domain.Entities.WorkoutExercise.WorkoutExercise", b =>
+            modelBuilder.Entity("HealthMonitor.Domain.Entities.Exercise.Exercise", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Reps")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Sets")
-                        .HasColumnType("integer");
-
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
-                    b.Property<int>("WorkoutId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("WorkoutId");
-
-                    b.ToTable("WorkoutExercises");
-                });
-
-            modelBuilder.Entity("HealthMonitor.Domain.Entities.WorkoutExercise.WorkoutExercise", b =>
-                {
-                    b.HasOne("HealthMonitor.Domain.Entities.Exercise.Exercise", "Exercise")
-                        .WithMany("WorkoutExercises")
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HealthMonitor.Domain.Entities.Workout.Workout", "Workout")
-                        .WithMany("WorkoutExercises")
+                        .WithMany("Exercises")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Exercise");
-
                     b.Navigation("Workout");
-                });
-
-            modelBuilder.Entity("HealthMonitor.Domain.Entities.Exercise.Exercise", b =>
-                {
-                    b.Navigation("WorkoutExercises");
                 });
 
             modelBuilder.Entity("HealthMonitor.Domain.Entities.Workout.Workout", b =>
                 {
-                    b.Navigation("WorkoutExercises");
+                    b.Navigation("Exercises");
                 });
 #pragma warning restore 612, 618
         }
