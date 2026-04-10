@@ -1,3 +1,7 @@
+using HealthMonitor.Domain.Entities.Food;
+using HealthMonitor.Domain.Entities.Workout;
+using HealthMonitor.Domain.Entities.Exercise;
+using HealthMonitor.Domain.Entities.DailyRecord;
 using HealthMonitor.Domain.Entities.Admin;
 using HealthMonitor.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +10,10 @@ namespace HealthMonitor.DataAccesLayer.Context;
 
 public class AppDbContext: DbContext
 {
+    public DbSet<FoodEntity> Foods { get; set; }
+    public DbSet<Workout> Workouts { get; set; }
+    public DbSet<Exercise> Exercises { get; set; }
+    public DbSet<DailyRecord> DailyRecords { get; set; }
     public DbSet<Admin> Admins { get; set; }
     public DbSet<UserEntity> Users { get; set; }
 
