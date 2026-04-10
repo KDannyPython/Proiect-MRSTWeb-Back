@@ -22,9 +22,7 @@ public class ExerciseActions
         var exerciseEntity = new Exercise
         {
             Name = exerciseDto.Name,
-            Sets = exerciseDto.Sets,
-            Reps = exerciseDto.Reps,
-            Weight = exerciseDto.Weight
+            MuscleTarget = exerciseDto.MuscleTarget,
         };
 
         try
@@ -51,11 +49,8 @@ public class ExerciseActions
         return new ExerciseInfoDto
         {
             Id = exerciseEntity.Id,
-            WorkoutId = exerciseEntity.WorkoutId,
             Name = exerciseEntity.Name,
-            Sets = exerciseEntity.Sets,
-            Reps = exerciseEntity.Reps,
-            Weight = exerciseEntity.Weight
+            MuscleTarget = exerciseEntity.MuscleTarget,
         };
     }
 
@@ -65,11 +60,8 @@ public class ExerciseActions
         return _context.Exercises.Select(e => new ExerciseInfoDto
         {
             Id = e.Id,
-            WorkoutId = e.WorkoutId,
             Name = e.Name,
-            Sets = e.Sets,
-            Reps = e.Reps,
-            Weight = e.Weight
+            MuscleTarget = e.MuscleTarget,
         }).ToList();
     }
 
@@ -80,9 +72,7 @@ public class ExerciseActions
         if (exerciseEntity == null) return false;
 
         exerciseEntity.Name = exerciseDto.Name;
-        exerciseEntity.Sets = exerciseDto.Sets;
-        exerciseEntity.Reps = exerciseDto.Reps;
-        exerciseEntity.Weight = exerciseDto.Weight;
+        exerciseEntity.MuscleTarget = exerciseDto.MuscleTarget;
 
         try 
         {

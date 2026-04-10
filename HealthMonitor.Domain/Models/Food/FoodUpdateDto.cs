@@ -2,7 +2,7 @@
 
 namespace HealthMonitor.Domain.Models.Food
 {
-    public class FoodCreateDto
+    public class FoodUpdateDto
     {
         [Required]
         [StringLength(50)]

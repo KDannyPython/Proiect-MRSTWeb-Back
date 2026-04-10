@@ -8,9 +8,9 @@ namespace HealthMonitor.BusinessLayer.Core;
 public class WorkoutLogic : WorkoutActions, IWorkoutLogic
 {
     //CREATE (C)
-    public ServiceResponse CreateWorkout(WorkoutCreateDto workout)
+    public ServiceResponse CreateWorkout(WorkoutCreateDto workoutDto)
     {
-        var result = CreateWorkoutAction(workout);
+        var result = CreateWorkoutAction(workoutDto);
         if (result == false)
         {
             return new ServiceResponse
@@ -26,7 +26,8 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
             Message = "Antrenamentul a fost salvat cu succes în Postgres!"
         };
     }
-    //READ by id (R)
+    
+    //READ BY ID (R)
     public ServiceResponse GetWorkoutById(int id)
     {
         var workout = GetWorkoutByIdAction(id);
@@ -57,9 +58,9 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     }
 
     //UPDATE (U)
-    public ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workout)
+    public ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workoutDto)
     {
-        var result = UpdateWorkoutAction(id, workout);
+        var result = UpdateWorkoutAction(id, workoutDto);
         if (result == false)
         {
             return new ServiceResponse 
@@ -79,23 +80,13 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     //DELETE (D)
     public ServiceResponse DeleteWorkout(int id)
     {
-        var workout = GetWorkoutByIdAction(id);
-        if (workout == null)
-        {
-            return new ServiceResponse 
-            {
-                IsSucces = false, 
-                Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
-            };
-        }
-
         var result = DeleteWorkoutAction(id);
         if (result == false)
         {
             return new ServiceResponse 
             {
                 IsSucces = false, 
-                Message = "Eșec la ștergere (Id invalid?)."
+                Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
             };
         }
 
