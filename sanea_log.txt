@@ -1,9 +1,0 @@
-eec81f8 adnotare la DTO care chiar lucreaza/verifica
-a29c2af functionare CRUD complet si rework la entitati
-dec8792 appsettings.json container settings docker
-84fb493 Update nu lucreaza
-ab8a582 fisier docker-compose.yml
-7355450 versiunea de baza
-2b1d633 API CRUD complet pe entitatle: Workout, Exercise si DailyRecord
-6b81ecd API la Workout, Exercise, DailyRecord cu (CR) fara (UD)
-aa92e28 Initial commit (Structura backenb de la 0)
