@@ -1,9 +1,0 @@
-e617c85 Created notificationEntity + Full CRUD + MarkAllAsRead not working
-337b570 Created Search by name API
-24a23f0 Created UpdateAPI for Food. FULL CRUD DONE
-01b143e Food entity traits name change
-fa8cc08 Got rid of errors/bugs + added migration
-6cad5eb Created delete API
-3dc00c9 Adaugarea unei integrarii API pentru alimente
-cf57960 Modificare valori nutritionale
-aa92e28 Initial commit (Structura backenb de la 0)
