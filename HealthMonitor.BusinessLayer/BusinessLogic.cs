@@ -13,6 +13,12 @@ public class BusinessLogic
         return new FoodLogic();
     }
 
+    //NotificationLogic
+    public INotificationLogic GetNotificationLogic()
+    {
+        return new NotificationLogic();
+    }
+
     // WorkoutLogic
     public IWorkoutLogic GetWorkoutLogic()
     {

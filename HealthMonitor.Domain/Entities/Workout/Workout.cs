@@ -1,19 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthMonitor.Domain.Entities.Workout
 {
     public class Workout
     {
+        [Key]
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public DateTime Date { get; set; }
-        public int Duration { get; set; }
-        public string Type { get; set; }
-        public string Label{ get; set; }
-        public int CaloriesBurned { get; set; }
 
-        public List<Exercise.Exercise> Exercises { get; set; } =
-        new List<Exercise.Exercise>();
+        [Required]
+        [MaxLength(450)]
+        public string UserId { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
+
+        [Range(1, 480)] //8 ore (Rich Piana arm day reference xd)
+        public int Duration { get; set; }
+
+        [Required]
+        public WorkoutType Type { get; set; }
+
+        [MaxLength(100)]
+        public string? Label{ get; set; }
+
+        public List<WorkoutExercise.WorkoutExercise> WorkoutExercises { get; set; } =
+        new List<WorkoutExercise.WorkoutExercise>();
     }
 }

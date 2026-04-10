@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Workout;
+using HealthMonitor.Domain.Entities.WorkoutExercise;
 using HealthMonitor.Domain.Models.Workout;
+using HealthMonitor.Domain.Models.WorkoutExercise;
+using Microsoft.EntityFrameworkCore; //pt .Include()
 
 namespace HealthMonitor.BusinessLayer.Structure;
 
@@ -19,14 +22,23 @@ public class WorkoutActions
     //CREATE (C)
     public bool CreateWorkoutAction(WorkoutCreateDto workoutDto)
     {
+        var currentUserId = "mock-user-123"; //o sa dam replace dupa ce avem JWT
+
         var workoutEntity = new Workout
         {
-            UserId = workoutDto.UserId,
+            UserId = currentUserId,
             Date = workoutDto.Date,
             Duration = workoutDto.Duration,
             Type = workoutDto.Type,
             Label = workoutDto.Label,
-            CaloriesBurned = workoutDto.CaloriesBurned
+
+            WorkoutExercises = workoutDto.WorkoutExercises.Select(dto => new WorkoutExercise
+            {
+                ExerciseId = dto.ExerciseId,
+                Sets = dto.Sets,
+                Reps = dto.Reps,
+                Weight = dto.Weight
+            }).ToList()
         };
 
         try
@@ -44,7 +56,10 @@ public class WorkoutActions
     //READ by id (R)
     public WorkoutInfoDto? GetWorkoutByIdAction(int id)
     {
-        var workoutEntity = _context.Workouts.Find(id);
+        var workoutEntity = _context.Workouts
+        .Include(w => w.WorkoutExercises)
+        .ThenInclude(we => we.Exercise)
+        .FirstOrDefault(w => w.Id == id);
         if (workoutEntity == null)
         {
             return null;
@@ -58,13 +73,26 @@ public class WorkoutActions
             Duration = workoutEntity.Duration,
             Type = workoutEntity.Type,
             Label = workoutEntity.Label,
-            CaloriesBurned = workoutEntity.CaloriesBurned
+
+            WorkoutExercises = workoutEntity.WorkoutExercises.Select(we => new WorkoutExerciseInfoDto
+            {
+                ExerciseId = we.ExerciseId,
+                Sets = we.Sets,
+                Reps = we.Reps,
+                Weight = we.Weight,
+                ExerciseName = we.Exercise.Name,
+                MuscleTarget = we.Exercise.MuscleTarget
+            }).ToList()
+            
         };
     }
     //READ ALL (R)
     public List<WorkoutInfoDto> GetWorkoutListAction()
     {
-        return _context.Workouts.Select(w => new WorkoutInfoDto
+        return _context.Workouts
+        .Include(w => w.WorkoutExercises)
+        .ThenInclude(we => we.Exercise)
+        .Select(w => new WorkoutInfoDto
         {
             Id = w.Id,
             UserId = w.UserId,
@@ -72,35 +100,74 @@ public class WorkoutActions
             Duration = w.Duration,
             Type = w.Type,
             Label = w.Label,
-            CaloriesBurned = w.CaloriesBurned
+
+            WorkoutExercises = w.WorkoutExercises.Select(we => new WorkoutExerciseInfoDto
+            {
+                ExerciseId = we.ExerciseId,
+                Sets = we.Sets,
+                Reps = we.Reps,
+                Weight = we.Weight,
+                ExerciseName = we.Exercise.Name,
+                MuscleTarget = we.Exercise.MuscleTarget
+            }).ToList()
         }).ToList();
     }
 
     //UPDATE (U)
         public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto)
     {
-        var workoutEntity = _context.Workouts.Find(id); // Cautam antrenamentul vechi
-        if (workoutEntity == null) return false;
+        var workoutEntity = _context.Workouts
+        .Include(w => w.WorkoutExercises)
+        .FirstOrDefault(w => w.Id == id);
 
-        // Suprascriem cu datele noi
+        if (workoutEntity == null) 
+        {
+            return false;
+        }
+        
         workoutEntity.Date = workoutDto.Date;
         workoutEntity.Duration = workoutDto.Duration;
         workoutEntity.Type = workoutDto.Type;
         workoutEntity.Label = workoutDto.Label;
-        workoutEntity.CaloriesBurned = workoutDto.CaloriesBurned;
 
-        try { _context.SaveChanges(); return true; }
-        catch (Exception) { return false; }
+        _context.WorkoutExercises.RemoveRange(workoutEntity.WorkoutExercises);
+
+        var newLinkItems = workoutDto.WorkoutExercises.Select(dto => new WorkoutExercise
+        {
+            WorkoutId = workoutEntity.Id,
+            ExerciseId = dto.ExerciseId,
+            Sets = dto.Sets,
+            Reps = dto.Reps,
+            Weight = dto.Weight
+        }).ToList();
+
+        _context.WorkoutExercises.AddRange(newLinkItems);
+
+        try { 
+            _context.SaveChanges(); 
+            return true; 
+        }
+        catch (Exception) { 
+            return false; 
+        }
     }
 
     //DELETE (D)
     public bool DeleteWorkoutAction(int id)
     {
-        var workoutEntity = _context.Workouts.Find(id); // Gasim id-ul
-        if (workoutEntity == null) return false;
+        var workoutEntity = _context.Workouts.Find(id);
+        if (workoutEntity == null) {
+            return false;
+        }
 
-        try { _context.Workouts.Remove(workoutEntity); _context.SaveChanges(); return true; }
-        catch (Exception) { return false; }
+        try { 
+            _context.Workouts.Remove(workoutEntity); 
+            _context.SaveChanges(); 
+            return true; 
+        }
+        catch (Exception) { 
+            return false; 
+        }
     }
 
 }
