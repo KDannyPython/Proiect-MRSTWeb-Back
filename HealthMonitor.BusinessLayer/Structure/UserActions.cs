@@ -4,6 +4,7 @@ using System.Linq;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.User;
 using HealthMonitor.Domain.Models.User;
+using HealthMonitor.BusinessLayer.Core;
 
 namespace HealthMonitor.BusinessLayer.Structure
 {
@@ -23,7 +24,7 @@ namespace HealthMonitor.BusinessLayer.Structure
             {
                 Name = userDto.Name,
                 Email = userDto.Email,
-                PasswordHash = userDto.PasswordHash,
+                PasswordHash = PasswordHasher.Hash(userDto.PasswordHash)
                 Gender = userDto.Gender,
                 Age = userDto.Age,
                 Height = userDto.Height,

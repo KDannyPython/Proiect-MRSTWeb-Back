@@ -3,6 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HealthMonitor.Domain.Entities.User
 {
+    public enum UserRole
+    {
+        User,
+        Admin
+    }
     public class UserEntity
     {
         [Key]
@@ -18,7 +23,7 @@ namespace HealthMonitor.Domain.Entities.User
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Parola este obligatorie.")]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         [MaxLength(20)]
         public string Gender { get; set; }
@@ -33,6 +38,11 @@ namespace HealthMonitor.Domain.Entities.User
         public int Weight { get; set; }
 
         [MaxLength(50)]
-        public string Goal { get; set; } 
+        public string Goal { get; set; }
+
+        public UserRole Role { get; set; }
+
+        public DateTime RegisteredOn { get; set; }
+
     }
 }
