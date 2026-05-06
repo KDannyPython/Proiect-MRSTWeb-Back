@@ -15,7 +15,7 @@ namespace HealthMonitor.Domain.Models.User
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Parola este obligatorie.")]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         [MaxLength(20)]
         public string Gender { get; set; }
