@@ -2,11 +2,6 @@ using System;
 
 namespace HealthMonitor.Domain.Models.User
 {
-    public enum UserRole
-    {
-        User,
-        Admin
-    }
     public class UserInfoDto
     {
         public int Id { get; set; }
