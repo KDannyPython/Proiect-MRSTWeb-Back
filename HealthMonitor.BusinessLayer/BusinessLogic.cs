@@ -1,5 +1,6 @@
-﻿using HealthMonitor.BusinessLayer.Interfaces;
-using HealthMonitor.BusinessLayer.Core;
+﻿using HealthMonitor.BusinessLayer.Core;
+using HealthMonitor.BusinessLayer.Interfaces;
+using HealthMonitor.BusinessLayer.Structure;
 
 namespace HealthMonitor.BusinessLayer;
 
@@ -36,10 +37,15 @@ public class BusinessLogic
     {
         return new DailyRecordLogic();
     }
-    // UserLogic
-    public IUserLogic GetUserLogic()
+    // UserLoginLogic
+    public IUserLoginLogic GetUserLogic()
     {
-        return new UserLogic();
+        return new UserAuthAction();
+    }
+    // UserRegLogic
+    public IUserRegLogic GetUserRegLogic()
+    {
+        return new UserRegLogic();
     }
     // AdminLogic
     public IAdminLogic GetAdminLogic()

@@ -15,29 +15,12 @@ namespace HealthMonitor.Api.Controllers
             var bl = new BusinessLogic();
             _userLogic = bl.GetUserLogic();
         }
-        [HttpPost("CreateUser")]
-        public IActionResult CreateUser([FromBody] UserCreateDto userDto)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var response = _userLogic.CreateUser(userDto);
-            if (!response.IsSucces)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
+        
         [HttpGet("GetUserById/{id}")]
         public IActionResult GetUserById(int id)
         {
             var response = _userLogic.GetUserById(id);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return NotFound(response);
             }
@@ -61,7 +44,7 @@ namespace HealthMonitor.Api.Controllers
             }
             
             var response = _userLogic.UpdateUser(id, userDto);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return BadRequest(response);
             }
@@ -73,7 +56,7 @@ namespace HealthMonitor.Api.Controllers
         public IActionResult DeleteUser(int id)
         {
             var response = _userLogic.DeleteUser(id);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return BadRequest(response);
             }
