@@ -146,7 +146,7 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             userEntity.Name = userDto.Name;
             userEntity.Email = userDto.Email;
-            userEntity.Password = userDto.Password;
+            userEntity.Password = PasswordHasher.HashPassword(userDto.Password);
             userEntity.Gender = userDto.Gender;
             userEntity.Age = userDto.Age;
             userEntity.Height = userDto.Height;
