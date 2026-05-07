@@ -21,7 +21,7 @@ public class NotificationController : ControllerBase
     public IActionResult CreateNotification([FromBody] CreateNotificationDto notification)
     {
         var result = _notificationLogic.CreateNotification(notification);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -32,7 +32,7 @@ public class NotificationController : ControllerBase
     public IActionResult GetNotificationById(int Id)
     {
         var result = _notificationLogic.GetNotificationById(Id);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -43,7 +43,7 @@ public class NotificationController : ControllerBase
     public IActionResult GetNotificationByUserId(int UserId)
     {
         var result = _notificationLogic.GetNotificationByUserId(UserId);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -54,7 +54,7 @@ public class NotificationController : ControllerBase
     public IActionResult MarkAllAsRead([FromRoute] int UserId)
     {
         var result = _notificationLogic.MarkAllAsRead(UserId);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -65,7 +65,7 @@ public class NotificationController : ControllerBase
     public IActionResult MarkAsRead(int Id)
     {
         var result = _notificationLogic.MarkAsRead(Id);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -76,7 +76,7 @@ public class NotificationController : ControllerBase
     public IActionResult DeleteNotification(int Id)
     {
         var result = _notificationLogic.DeleteNotification(Id);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }

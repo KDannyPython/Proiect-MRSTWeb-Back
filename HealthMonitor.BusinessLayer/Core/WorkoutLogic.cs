@@ -15,14 +15,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false, 
+                IsSuccess = false, 
                 Message = "A eșuat salvarea antrenamentului."
             };
         }
         
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Antrenamentul a fost salvat cu succes în Postgres!"
         };
     }
@@ -35,14 +35,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = workout
         };
     }
@@ -52,7 +52,7 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     {
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = GetWorkoutListAction()
         };
     }
@@ -65,14 +65,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
         {
             return new ServiceResponse 
             {
-                IsSucces = false, 
+                IsSuccess = false, 
                 Message = "Eșec la modificare (Id invalid?)."
             };
         }
 
         return new ServiceResponse 
         {
-            IsSucces = true, 
+            IsSuccess = true, 
             Message = "Antrenamentul a fost modificat!"
         };
     }
@@ -85,14 +85,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
         {
             return new ServiceResponse 
             {
-                IsSucces = false, 
+                IsSuccess = false, 
                 Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
             };
         }
 
         return new ServiceResponse 
         {
-            IsSucces = true, 
+            IsSuccess = true, 
             Message = "Antrenamentul a fost șters permanent!"
         };
     }

@@ -15,14 +15,14 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "A eșuat salvarea exercițiului."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Exercițiul a fost salvat cu succes în Postgres!"
         };
     }
@@ -35,14 +35,14 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Exercițiul nu a putut fi găsit (Id invalid)."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = exercise
         };
     }
@@ -52,7 +52,7 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
     {
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = GetExerciseListAction()
         };
     }
@@ -65,14 +65,14 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         {
             return new ServiceResponse 
             {
-                IsSucces = false, 
+                IsSuccess = false, 
                 Message = "Eșec la modificare (Id invalid?)."
             };
         }
 
         return new ServiceResponse 
         {
-            IsSucces = true, 
+            IsSuccess = true, 
             Message = "Exercițiul a fost modificat!"
         };
     }
@@ -85,14 +85,14 @@ public class ExerciseLogic : ExerciseActions, IExerciseLogic
         {
             return new ServiceResponse 
             {
-                IsSucces = false, 
+                IsSuccess = false, 
                 Message = "Eșec la ștergere (Id invalid?)."
             };
         }
 
         return new ServiceResponse 
         {
-            IsSucces = true, 
+            IsSuccess = true, 
             Message = "Exercițiul a fost șters permanent!"
         };
     }

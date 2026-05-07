@@ -21,7 +21,7 @@ public class FoodController : ControllerBase
     public IActionResult GetFoodById(int Id)
     {
         var result = _foodLogic.GetFoodById(Id);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -32,7 +32,7 @@ public class FoodController : ControllerBase
     public IActionResult GetFoodByName(string Name)
     {
         var result = _foodLogic.GetFoodByName(Name);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return NotFound(result.Message);
         }
@@ -43,7 +43,7 @@ public class FoodController : ControllerBase
     public IActionResult GetFoodList()
     {
         var result = _foodLogic.GetFoodList();
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -54,7 +54,7 @@ public class FoodController : ControllerBase
     public IActionResult CreateFood([FromBody] FoodCreateDto food)
     {
         var result = _foodLogic.CreateFood(food);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -65,7 +65,7 @@ public class FoodController : ControllerBase
     public IActionResult DeleteFoodById(int Id)
     {
         var result = _foodLogic.DeleteFoodById(Id);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }
@@ -76,7 +76,7 @@ public class FoodController : ControllerBase
     public IActionResult UpdateFoodById(int Id, FoodUpdateDto food)
     {
         var result = _foodLogic.UpdateFoodById(Id, food);
-        if (!result.IsSucces)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Message);
         }

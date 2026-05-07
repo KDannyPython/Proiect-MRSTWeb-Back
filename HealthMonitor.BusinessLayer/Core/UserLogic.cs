@@ -7,24 +7,6 @@ namespace HealthMonitor.BusinessLayer.Core
 {
     public class UserLogic : UserActions, IUserLogic
     {
-        public ServiceResponse CreateUser(UserCreateDto userDto)
-        {
-            var result = CreateUserAction(userDto);
-            if (result == false)
-            {
-                return new ServiceResponse
-                {
-                    IsSucces = false,
-                    Message = "A apărut o eroare. Utilizatorul nu a putut fi creat."
-                };
-            }
-            return new ServiceResponse
-            {
-                IsSucces = true,
-                Message = "Utilizatorul a fost creat cu succes."
-            };
-        }
-
         public ServiceResponse GetUserById(int id)
         {
             var user = GetUserByIdAction(id);
@@ -32,14 +14,14 @@ namespace HealthMonitor.BusinessLayer.Core
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Utilizatorul nu a fost găsit în baza de date."
                 };
             }
 
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Data = user
             };
         }
@@ -49,7 +31,7 @@ namespace HealthMonitor.BusinessLayer.Core
             var userList = GetUserListAction();
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Data = userList
             };
         }
@@ -57,17 +39,17 @@ namespace HealthMonitor.BusinessLayer.Core
         public ServiceResponse UpdateUser(int id, UserCreateDto userDto)
         {
             var result = UpdateUserAction(id, userDto);
-            if (result == false)
+            if (result == null)
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Utilizatorul nu a fost găsit sau a apărut o eroare la actualizare."
                 };
             }
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Message = "Informațiile utilizatorului au fost actualizate cu succes."
             };
         }
@@ -75,17 +57,17 @@ namespace HealthMonitor.BusinessLayer.Core
         public ServiceResponse DeleteUser(int id)
         {
             var result = DeleteUserAction(id);
-            if (result == false)
+            if (result == null)
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Utilizatorul nu a putut fi șters sau nu a fost găsit."
                 };
             }
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Message = "Utilizatorul a fost șters cu succes din baza de date."
             };
         }

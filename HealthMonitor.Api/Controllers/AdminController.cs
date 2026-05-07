@@ -26,7 +26,7 @@ namespace HealthMonitor.Api.Controllers
             }
 
             var response = _adminLogic.CreateAdmin(adminDto);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return BadRequest(response);
             }
@@ -38,7 +38,7 @@ namespace HealthMonitor.Api.Controllers
         public IActionResult GetAdminById(int id)
         {
             var response = _adminLogic.GetAdminById(id);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return NotFound(response);
             }
@@ -62,7 +62,7 @@ namespace HealthMonitor.Api.Controllers
             }
             
             var response = _adminLogic.UpdateAdmin(id, adminDto);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return BadRequest(response);
             }
@@ -74,7 +74,7 @@ namespace HealthMonitor.Api.Controllers
         public IActionResult DeleteAdmin(int id)
         {
             var response = _adminLogic.DeleteAdmin(id);
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 return BadRequest(response);
             }

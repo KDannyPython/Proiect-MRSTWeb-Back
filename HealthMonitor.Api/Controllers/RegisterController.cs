@@ -19,9 +19,9 @@ namespace HealthMonitor.Api.Controllers
         public IActionResult Register([FromBody] UserCreateDto uRegData)
         {
             var data = _userReg.UserRegDataValidation(uRegData);
-            if (data.IsSuccess)
+            if (!data.IsSuccess)
             {
-                return Ok(data.Message);
+                return BadRequest(data.Message);
             }
 
             return Ok(data.Message);

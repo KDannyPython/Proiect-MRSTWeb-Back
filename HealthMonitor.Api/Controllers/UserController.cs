@@ -25,14 +25,14 @@ namespace HealthMonitor.Api.Controllers
                 return NotFound(response);
             }
 
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpGet("GetAllUsers")]
         public IActionResult GetUserList()
         {
             var response = _userLogic.GetUserList();
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpPut("UpdateUser/{id}")]
@@ -49,7 +49,7 @@ namespace HealthMonitor.Api.Controllers
                 return BadRequest(response);
             }
 
-            return Ok(response);
+            return Ok(response.Message);
         }
 
         [HttpDelete("DeleteUser/{id}")]
@@ -61,7 +61,7 @@ namespace HealthMonitor.Api.Controllers
                 return BadRequest(response);
             }
 
-            return Ok(response);
+            return Ok(response.Message);
         }
     }
 }

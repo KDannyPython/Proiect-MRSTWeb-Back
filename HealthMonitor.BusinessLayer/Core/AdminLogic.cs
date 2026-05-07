@@ -14,13 +14,13 @@ namespace HealthMonitor.BusinessLayer.Core
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "A apărut o eroare. Administratorul nu a putut fi creat."
                 };
             }
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Message = "Administratorul a fost creat cu succes."
             };
         }
@@ -32,14 +32,14 @@ namespace HealthMonitor.BusinessLayer.Core
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Administratorul nu a fost găsit în baza de date."
                 };
             }
 
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Data = admin
             };
         }
@@ -49,7 +49,7 @@ namespace HealthMonitor.BusinessLayer.Core
             var adminList = GetAdminListAction();
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Data = adminList
             };
         }
@@ -61,13 +61,13 @@ namespace HealthMonitor.BusinessLayer.Core
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Administratorul nu a fost găsit sau a apărut o eroare la actualizare."
                 };
             }
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Message = "Informațiile administratorului au fost actualizate cu succes."
             };
         }
@@ -79,13 +79,13 @@ namespace HealthMonitor.BusinessLayer.Core
             {
                 return new ServiceResponse
                 {
-                    IsSucces = false,
+                    IsSuccess = false,
                     Message = "Administratorul nu a putut fi șters sau nu a fost găsit."
                 };
             }
             return new ServiceResponse
             {
-                IsSucces = true,
+                IsSuccess = true,
                 Message = "Administratorul a fost șters cu succes din baza de date."
             };
         }
