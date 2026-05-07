@@ -22,7 +22,7 @@ public class WorkoutController : ControllerBase
     public IActionResult CreateWorkout([FromBody] WorkoutCreateDto workout)
     {
         var result = _workoutLogic.CreateWorkout(workout);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -31,7 +31,7 @@ public class WorkoutController : ControllerBase
     public IActionResult GetWorkoutById(int id)
     {
         var result = _workoutLogic.GetWorkoutById(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -40,7 +40,7 @@ public class WorkoutController : ControllerBase
     public IActionResult GetWorkoutList()
     {
         var result = _workoutLogic.GetWorkoutList();
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -49,7 +49,7 @@ public class WorkoutController : ControllerBase
     public IActionResult UpdateWorkout(int id, [FromBody] WorkoutCreateDto workout)
     {
         var result = _workoutLogic.UpdateWorkout(id, workout);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -58,7 +58,7 @@ public class WorkoutController : ControllerBase
     public IActionResult DeleteWorkout(int id)
     {
         var result = _workoutLogic.DeleteWorkout(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 

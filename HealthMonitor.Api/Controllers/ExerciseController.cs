@@ -22,7 +22,7 @@ public class ExerciseController : ControllerBase
     public IActionResult CreateExercise([FromBody] ExerciseCreateDto exercise)
     {
         var result = _exerciseLogic.CreateExercise(exercise);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -31,7 +31,7 @@ public class ExerciseController : ControllerBase
     public IActionResult GetExerciseById(int id)
     {
         var result = _exerciseLogic.GetExerciseById(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -40,7 +40,7 @@ public class ExerciseController : ControllerBase
     public IActionResult GetExerciseList()
     {
         var result = _exerciseLogic.GetExerciseList();
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -49,7 +49,7 @@ public class ExerciseController : ControllerBase
     public IActionResult UpdateExercise(int id, [FromBody] ExerciseCreateDto exercise)
     {
         var result = _exerciseLogic.UpdateExercise(id, exercise);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -58,7 +58,7 @@ public class ExerciseController : ControllerBase
     public IActionResult DeleteExercise(int id)
     {
         var result = _exerciseLogic.DeleteExercise(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 }

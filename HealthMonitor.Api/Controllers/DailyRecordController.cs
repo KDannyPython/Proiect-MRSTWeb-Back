@@ -22,7 +22,7 @@ public class DailyRecordController : ControllerBase
     public IActionResult CreateDailyRecord([FromBody] DailyRecordCreateDto record)
     {
         var result = _dailyRecordLogic.CreateDailyRecord(record);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -31,7 +31,7 @@ public class DailyRecordController : ControllerBase
     public IActionResult GetDailyRecordById(int id)
     {
         var result = _dailyRecordLogic.GetDailyRecordById(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -40,7 +40,7 @@ public class DailyRecordController : ControllerBase
     public IActionResult GetDailyRecordList()
     {
         var result = _dailyRecordLogic.GetDailyRecordList();
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
 
@@ -49,7 +49,7 @@ public class DailyRecordController : ControllerBase
     public IActionResult UpdateDailyRecord(int id, [FromBody] DailyRecordCreateDto record)
     {
         var result = _dailyRecordLogic.UpdateDailyRecord(id, record);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 
@@ -58,7 +58,7 @@ public class DailyRecordController : ControllerBase
     public IActionResult DeleteDailyRecord(int id)
     {
         var result = _dailyRecordLogic.DeleteDailyRecord(id);
-        if (!result.IsSucces) return BadRequest(result.Message);
+        if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
 }

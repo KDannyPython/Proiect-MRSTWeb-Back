@@ -15,14 +15,14 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "A eșuat salvarea recordului zilnic."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Recordul zilnic a fost salvat cu succes în Postgres!"
         };
     }
@@ -35,14 +35,14 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Recordul zilnic nu a putut fi găsit (Id invalid)."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = dailyRecord
         };
     }
@@ -52,7 +52,7 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
     {
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = GetDailyRecordListAction()
         };
     }
@@ -65,14 +65,14 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Actualizarea recordului zilnic a eșuat."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Recordul zilnic a fost actualizat cu succes!"
         };
     }
@@ -85,14 +85,14 @@ public class DailyRecordLogic : DailyRecordActions, IDailyRecordLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Ștergerea recordului zilnic a eșuat."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Recordul zilnic a fost șters cu succes!"
         };
     }

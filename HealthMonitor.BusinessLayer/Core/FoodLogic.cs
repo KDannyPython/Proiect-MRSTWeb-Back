@@ -14,13 +14,13 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Failed to create food item."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Food created successfully."
         };
     }
@@ -32,14 +32,14 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Food item not found."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = food
         };
     }
@@ -51,14 +51,14 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Food item not found with this name."
             };
         }
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = food
         };
     }
@@ -69,7 +69,7 @@ public class FoodLogic : FoodActions, IFoodLogic
 
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = GetFoodListAction()
         };
     }
@@ -81,13 +81,13 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Food item not found or failed to delete."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Food deleted successfully."
         };
     }
@@ -99,13 +99,13 @@ public class FoodLogic : FoodActions, IFoodLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Food item not found or failed to update."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Food updated successfully."
         };
     }

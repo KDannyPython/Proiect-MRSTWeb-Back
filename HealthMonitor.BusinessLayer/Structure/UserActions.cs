@@ -47,7 +47,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Weight = userDto.Weight,
                 Goal = userDto.Goal,
                 Role = UserRole.User,
-                RegisteredOn = DateTime.Now
+                RegisteredOn = DateTime.UtcNow
             };
 
             try
@@ -66,7 +66,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 return new ServiceResponse
                 {
                     IsSuccess = false,
-                    Message = ex.Message
+                    Message = ex.InnerException?.Message ?? ex.Message
                 };
             }
         }

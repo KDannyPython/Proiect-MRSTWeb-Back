@@ -13,13 +13,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Failed to create notification."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Notification created successfully."
         };
     }
@@ -31,13 +31,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Notification not found."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = notification
         };
     }
@@ -49,13 +49,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "No notifications found for this user."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Data = notifications
         };
     }
@@ -67,13 +67,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Failed to mark notifications as read."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "All notifications marked as read successfully."
         };
     }
@@ -85,13 +85,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Failed to mark notification as read."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Notification marked as read successfully."
         };
     }
@@ -103,13 +103,13 @@ public class NotificationLogic : NotificationActions, INotificationLogic
         {
             return new ServiceResponse
             {
-                IsSucces = false,
+                IsSuccess = false,
                 Message = "Failed to delete notification."
             };
         }
         return new ServiceResponse
         {
-            IsSucces = true,
+            IsSuccess = true,
             Message = "Notification deleted successfully."
         };
     }

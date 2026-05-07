@@ -5,7 +5,6 @@ namespace HealthMonitor.BusinessLayer.Interfaces
 {
     public interface IUserLogic
     {
-        ServiceResponse CreateUser(UserCreateDto user);
         ServiceResponse GetUserById(int id);
         ServiceResponse GetUserList();
         ServiceResponse UpdateUser(int id, UserCreateDto user);

@@ -13,7 +13,7 @@ namespace HealthMonitor.Api.Controllers
         public AuthController()
         {
             var bl = new BusinessLayer.BusinessLogic();
-            _userAction = bl.GetUserLogic();
+            _userAction = bl.GetUserLoginLogic();
         }
 
         [HttpPost("auth")]

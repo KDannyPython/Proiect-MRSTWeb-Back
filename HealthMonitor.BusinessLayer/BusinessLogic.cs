@@ -38,7 +38,7 @@ public class BusinessLogic
         return new DailyRecordLogic();
     }
     // UserLoginLogic
-    public IUserLoginLogic GetUserLogic()
+    public IUserLoginLogic GetUserLoginLogic()
     {
         return new UserAuthAction();
     }
@@ -46,6 +46,11 @@ public class BusinessLogic
     public IUserRegLogic GetUserRegLogic()
     {
         return new UserRegLogic();
+    }
+    // UserLogic
+    public IUserLogic GetUserLogic()
+    {
+        return new UserLogic();
     }
     // AdminLogic
     public IAdminLogic GetAdminLogic()
