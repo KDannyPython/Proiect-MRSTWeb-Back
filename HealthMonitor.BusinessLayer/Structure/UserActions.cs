@@ -21,7 +21,7 @@ namespace HealthMonitor.BusinessLayer.Structure
         }
 
         // REGISTER
-        public ServiceResponse RegisterUserAction(UserCreateDto userDto)
+        public ServiceResponse RegisterUserAction(RegisterDto userDto)
         {
             var existingUser = _context.Users.FirstOrDefault(u =>
                 u.Email == userDto.Email ||
@@ -41,11 +41,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Name = userDto.Name,
                 Email = userDto.Email,
                 Password = PasswordHasher.HashPassword(userDto.Password),
-                Gender = userDto.Gender,
-                Age = userDto.Age,
-                Height = userDto.Height,
-                Weight = userDto.Weight,
-                Goal = userDto.Goal,
+                OnboardingCompleted = false,
                 Role = UserRole.User,
                 RegisteredOn = DateTime.UtcNow
             };
@@ -88,7 +84,7 @@ namespace HealthMonitor.BusinessLayer.Structure
         }
 
         // Token Generator
-        internal string UserTokenGeneration(UserEntity user)
+        public string UserTokenGeneration(UserEntity user)
         {
             var token = new TokenService();
             return token.GenerateToken(user.Id, user.Name, user.Role.ToString());
@@ -200,6 +196,35 @@ namespace HealthMonitor.BusinessLayer.Structure
                     Message = ex.Message
                 };
             }
+        }
+
+        public ServiceResponse CompleteOnboardingAction(int userId, OnboardingDto dto)
+        {
+            var user = _context.Users.Find(userId);
+
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "User not found."
+                };
+            }
+
+            user.Gender = dto.Gender;
+            user.Age = dto.Age;
+            user.Height = dto.Height;
+            user.Weight = dto.Weight;
+            user.Goal = dto.Goal;
+            user.OnboardingCompleted = true;
+
+            _context.SaveChanges();
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Onboarding completed."
+            };
         }
     }
 }

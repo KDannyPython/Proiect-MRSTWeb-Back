@@ -21,7 +21,7 @@ namespace HealthMonitor.BusinessLayer.Structure
             }
 
             var token = UserTokenGeneration(user);
-
+            
             return new ServiceResponse
             {
                 IsSuccess = true,

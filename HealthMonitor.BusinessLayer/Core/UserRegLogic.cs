@@ -7,7 +7,7 @@ namespace HealthMonitor.BusinessLayer.Core
 {
     public class UserRegLogic : UserActions, IUserRegLogic
     {
-        public ServiceResponse UserRegDataValidation(UserCreateDto uReg)
+        public ServiceResponse UserRegDataValidation(RegisterDto uReg)
         {
             return RegisterUserAction(uReg);
         }
