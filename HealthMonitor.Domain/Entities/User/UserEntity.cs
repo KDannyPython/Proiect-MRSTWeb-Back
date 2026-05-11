@@ -27,20 +27,22 @@ namespace HealthMonitor.Domain.Entities.User
         [Required(ErrorMessage = "Parola este obligatorie.")]
         public string Password { get; set; }
 
+        public bool OnboardingCompleted { get; set; } = false;
+
         [MaxLength(20)]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         
         [Range(1, 120, ErrorMessage = "Vârsta trebuie să fie între 1 și 120 de ani.")]
-        public int Age { get; set; }
+        public int? Age { get; set; }
         
         [Range(30, 250, ErrorMessage = "Înălțimea (cm) este incorectă.")]
-        public int Height { get; set; }
+        public int? Height { get; set; }
         
         [Range(10, 300, ErrorMessage = "Greutatea (kg) este incorectă.")]
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
 
         [MaxLength(50)]
-        public string Goal { get; set; }
+        public string? Goal { get; set; }
 
         public UserRole Role { get; set; }
 

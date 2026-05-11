@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using HealthMonitor.BusinessLayer.Interfaces;
+﻿using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.User;
+using HealthMonitor.BusinessLayer.Structure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HealthMonitor.Api.Controllers
 {
@@ -9,14 +10,16 @@ namespace HealthMonitor.Api.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly IUserRegLogic _userReg;
+        private readonly IUserLoginLogic _userAction;
         public RegisterController()
         {
             var bl = new BusinessLayer.BusinessLogic();
             _userReg = bl.GetUserRegLogic();
+            _userAction = bl.GetUserLoginLogic();
         }
 
         [HttpPost]
-        public IActionResult Register([FromBody] UserCreateDto uRegData)
+        public IActionResult Register([FromBody] RegisterDto uRegData)
         {
             var data = _userReg.UserRegDataValidation(uRegData);
             if (!data.IsSuccess)
@@ -24,7 +27,23 @@ namespace HealthMonitor.Api.Controllers
                 return BadRequest(data.Message);
             }
 
-            return Ok(data.Message);
+            var createdUser = _userAction.UserLoginDataValidation(
+                new UserLoginDto
+                {
+                    Credential = uRegData.Email,
+                    Password = uRegData.Password
+                });
+
+            if (!createdUser.IsSuccess)
+            {
+                return BadRequest(createdUser.Message);
+            }
+
+            return Ok(new
+            {
+                token = createdUser.Message,
+                onboardingCompleted = false
+            });
         }
     }
 }

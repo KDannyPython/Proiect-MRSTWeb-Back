@@ -5,6 +5,6 @@ namespace HealthMonitor.BusinessLayer.Interfaces
 {
     public interface IUserRegLogic
     {
-        public ServiceResponse UserRegDataValidation(UserCreateDto uReg);
+        public ServiceResponse UserRegDataValidation(RegisterDto uReg);
     }
 }

@@ -17,6 +17,18 @@ builder.Services.AddHttpClient<IUsdaFoodLogic, UsdaFoodLogic>();
 //AddSingleton
 //AddDbContext
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -24,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowFrontend");
 app.MapControllers();
 app.UseHttpsRedirection();
 
