@@ -14,6 +14,11 @@ public class BusinessLogic
         return new FoodLogic();
     }
 
+    public IFoodLogLogic GetFoodLogLogic()
+    {
+        return new FoodLogLogic();
+    }
+
     //NotificationLogic
     public INotificationLogic GetNotificationLogic()
     {

@@ -15,7 +15,7 @@ namespace HealthMonitor.BusinessLayer.Structure
         private readonly TokenService _tokenService;
 
         public UserActions()
-        {
+        { 
             _context = new AppDbContext();
             _tokenService = new TokenService();
         }
@@ -106,6 +106,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Height = userEntity.Height,
                 Weight = userEntity.Weight,
                 Goal = userEntity.Goal,
+                OnboardingCompleted = userEntity.OnboardingCompleted,
                 Role = userEntity.Role.ToString()
             };
         }
@@ -123,6 +124,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Height = u.Height,
                 Weight = u.Weight,
                 Goal = u.Goal,
+                OnboardingCompleted = u.OnboardingCompleted,
                 Role = u.Role.ToString()
             }).ToList();
         }

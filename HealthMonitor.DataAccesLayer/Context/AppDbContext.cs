@@ -20,6 +20,7 @@ public class AppDbContext: DbContext
     public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
     public DbSet<Admin> Admins { get; set; }
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<FoodLogEntity> FoodLogs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

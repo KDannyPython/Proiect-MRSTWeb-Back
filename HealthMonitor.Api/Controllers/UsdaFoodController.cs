@@ -1,5 +1,6 @@
 ﻿using HealthMonitor.BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HealthMonitor.Api.Controllers;
 
@@ -25,5 +26,18 @@ public class UsdaFoodController: ControllerBase
         var result = await _usdaFoodLogic.SearchUsdaFoodAsync(query);
 
         return Ok(result);
-    }   
+    }
+    
+    [HttpGet("{fdcId}")]
+    public async Task<IActionResult> GetFoodByIdAsync(int fdcId)
+    {
+        if (fdcId <= 0)
+        {
+            return BadRequest("Invalid food id.");
+        }
+
+        var result = await _usdaFoodLogic.GetFoodByIdAsync(fdcId);
+
+        return Ok(result);
+    }
 }
