@@ -1,3 +1,5 @@
+using HealthMonitor.Domain.Entities.Food;
+using HealthMonitor.Domain.Entities.Water;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -49,5 +51,12 @@ namespace HealthMonitor.Domain.Entities.User
         [DataType(DataType.Date)]
         public DateTime RegisteredOn { get; set; }
 
+        [InverseProperty("User")]
+        public ICollection<FoodLogEntity> FoodLogs { get; set; }
+        = new List<FoodLogEntity>();
+
+        [InverseProperty("User")]
+        public ICollection<WaterLogEntity> WaterLogs { get; set; }
+        = new List<WaterLogEntity>();
     }
 }

@@ -76,4 +76,66 @@ public class UsdaFoodLogic: IUsdaFoodLogic
 
         return result;
     }
+
+    public async Task<UsdaFoodItemDto?> GetFoodByIdAsync(int fdcId)
+    {
+        var url = $"{BaseUrl}food/{fdcId}?api_key={ApiKey}";
+
+        var response = await _httpClient.GetAsync(url);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        using var document = JsonDocument.Parse(json);
+        var root = document.RootElement;
+
+        var item = new UsdaFoodItemDto
+        {
+            FdcId = root.GetProperty("fdcId").GetInt32(),
+            Description = root.GetProperty("description").GetString() ?? ""
+        };
+
+        if (root.TryGetProperty("foodNutrients", out var nutrients))
+        {
+            foreach (var nutrient in nutrients.EnumerateArray())
+            {
+                if (!nutrient.TryGetProperty("nutrient", out var nutrientObj))
+                    continue;
+
+                var name = nutrientObj.GetProperty("name").GetString();
+
+                double value = 0;
+
+                if (nutrient.TryGetProperty("amount", out var amountEl))
+                {
+                    value = amountEl.GetDouble();
+                }
+
+                switch (name)
+                {
+                    case "Energy":
+                        item.Calories = value;
+                        break;
+
+                    case "Protein":
+                        item.Protein = value;
+                        break;
+
+                    case "Carbohydrate, by difference":
+                        item.Carbohydrates = value;
+                        break;
+
+                    case "Total lipid (fat)":
+                        item.Fat = value;
+                        break;
+                }
+            }
+        }
+
+        return item;
+    }
 }

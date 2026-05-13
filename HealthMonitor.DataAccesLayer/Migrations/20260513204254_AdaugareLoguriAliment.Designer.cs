@@ -3,6 +3,7 @@ using System;
 using HealthMonitor.DataAccesLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthMonitor.DataAccesLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260513204254_AdaugareLoguriAliment")]
+    partial class AdaugareLoguriAliment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +126,6 @@ namespace HealthMonitor.DataAccesLayer.Migrations
 
                     b.Property<float>("Fat")
                         .HasColumnType("real");
-
-                    b.Property<int>("FdcId")
-                        .HasColumnType("integer");
 
                     b.Property<float>("Fiber")
                         .HasColumnType("real");
@@ -347,7 +347,7 @@ namespace HealthMonitor.DataAccesLayer.Migrations
             modelBuilder.Entity("HealthMonitor.Domain.Entities.Food.FoodLogEntity", b =>
                 {
                     b.HasOne("HealthMonitor.Domain.Entities.Food.FoodEntity", "Food")
-                        .WithMany("FoodLogs")
+                        .WithMany()
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -396,11 +396,6 @@ namespace HealthMonitor.DataAccesLayer.Migrations
             modelBuilder.Entity("HealthMonitor.Domain.Entities.Exercise.Exercise", b =>
                 {
                     b.Navigation("WorkoutExercises");
-                });
-
-            modelBuilder.Entity("HealthMonitor.Domain.Entities.Food.FoodEntity", b =>
-                {
-                    b.Navigation("FoodLogs");
                 });
 
             modelBuilder.Entity("HealthMonitor.Domain.Entities.User.UserEntity", b =>

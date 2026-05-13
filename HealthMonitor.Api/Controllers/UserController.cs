@@ -1,3 +1,6 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Linq;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer; 
 using HealthMonitor.Domain.Models.User;
@@ -15,7 +18,40 @@ namespace HealthMonitor.Api.Controllers
             var bl = new BusinessLogic();
             _userLogic = bl.GetUserLogic();
         }
-        
+
+        [HttpGet("me")]
+        public IActionResult GetCurrentUser()
+        {
+            var authHeader = Request.Headers["Authorization"].ToString();
+
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return Unauthorized();
+            }
+
+            var token = authHeader.Replace("Bearer ", "");
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+            var idClaim = jwt.Claims.FirstOrDefault(x =>
+                x.Type == ClaimTypes.NameIdentifier);
+
+            if (idClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = int.Parse(idClaim.Value);
+
+            var user = _userLogic.GetUserById(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         [HttpGet("GetUserById/{id}")]
         public IActionResult GetUserById(int id)
         {

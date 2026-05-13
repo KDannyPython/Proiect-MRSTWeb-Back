@@ -1,5 +1,7 @@
-using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Core;
+using HealthMonitor.BusinessLayer.Interfaces;
+using HealthMonitor.DataAccesLayer.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IUsdaFoodLogic, UsdaFoodLogic>();
+builder.Services.AddScoped<IFoodLogLogic, FoodLogLogic>();
 
 //AddScoped
 //AddTransient
