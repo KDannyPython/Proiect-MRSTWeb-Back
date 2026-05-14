@@ -43,10 +43,10 @@ public class FoodLogActions
                 {
                     FdcId = usdaFood.FdcId,
                     Name = usdaFood.Description,
-                    Calories = (float)usdaFood.Calories,
-                    Protein = (float)usdaFood.Protein,
-                    Carbohydrates = (float)usdaFood.Carbohydrates,
-                    Fat = (float)usdaFood.Fat
+                    Calories = (float)(usdaFood.Calories ?? 0),
+                    Protein = (float)(usdaFood.Protein ?? 0),
+                    Carbohydrates = (float)(usdaFood.Carbohydrates ?? 0),
+                    Fat = (float)(usdaFood.Fat ?? 0)
                 };
 
                 await _context.Foods.AddAsync(foodEntity);
@@ -79,7 +79,7 @@ public class FoodLogActions
             return new ServiceResponse
             {
                 IsSuccess = false,
-                Message = ex.InnerException?.Message ?? ex.Message
+                Message = ex.ToString()
             };
         }
     }

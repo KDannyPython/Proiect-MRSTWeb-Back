@@ -8,15 +8,15 @@ namespace HealthMonitor.BusinessLayer.Core;
 
 public class FoodLogLogic : FoodLogActions, IFoodLogLogic
 {
-    public async  Task<ServiceResponse> LogFoodAction(FoodCreateDto food)
+    public async  Task<ServiceResponse> AddFoodLog(int userId, FoodLogDto food)
     {
-        var result = await LogFoodAction(food);
+        var result = await LogFoodAction(userId, food);
         if (!result.IsSuccess)
         {
             return new ServiceResponse
             {
                 IsSuccess = false,
-                Message = "Failed to create food item."
+                Message = result.Message
             };
         }
 
