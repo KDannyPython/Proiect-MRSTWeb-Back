@@ -22,7 +22,10 @@ public class ExerciseActions
         var exerciseEntity = new Exercise
         {
             Name = exerciseDto.Name,
-            MuscleTarget = exerciseDto.MuscleTarget,
+            PrimaryMuscleGroup = exerciseDto.PrimaryMuscleGroup,
+            SecondaryMuscleGroup = exerciseDto.SecondaryMuscleGroup,
+            Difficulty = exerciseDto.Difficulty,
+            FatigueCost = exerciseDto.FatigueCost,
         };
 
         try
@@ -50,7 +53,10 @@ public class ExerciseActions
         {
             Id = exerciseEntity.Id,
             Name = exerciseEntity.Name,
-            MuscleTarget = exerciseEntity.MuscleTarget,
+            PrimaryMuscleGroup = exerciseEntity.PrimaryMuscleGroup,
+            SecondaryMuscleGroup = exerciseEntity.SecondaryMuscleGroup,
+            Difficulty = exerciseEntity.Difficulty,
+            FatigueCost = exerciseEntity.FatigueCost,
         };
     }
 
@@ -61,7 +67,10 @@ public class ExerciseActions
         {
             Id = e.Id,
             Name = e.Name,
-            MuscleTarget = e.MuscleTarget,
+            PrimaryMuscleGroup = e.PrimaryMuscleGroup,
+            SecondaryMuscleGroup = e.SecondaryMuscleGroup,
+            Difficulty = e.Difficulty,
+            FatigueCost = e.FatigueCost,
         }).ToList();
     }
 
@@ -72,7 +81,10 @@ public class ExerciseActions
         if (exerciseEntity == null) return false;
 
         exerciseEntity.Name = exerciseDto.Name;
-        exerciseEntity.MuscleTarget = exerciseDto.MuscleTarget;
+        exerciseEntity.PrimaryMuscleGroup = exerciseDto.PrimaryMuscleGroup;
+        exerciseEntity.SecondaryMuscleGroup = exerciseDto.SecondaryMuscleGroup;
+        exerciseEntity.Difficulty = exerciseDto.Difficulty;
+        exerciseEntity.FatigueCost = exerciseDto.FatigueCost;
 
         try 
         {

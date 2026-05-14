@@ -77,11 +77,14 @@ public class WorkoutActions
             WorkoutExercises = workoutEntity.WorkoutExercises.Select(we => new WorkoutExerciseInfoDto
             {
                 ExerciseId = we.ExerciseId,
+                ExerciseName = we.Exercise.Name,
+                PrimaryMuscleGroup = we.Exercise.PrimaryMuscleGroup,
+                SecondaryMuscleGroup = we.Exercise.SecondaryMuscleGroup,
+                Difficulty = we.Exercise.Difficulty,
+                FatigueCost = we.Exercise.FatigueCost,
                 Sets = we.Sets,
                 Reps = we.Reps,
                 Weight = we.Weight,
-                ExerciseName = we.Exercise.Name,
-                MuscleTarget = we.Exercise.MuscleTarget
             }).ToList()
             
         };
@@ -104,11 +107,14 @@ public class WorkoutActions
             WorkoutExercises = w.WorkoutExercises.Select(we => new WorkoutExerciseInfoDto
             {
                 ExerciseId = we.ExerciseId,
+                ExerciseName = we.Exercise.Name,
+                PrimaryMuscleGroup = we.Exercise.PrimaryMuscleGroup,
+                SecondaryMuscleGroup = we.Exercise.SecondaryMuscleGroup,
+                Difficulty = we.Exercise.Difficulty,
+                FatigueCost = we.Exercise.FatigueCost,
                 Sets = we.Sets,
                 Reps = we.Reps,
                 Weight = we.Weight,
-                ExerciseName = we.Exercise.Name,
-                MuscleTarget = we.Exercise.MuscleTarget
             }).ToList()
         }).ToList();
     }
