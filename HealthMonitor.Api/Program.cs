@@ -2,6 +2,7 @@ using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.DataAccesLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using HealthMonitor.DataAccesLayer.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,5 +43,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.MapControllers();
 app.UseHttpsRedirection();
+
+//lista de exercitii predefinite
+DbInitializer.SeedExercises();
 
 app.Run();

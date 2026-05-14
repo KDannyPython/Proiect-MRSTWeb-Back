@@ -14,6 +14,7 @@ namespace HealthMonitor.Domain.Models.Workout
         public WorkoutType Type { get; set; }
         public string? Label{ get; set; }
 
-        public List<WorkoutExerciseInfoDto> WorkoutExercises { get; set; } = new List<WorkoutExerciseInfoDto>();
+        public List<WorkoutExerciseInfoDto> WorkoutExercises { get; set; } 
+        = new List<WorkoutExerciseInfoDto>();
     }
 }

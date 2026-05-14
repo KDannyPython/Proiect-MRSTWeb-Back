@@ -11,11 +11,14 @@ namespace HealthMonitor.Domain.Entities.Workout
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
+        [MaxLength(450)]
         public string UserId { get; set; } = null!;
 
         [Required]
         public DateTime Date { get; set; }
 
+        [Required]
         [Range(1, 480)] //8 ore (Rich Piana reference)
         public int Duration { get; set; }
 

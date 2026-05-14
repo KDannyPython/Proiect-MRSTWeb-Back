@@ -11,11 +11,15 @@ namespace HealthMonitor.Domain.Entities.WorkoutExercise
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public int WorkoutId { get; set; }
+
         [ForeignKey("WorkoutId")]
         public Workout.Workout Workout { get; set; } = null!;
         
+        [Required]
         public int ExerciseId { get; set; }
+
         [ForeignKey("ExerciseId")]
         public Exercise.Exercise Exercise { get; set; } = null!;
 
@@ -28,10 +32,7 @@ namespace HealthMonitor.Domain.Entities.WorkoutExercise
         public int Reps { get; set; }
 
         [Required]
-        [Range(0, 500)]
+        [Range(0, 550)]
         public float Weight { get; set; }
-
-        public Workout.Workout Workout { get; set; }
-        public Exercise.Exercise Exercise { get; set; }
     }
 }
