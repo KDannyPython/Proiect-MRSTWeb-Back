@@ -71,4 +71,21 @@ public class FoodLogController : ControllerBase
         return Ok(result.Message);
     }
 
+    [HttpGet("user")]
+    [Authorize]
+    public async Task<IActionResult> GetUserFoodLogs()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim.Value);
+
+        var result = await _foodLogLogic.GetUserFoodLogs(userId);
+
+        return Ok(result);
+    }
 }

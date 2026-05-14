@@ -3,6 +3,7 @@ using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Models.Food;
 using HealthMonitor.Domain.Models.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthMonitor.BusinessLayer.Core;
 
@@ -66,4 +67,5 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
             Message = "Food log deleted successfully."
         };
     }
+
 }
