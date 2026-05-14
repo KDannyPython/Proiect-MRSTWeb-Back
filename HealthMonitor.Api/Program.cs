@@ -3,6 +3,9 @@ using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.DataAccesLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using HealthMonitor.DataAccesLayer.Seeding;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,12 +36,34 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes("AlabalaPortocalaCineMi_aFuratBanana")
+            )
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCors("AllowFrontend");
 app.MapControllers();
