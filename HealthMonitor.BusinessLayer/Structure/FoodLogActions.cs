@@ -11,21 +11,21 @@ namespace HealthMonitor.BusinessLayer.Structure;
 public class FoodLogActions
 {
     private readonly AppDbContext _context;
-
-    public FoodLogActions(AppDbContext context)
+    private readonly UsdaFoodLogic _usdaFoodLogic;
+    public FoodLogActions()
     {
-        _context = context;
+        _context = new AppDbContext();
+
+        _usdaFoodLogic = new UsdaFoodLogic(new HttpClient());
     }
 
     public async Task<ServiceResponse> LogFoodAction(int userId, FoodLogDto foodLog)
     {
         try
         {
-            // cautam food local dupa FdcId
             var foodEntity = await _context.Foods
                 .FirstOrDefaultAsync(x => x.FdcId == foodLog.FdcId);
 
-            // daca nu exista local -> luam din USDA
             if (foodEntity == null)
             {
                 var usdaFood = await _usdaFoodLogic.GetFoodByIdAsync(foodLog.FdcId);
@@ -39,7 +39,6 @@ public class FoodLogActions
                     };
                 }
 
-                // cream food local
                 foodEntity = new FoodEntity
                 {
                     FdcId = usdaFood.FdcId,
@@ -51,16 +50,13 @@ public class FoodLogActions
                 };
 
                 await _context.Foods.AddAsync(foodEntity);
-
                 await _context.SaveChangesAsync();
             }
 
-            // cream log
             var foodLogEntity = new FoodLogEntity
             {
                 UserId = userId,
 
-                // ID local
                 FoodId = foodEntity.Id,
 
                 QuantityGrams = foodLog.QuantityGrams,

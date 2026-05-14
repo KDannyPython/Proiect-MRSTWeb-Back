@@ -6,12 +6,12 @@ using HealthMonitor.Domain.Models.Food;
 namespace HealthMonitor.Api.Controllers;
 
 [ApiController]
-[Route("api/logs")]
-public class FoodLogControler : ControllerBase
+[Route("api/[controller]")]
+public class FoodLogController : ControllerBase
 {
     private readonly IFoodLogLogic _foodLogLogic;
 
-    public FoodLogControler()
+    public FoodLogController()
     {
         var bl = new BusinessLogic();
         _foodLogLogic = bl.GetFoodLogLogic();

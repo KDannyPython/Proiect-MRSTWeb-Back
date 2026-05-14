@@ -7,6 +7,7 @@ using HealthMonitor.Domain.Entities.WorkoutExercise;
 using HealthMonitor.Domain.Entities.Admin;
 using HealthMonitor.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
+using HealthMonitor.Domain.Entities.Water;
 
 namespace HealthMonitor.DataAccesLayer.Context;
 
@@ -21,6 +22,7 @@ public class AppDbContext: DbContext
     public DbSet<Admin> Admins { get; set; }
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<FoodLogEntity> FoodLogs { get; set; }
+    public DbSet<WaterLogEntity> WaterLogs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

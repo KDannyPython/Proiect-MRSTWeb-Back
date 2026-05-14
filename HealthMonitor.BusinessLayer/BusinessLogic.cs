@@ -19,6 +19,11 @@ public class BusinessLogic
         return new FoodLogLogic();
     }
 
+    public IWaterLogLogic GetWaterLogLogic()
+    {
+        return new WaterLogLogic();
+    }
+
     //NotificationLogic
     public INotificationLogic GetNotificationLogic()
     {
