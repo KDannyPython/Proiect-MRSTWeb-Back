@@ -4,6 +4,7 @@ using System.Linq;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Workout;
 using HealthMonitor.Domain.Entities.WorkoutExercise;
+using HealthMonitor.Domain.Entities.Exercise;
 using HealthMonitor.Domain.Models.Workout;
 using HealthMonitor.Domain.Models.WorkoutExercise;
 using Microsoft.EntityFrameworkCore; //pt .Include()
