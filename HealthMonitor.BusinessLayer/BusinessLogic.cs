@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Core;
+using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
 
@@ -42,11 +42,6 @@ public class BusinessLogic
         return new ExerciseLogic();
     }
 
-    // DailyRecordLogic
-    public IDailyRecordLogic GetDailyRecordLogic()
-    {
-        return new DailyRecordLogic();
-    }
     // UserLoginLogic
     public IUserLoginLogic GetUserLoginLogic()
     {
