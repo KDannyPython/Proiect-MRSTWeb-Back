@@ -1,19 +1,23 @@
 using HealthMonitor.Domain.Entities.Exercise;
 using HealthMonitor.Domain.Entities.Workout;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthMonitor.Domain.Entities.WorkoutExercise
 {
     public class WorkoutExercise
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
         public int WorkoutId { get; set; }
-
-        [Required]
+        [ForeignKey("WorkoutId")]
+        public Workout.Workout Workout { get; set; } = null!;
+        
         public int ExerciseId { get; set; }
+        [ForeignKey("ExerciseId")]
+        public Exercise.Exercise Exercise { get; set; } = null!;
 
         [Required]
         [Range(1, 50)]
