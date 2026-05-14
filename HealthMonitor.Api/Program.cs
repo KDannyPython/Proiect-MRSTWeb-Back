@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IUsdaFoodLogic, UsdaFoodLogic>();
-builder.Services.AddScoped<IFoodLogLogic, FoodLogLogic>();
+//builder.Services.AddScoped<IFoodLogLogic, FoodLogLogic>();
 
 //AddScoped
 //AddTransient

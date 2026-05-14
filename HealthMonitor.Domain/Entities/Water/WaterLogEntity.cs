@@ -13,7 +13,7 @@ namespace HealthMonitor.Domain.Entities.Water
 
         [ForeignKey("UserId")]
         public UserEntity User { get; set; } = null!;
-        public double AmountMl { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public int AmountMl { get; set; }
+        public DateTime LoggedAt { get; set; }
     }
 }
