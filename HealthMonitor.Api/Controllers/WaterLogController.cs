@@ -1,10 +1,13 @@
 ﻿using HealthMonitor.BusinessLayer;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Water;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HealthMonitor.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class WaterLogController : ControllerBase
@@ -17,8 +20,16 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpPost("add")]
-    public IActionResult AddWater(int userId, [FromBody] WaterLogDto water)
+    public IActionResult AddWater([FromBody] WaterLogDto water)
     {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
         var result = _waterLogLogic.AddWater(userId, water);
 
         if (!result.IsSuccess)
@@ -30,8 +41,16 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpPost("remove")]
-    public IActionResult RemoveWater(int userId, [FromBody] WaterLogDto water)
+    public IActionResult RemoveWater([FromBody] WaterLogDto water)
     {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
         var result = _waterLogLogic.RemoveWater(userId, water);
 
         if (!result.IsSuccess)
@@ -43,10 +62,22 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpGet("today")]
-    public IActionResult GetTodayWater(int userId)
+    public IActionResult GetTodayWater()
     {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
+
         var amount = _waterLogLogic.GetTodayWater(userId);
 
-        return Ok(amount);
+        return Ok(new
+        {
+            amountMl = amount
+        });
     }
 }
