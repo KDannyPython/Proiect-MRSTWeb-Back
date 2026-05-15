@@ -8,7 +8,7 @@ public static class DbInitializer
     public static void SeedExercises()
     {
         using var context = new AppDbContext();
-        if (context.Exercises.Any()) return;
+        // Iterăm prin listă și adăugăm doar ce lipsește
 
         var exercises = new List<Exercise>
         {
@@ -90,7 +90,13 @@ public static class DbInitializer
             new Exercise { Name = "Thruster", PrimaryMuscleGroup = MuscleGroup.Quads, SecondaryMuscleGroup = "Shoulders,Glutes", Difficulty = Difficulty.Advanced, FatigueCost = FatigueCost.VeryHigh },
         };
 
-        context.Exercises.AddRange(exercises);
+        foreach (var ex in exercises)
+        {
+            if (!context.Exercises.Any(e => e.Name == ex.Name))
+            {
+                context.Exercises.Add(ex);
+            }
+        }
         context.SaveChanges();
     }
 }
