@@ -62,13 +62,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors("AllowFrontend");
 app.MapControllers();
-app.UseHttpsRedirection();
-
 //lista de exercitii predefinite
 DbInitializer.SeedExercises();
 
