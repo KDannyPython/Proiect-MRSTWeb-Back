@@ -8,9 +8,9 @@ namespace HealthMonitor.BusinessLayer.Core;
 public class WorkoutLogic : WorkoutActions, IWorkoutLogic
 {
     //CREATE (C)
-    public ServiceResponse CreateWorkout(WorkoutCreateDto workoutDto, string username)
+    public ServiceResponse CreateWorkout(WorkoutCreateDto workoutDto, int userId)
     {
-        var result = CreateWorkoutAction(workoutDto, username);
+        var result = CreateWorkoutAction(workoutDto, userId);
         if (result == false)
         {
             return new ServiceResponse
@@ -48,19 +48,19 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     }
 
     //READ ALL (R)  
-    public ServiceResponse GetWorkoutList(string username)
+    public ServiceResponse GetWorkoutList(int userId)
     {
         return new ServiceResponse
         {
             IsSuccess = true,
-            Data = GetWorkoutListAction(username)
+            Data = GetWorkoutListAction(userId)
         };
     }
 
     //UPDATE (U)
-    public ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workoutDto, string username)
+    public ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workoutDto, int userId)
     {
-        var result = UpdateWorkoutAction(id, workoutDto, username);
+        var result = UpdateWorkoutAction(id, workoutDto, userId);
         if (result == false)
         {
             return new ServiceResponse 

@@ -12,8 +12,7 @@ namespace HealthMonitor.Domain.Entities.Workout
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(450)]
-        public string UserId { get; set; } = null!;
+        public int UserId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
