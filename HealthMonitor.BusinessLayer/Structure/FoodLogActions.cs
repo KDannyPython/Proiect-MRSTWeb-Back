@@ -84,7 +84,7 @@ public class FoodLogActions
         }
     }
 
-    public async Task<ServiceResponse> UpdateFoodQuantityAction(int foodLogId, double quantityGrams)
+    public async Task<ServiceResponse> UpdateFoodQuantityAction(int foodLogId, int quantityGrams)
     {
         try
         {
@@ -153,5 +153,28 @@ public class FoodLogActions
                 Message = ex.Message
             };
         }
+    }
+
+    public int GetTodayCaloriesAction(int userId)
+    {
+        var today = DateTime.UtcNow.Date;
+
+        var todayLogs = _context.FoodLogs
+            .Include(x => x.Food)
+            .Where(x =>
+                x.UserId == userId &&
+                x.LoggedAt.Date == today)
+            .ToList();
+
+        if (!todayLogs.Any())
+        {
+            return 0;
+        }
+
+        int totalCalories = (int)Math.Round(todayLogs.Sum(x =>
+            (x.QuantityGrams * x.Food.Calories) / 100
+        ));
+
+        return totalCalories;
     }
 }

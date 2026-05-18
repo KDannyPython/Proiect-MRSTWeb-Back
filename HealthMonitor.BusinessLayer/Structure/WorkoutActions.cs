@@ -21,9 +21,9 @@ public class WorkoutActions
     }
 
     //CREATE (C)
-    public bool CreateWorkoutAction(WorkoutCreateDto workoutDto)
+    public bool CreateWorkoutAction(WorkoutCreateDto workoutDto, string username)
     {
-        var currentUserId = "mock-user-123"; //o sa dam replace dupa ce avem JWT
+        var currentUserId = username;
 
         var workoutEntity = new Workout
         {
@@ -91,9 +91,10 @@ public class WorkoutActions
         };
     }
     //READ ALL (R)
-    public List<WorkoutInfoDto> GetWorkoutListAction()
+    public List<WorkoutInfoDto> GetWorkoutListAction(string username)
     {
         return _context.Workouts
+        .Where(w => w.UserId == username)
         .Include(w => w.WorkoutExercises)
         .ThenInclude(we => we.Exercise)
         .Select(w => new WorkoutInfoDto
@@ -121,13 +122,13 @@ public class WorkoutActions
     }
 
     //UPDATE (U)
-        public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto)
+        public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto, string username)
     {
         var workoutEntity = _context.Workouts
         .Include(w => w.WorkoutExercises)
         .FirstOrDefault(w => w.Id == id);
 
-        if (workoutEntity == null) 
+        if (workoutEntity == null || workoutEntity.UserId != username) 
         {
             return false;
         }

@@ -5,9 +5,9 @@ namespace HealthMonitor.BusinessLayer.Interfaces;
 
 public interface IWorkoutLogic
 {
-    ServiceResponse CreateWorkout(WorkoutCreateDto workoutDto);
+    ServiceResponse CreateWorkout(WorkoutCreateDto workoutDto, string username);
     ServiceResponse GetWorkoutById(int id);
-    ServiceResponse GetWorkoutList();
-    ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workoutDto);
+    ServiceResponse GetWorkoutList(string username);
+    ServiceResponse UpdateWorkout(int id, WorkoutCreateDto workoutDto, string username);
     ServiceResponse DeleteWorkout(int id);
 }

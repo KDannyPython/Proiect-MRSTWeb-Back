@@ -46,6 +46,7 @@ public class FoodLogController : ControllerBase
     }
 
     [HttpPut("{foodLogId}")]
+    [Authorize]
     public async Task<IActionResult> UpdateFoodQuantity(int foodLogId, [FromBody] FoodLogUpdateDto food)
     {
         var result = await _foodLogLogic.UpdateFoodQuantity(foodLogId, food.QuantityGrams);
@@ -59,6 +60,7 @@ public class FoodLogController : ControllerBase
     }
 
     [HttpDelete("{foodLogId}")]
+    [Authorize]
     public async Task<IActionResult> DeleteFoodLog(int foodLogId)
     {
         var result = await _foodLogLogic.DeleteFoodLog(foodLogId);
@@ -71,21 +73,24 @@ public class FoodLogController : ControllerBase
         return Ok(result.Message);
     }
 
-    //[HttpGet("user")]
-    //[Authorize]
-    //public async Task<IActionResult> GetUserFoodLogs()
-    //{
-    //    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+    [HttpGet("today")]
+    [Authorize]
+    public IActionResult GetTodayUserCalories()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-    //    if (userIdClaim == null)
-    //    {
-    //        return Unauthorized();
-    //    }
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
 
-    //    int userId = int.Parse(userIdClaim.Value);
+        int userId = int.Parse(userIdClaim);
 
-    //    var result = await _foodLogLogic.GetUserFoodLogs(userId);
+        var calories = _foodLogLogic.GetTodayCalories(userId);
 
-    //    return Ok(result);
-    //}
+        return Ok(new
+        {
+            Calories = calories
+        });
+    }
 }

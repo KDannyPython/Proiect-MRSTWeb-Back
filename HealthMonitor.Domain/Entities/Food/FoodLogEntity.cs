@@ -17,7 +17,7 @@ namespace HealthMonitor.Domain.Entities.Food
 
         [ForeignKey("FoodId")]
         public FoodEntity Food { get; set; } = null!;
-        public double QuantityGrams { get; set; }
+        public int QuantityGrams { get; set; }
         public DateTime LoggedAt { get; set; }
     }
 }
