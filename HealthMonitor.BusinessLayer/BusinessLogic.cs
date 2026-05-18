@@ -24,6 +24,11 @@ public class BusinessLogic
         return new WaterLogLogic();
     }
 
+    public ICalendarLogic GetCalendarLogic()
+    {
+        return new CalendarLogic();
+    }
+
     //NotificationLogic
     public INotificationLogic GetNotificationLogic()
     {

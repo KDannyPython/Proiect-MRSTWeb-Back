@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using HealthMonitor.BusinessLayer;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Workout;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HealthMonitor.Api.Controllers;
 
@@ -23,8 +24,16 @@ public class WorkoutController : ControllerBase
     [HttpPost("create")]
     public IActionResult CreateWorkout([FromBody] WorkoutCreateDto workout)
     {
-        var username = User.Identity?.Name ?? "unknown";
-        var result = _workoutLogic.CreateWorkout(workout, username);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
+
+        var result = _workoutLogic.CreateWorkout(workout, userId);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
@@ -42,8 +51,15 @@ public class WorkoutController : ControllerBase
     [HttpGet("list")]
     public IActionResult GetWorkoutList()
     {
-        var username = User.Identity?.Name ?? "unknown";
-        var result = _workoutLogic.GetWorkoutList(username);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
+        var result = _workoutLogic.GetWorkoutList(userId);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
@@ -52,8 +68,15 @@ public class WorkoutController : ControllerBase
     [HttpPut("update/{id}")]
     public IActionResult UpdateWorkout(int id, [FromBody] WorkoutCreateDto workout)
     {
-        var username = User.Identity?.Name ?? "unknown";
-        var result = _workoutLogic.UpdateWorkout(id, workout, username);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
+        var result = _workoutLogic.UpdateWorkout(id, workout, userId);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }

@@ -21,9 +21,9 @@ public class WorkoutActions
     }
 
     //CREATE (C)
-    public bool CreateWorkoutAction(WorkoutCreateDto workoutDto, string username)
+    public bool CreateWorkoutAction(WorkoutCreateDto workoutDto, int userId)
     {
-        var currentUserId = username;
+        var currentUserId = userId;
 
         var workoutEntity = new Workout
         {
@@ -91,10 +91,10 @@ public class WorkoutActions
         };
     }
     //READ ALL (R)
-    public List<WorkoutInfoDto> GetWorkoutListAction(string username)
+    public List<WorkoutInfoDto> GetWorkoutListAction(int userId)
     {
         return _context.Workouts
-        .Where(w => w.UserId == username)
+        .Where(w => w.UserId == userId)
         .Include(w => w.WorkoutExercises)
         .ThenInclude(we => we.Exercise)
         .Select(w => new WorkoutInfoDto
@@ -122,13 +122,13 @@ public class WorkoutActions
     }
 
     //UPDATE (U)
-        public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto, string username)
+        public bool UpdateWorkoutAction(int id, WorkoutCreateDto workoutDto, int userId)
     {
         var workoutEntity = _context.Workouts
         .Include(w => w.WorkoutExercises)
         .FirstOrDefault(w => w.Id == id);
 
-        if (workoutEntity == null || workoutEntity.UserId != username) 
+        if (workoutEntity == null || workoutEntity.UserId != userId) 
         {
             return false;
         }
