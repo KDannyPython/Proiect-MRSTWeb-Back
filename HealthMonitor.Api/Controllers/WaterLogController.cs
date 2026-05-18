@@ -20,6 +20,7 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpPost("add")]
+    [Authorize]
     public IActionResult AddWater([FromBody] WaterLogDto water)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -41,6 +42,7 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpPost("remove")]
+    [Authorize]
     public IActionResult RemoveWater([FromBody] WaterLogDto water)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -62,6 +64,7 @@ public class WaterLogController : ControllerBase
     }
 
     [HttpGet("today")]
+    [Authorize]
     public IActionResult GetTodayWater()
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

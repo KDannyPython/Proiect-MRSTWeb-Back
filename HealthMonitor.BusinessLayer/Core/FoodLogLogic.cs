@@ -28,9 +28,9 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
         };
     }
 
-    public async Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, double quantityGrams)
+    public async Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int quantityGrams)
     {
-        var result = await UpdateFoodQuantityAction(foodLogId,quantityGrams);
+        var result = await UpdateFoodQuantityAction(foodLogId, quantityGrams);
 
         if (!result.IsSuccess)
         {
@@ -68,4 +68,8 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
         };
     }
 
+    public int GetTodayCalories(int userId)
+    {
+        return GetTodayCaloriesAction(userId);
+    }
 }

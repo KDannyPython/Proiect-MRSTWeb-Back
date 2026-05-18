@@ -8,12 +8,12 @@ namespace HealthMonitor.Domain.Models.Food
         [StringLength(50)]
         public string Name { get; set; }
         [Required]
-        public float Calories { get; set; }
+        public double Calories { get; set; }
         [Required]
-        public float Protein { get; set; }
-        public float Carbohydrates { get; set; }
-        public float Fat { get; set; }
-        public float Fiber { get; set; }
-        public float VitaminC { get; set; }
+        public double Protein { get; set; }
+        public double Carbohydrates { get; set; }
+        public double Fat { get; set; }
+        public double Fiber { get; set; }
+        public double VitaminC { get; set; }
     }
 }

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using HealthMonitor.BusinessLayer;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Workout;
 
 namespace HealthMonitor.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/workout")]
 public class WorkoutController : ControllerBase
@@ -21,7 +23,8 @@ public class WorkoutController : ControllerBase
     [HttpPost("create")]
     public IActionResult CreateWorkout([FromBody] WorkoutCreateDto workout)
     {
-        var result = _workoutLogic.CreateWorkout(workout);
+        var username = User.Identity?.Name ?? "unknown";
+        var result = _workoutLogic.CreateWorkout(workout, username);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
@@ -39,7 +42,8 @@ public class WorkoutController : ControllerBase
     [HttpGet("list")]
     public IActionResult GetWorkoutList()
     {
-        var result = _workoutLogic.GetWorkoutList();
+        var username = User.Identity?.Name ?? "unknown";
+        var result = _workoutLogic.GetWorkoutList(username);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
@@ -48,7 +52,8 @@ public class WorkoutController : ControllerBase
     [HttpPut("update/{id}")]
     public IActionResult UpdateWorkout(int id, [FromBody] WorkoutCreateDto workout)
     {
-        var result = _workoutLogic.UpdateWorkout(id, workout);
+        var username = User.Identity?.Name ?? "unknown";
+        var result = _workoutLogic.UpdateWorkout(id, workout, username);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }

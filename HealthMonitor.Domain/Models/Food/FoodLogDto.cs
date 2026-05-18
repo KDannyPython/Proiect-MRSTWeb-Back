@@ -8,6 +8,6 @@ namespace HealthMonitor.Domain.Models.Food
     public class FoodLogDto
     {
         public int FdcId { get; set; }
-        public double QuantityGrams { get; set; }
+        public int QuantityGrams { get; set; }
     }
 }

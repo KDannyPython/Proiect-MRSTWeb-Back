@@ -6,5 +6,5 @@ namespace HealthMonitor.BusinessLayer.Interfaces;
 public interface IUsdaFoodLogic
 {
     Task<UsdaFoodSearchResponseDto> SearchUsdaFoodAsync(string query);
-    Task<UsdaFoodItemDto> GetFoodByIdAsync(int fdcId);
+    Task<UsdaFoodItemDto?> GetFoodByIdAsync(int fdcId);
 }
