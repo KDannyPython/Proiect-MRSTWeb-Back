@@ -36,6 +36,11 @@ namespace HealthMonitor.BusinessLayer.Core
             };
         }
 
+        public async Task UpdateMe(int userId, UpdateUserDto userDto)
+        {
+            var result = UpdateMeAction(userId, userDto);
+        }
+
         public ServiceResponse UpdateUser(int id, UserCreateDto userDto)
         {
             var result = UpdateUserAction(id, userDto);

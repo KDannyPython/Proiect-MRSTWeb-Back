@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Linq;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer; 
 using HealthMonitor.Domain.Models.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 namespace HealthMonitor.Api.Controllers
 {
     [ApiController]
@@ -69,6 +69,22 @@ namespace HealthMonitor.Api.Controllers
         {
             var response = _userLogic.GetUserList();
             return Ok(response.Data);
+        }
+
+        [Authorize]
+        [HttpPatch("me")]
+        public async Task<IActionResult> UpdateMe([FromBody] UpdateUserDto request)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+
+            await _userLogic.UpdateMe(userId, request);
+
+            return Ok();
         }
 
         [HttpPut("UpdateUser/{id}")]

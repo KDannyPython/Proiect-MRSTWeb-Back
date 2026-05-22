@@ -7,6 +7,7 @@ namespace HealthMonitor.BusinessLayer.Interfaces
     {
         ServiceResponse GetUserById(int id);
         ServiceResponse GetUserList();
+        Task UpdateMe(int userId, UpdateUserDto request);
         ServiceResponse UpdateUser(int id, UserCreateDto user);
         ServiceResponse DeleteUser(int id);
     }
