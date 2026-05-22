@@ -48,6 +48,10 @@ namespace HealthMonitor.Domain.Entities.User
 
         [Range(100000, 999999)]
         public string? ResetPasswordCode { get; set; }
+
+        [Range(1000, 9999)]
+        public string? TwoFactorCode { get; set; }
+        public bool TwoFactorEnabled { get; set; } = false;
         public UserRole Role { get; set; }
 
         [DataType(DataType.Date)]

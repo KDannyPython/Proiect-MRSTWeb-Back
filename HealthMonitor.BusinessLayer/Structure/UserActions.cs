@@ -45,6 +45,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Email = userDto.Email,
                 Password = PasswordHasher.HashPassword(userDto.Password),
                 OnboardingCompleted = false,
+                TwoFactorEnabled = false,
                 Role = UserRole.User,
                 RegisteredOn = DateTime.UtcNow
             };
@@ -54,9 +55,22 @@ namespace HealthMonitor.BusinessLayer.Structure
                 _context.Users.Add(userEntity);
                 _context.SaveChanges();
                 _emailLogic.SendEmail(
-                userDto.Email,
-                "Welcome to OmniTrack",
-                "<h1>Welcome!</h1>");
+                    userDto.Email,
+                    "Welcome to OmniTrack",
+                    @"<h1 style='color:#2E86DE;'>Welcome to OmniTrack 🚀</h1>
+
+                    <p>Hello,</p>
+
+                    <p>We’re excited to have you join <strong>OmniTrack</strong>!</p>
+
+                    <p>Your account has been successfully created and you’re now ready to start tracking your progress, managing your activities, and reaching your goals more efficiently.</p>
+
+                    <p>If you have any questions or need assistance, feel free to contact our support team anytime.</p>
+
+                    <p style='margin-top:20px;'>
+                    Best regards,<br>
+                    <strong>The OmniTrack Team</strong>
+                    </p>");
 
                 return new ServiceResponse
                 {
@@ -87,6 +101,46 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             if (user == null) return null;
 
+            if (user.TwoFactorEnabled)
+            {
+                var random = new Random();
+
+                var code = random
+                    .Next(1000, 9999)
+                    .ToString();
+
+                user.TwoFactorCode = code;
+
+                _context.SaveChanges();
+
+                var emailLogic = new EmailLogic();
+
+                emailLogic.SendEmail(
+                    user.Email,
+                    "Two-Factor Authentication Code",
+                    $@"<h1 style='color:#2E86DE;'>Two-Factor Authentication 🔐</h1>
+
+                    <p>Hello,</p>
+
+                    <p>Use the verification code below to complete your login:</p>
+
+                    <div style='margin:20px 0; padding:15px; background-color:#f4f4f4; border-radius:8px; text-align:center;'>
+                        <h2 style='letter-spacing:4px; margin:0;'>{code}</h2>
+                    </div>
+
+                    <p>If you did not attempt to sign in, please ignore this email or secure your account immediately.</p>
+
+                    <p style='margin-top:20px;'>
+                    Best regards,<br>
+                    <strong>The OmniTrack Team</strong>
+                    </p>");
+
+                return new UserEntity
+                {
+                    Id = -1
+                };
+            }
+
             return user;
         }
 
@@ -114,6 +168,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Weight = userEntity.Weight,
                 Goal = userEntity.Goal,
                 OnboardingCompleted = userEntity.OnboardingCompleted,
+                TwoFactorEnabled = userEntity.TwoFactorEnabled,
                 Role = userEntity.Role.ToString()
             };
         }
@@ -132,6 +187,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Weight = u.Weight,
                 Goal = u.Goal,
                 OnboardingCompleted = u.OnboardingCompleted,
+                TwoFactorEnabled = u.TwoFactorEnabled,
                 Role = u.Role.ToString()
             }).ToList();
         }
@@ -164,6 +220,9 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             if (request.Goal != null)
                 user.Goal = request.Goal;
+
+            if (request.TwoFactorEnabled.HasValue)
+                user.TwoFactorEnabled = request.TwoFactorEnabled.Value;
 
             await _context.SaveChangesAsync();
         }
@@ -356,8 +415,25 @@ namespace HealthMonitor.BusinessLayer.Structure
 
                 emailLogic.SendEmail(
                     user.Email,
-                    "Reset Password",
-                    $"<h1>Your reset code is: {code}</h1>");
+                    "Password Reset Code",
+                    $@"<h1 style='color:#E67E22;'>Password Reset Request 🔑</h1>
+
+                    <p>Hello,</p>
+
+                    <p>We received a request to reset your password for your <strong>OmniTrack</strong> account.</p>
+
+                    <p>Use the code below to continue:</p>
+
+                    <div style='margin:20px 0; padding:15px; background-color:#f4f4f4; border-radius:8px; text-align:center;'>
+                        <h2 style='letter-spacing:4px; margin:0;'>{code}</h2>
+                    </div>
+
+                    <p>If you did not request a password reset, you can safely ignore this email.</p>
+
+                    <p style='margin-top:20px;'>
+                    Best regards,<br>
+                    <strong>The OmniTrack Team</strong>
+                    </p>");
 
                 return new ServiceResponse
                 {
@@ -422,6 +498,24 @@ namespace HealthMonitor.BusinessLayer.Structure
                     Message = ex.Message
                 };
             }
+        }
+
+        // VERIFY 2FA
+        public UserEntity? VerifyTwoFactorAction(VerifyTwoFactorDto request)
+        {
+            var user = _context.Users
+                .FirstOrDefault(x =>
+                    x.Email == request.Email);
+
+            if (user == null) return null;
+
+            if (user.TwoFactorCode != request.Code) return null;
+
+            user.TwoFactorCode = null;
+
+            _context.SaveChanges();
+
+            return user;
         }
     }
 }

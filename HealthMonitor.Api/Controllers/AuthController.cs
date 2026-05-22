@@ -13,12 +13,13 @@ namespace HealthMonitor.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
+        private readonly IUserLogic _userLogic;
         private readonly IUserLoginLogic _userAction;
         public AuthController()
         {
             var bl = new BusinessLayer.BusinessLogic();
             _userAction = bl.GetUserLoginLogic();
+            _userLogic = bl.GetUserLogic();
         }
 
         [HttpPost("auth")]
@@ -31,11 +32,39 @@ namespace HealthMonitor.Api.Controllers
                 return Unauthorized(result.Message);
             }
 
+            if (result.Message == "2FA_REQUIRED")
+            {
+                return Ok(new
+                {
+                    requiresTwoFactor = true,
+                    email = udata.Credential
+                });
+            }
+
             var user = _userAction.LoginUserAction(udata);
 
             return Ok(new
             {
                 token = result.Message,
+                onboardingCompleted = user.OnboardingCompleted
+            });
+        }
+
+        [HttpPost("verify-2fa")]
+        public IActionResult VerifyTwoFactor([FromBody] VerifyTwoFactorDto request)
+        {
+            var user = _userLogic.VerifyTwoFactor(request);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid verification code.");
+            }
+
+            var token = _userAction.UserTokenGeneration(user);
+
+            return Ok(new
+            {
+                token,
                 onboardingCompleted = user.OnboardingCompleted
             });
         }
