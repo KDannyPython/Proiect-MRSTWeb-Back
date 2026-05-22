@@ -94,5 +94,41 @@ namespace HealthMonitor.BusinessLayer.Core
                 Message = "Password changed succesfully."
             };
         }
+
+        public ServiceResponse SendResetCode(ForgotPasswordDto request)
+        {
+            var result = SendResetCodeAction(request);
+            if (result == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Reset code sending error."
+                };
+            }
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Reset code sent succesfully."
+            };
+        }
+
+        public ServiceResponse ResetPassword(ResetPasswordDto request)
+        {
+            var result = ResetPasswordAction(request);
+            if (result == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Couldn't reset the password."
+                };
+            }
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Password reset succesfully."
+            };
+        }
     }
 }

@@ -6,10 +6,7 @@ namespace HealthMonitor.BusinessLayer.Core;
 
 public class EmailLogic : EmailActions, IEmailLogic
 {
-    public ServiceResponse SendEmail(
-        string to,
-        string subject,
-        string body)
+    public ServiceResponse SendEmail(string to, string subject, string body)
     {
         var result = SendEmailAction(to, subject, body);
 

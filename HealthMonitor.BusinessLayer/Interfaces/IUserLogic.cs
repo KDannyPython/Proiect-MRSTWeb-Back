@@ -11,5 +11,7 @@ namespace HealthMonitor.BusinessLayer.Interfaces
         ServiceResponse UpdateUser(int id, UserCreateDto user);
         ServiceResponse DeleteUser(int id);
         ServiceResponse ChangePassword(int userId, ChangePasswordDto password);
+        ServiceResponse SendResetCode(ForgotPasswordDto request);
+        ServiceResponse ResetPassword(ResetPasswordDto request);
     }
 }

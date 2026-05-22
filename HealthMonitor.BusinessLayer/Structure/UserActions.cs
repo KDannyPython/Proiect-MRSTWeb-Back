@@ -323,5 +323,105 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Message = "Onboarding completed."
             };
         }
+
+        // FORGOT PASSWORD
+        public ServiceResponse SendResetCodeAction(ForgotPasswordDto request)
+        {
+            try
+            {
+                var user = _context.Users
+                    .FirstOrDefault(x =>
+                        x.Email == request.Email);
+
+                if (user == null)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "User not found."
+                    };
+                }
+
+                var random = new Random();
+
+                var code = random
+                    .Next(100000, 999999)
+                    .ToString();
+
+                user.ResetPasswordCode = code;
+
+                _context.SaveChanges();
+
+                var emailLogic = new EmailLogic();
+
+                emailLogic.SendEmail(
+                    user.Email,
+                    "Reset Password",
+                    $"<h1>Your reset code is: {code}</h1>");
+
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Message = "Reset code sent."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        // RESET PASSWORD
+        public ServiceResponse ResetPasswordAction(ResetPasswordDto request)
+        {
+            try
+            {
+                var user = _context.Users
+                    .FirstOrDefault(x =>
+                        x.Email == request.Email);
+
+                if (user == null)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "User not found."
+                    };
+                }
+
+                if (user.ResetPasswordCode != request.Code)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid code."
+                    };
+                }
+
+                user.Password = PasswordHasher.HashPassword(request.NewPassword);
+
+                user.ResetPasswordCode = null;
+
+                _context.SaveChanges();
+
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Message = "Password reset successful."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
