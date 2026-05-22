@@ -1,9 +1,12 @@
-﻿namespace HealthMonitor.Domain.Models.User;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HealthMonitor.Domain.Models.User;
 
 public class UpdateUserDto
 {
     public string? Name { get; set; }
 
+    [EmailAddress]
     public string? Email { get; set; }
 
     public string? Gender { get; set; }
@@ -15,4 +18,6 @@ public class UpdateUserDto
     public int? Weight { get; set; }
 
     public string? Goal { get; set; }
+
+    public bool? TwoFactorEnabled { get; set; }
 }

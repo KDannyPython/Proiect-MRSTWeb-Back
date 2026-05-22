@@ -20,6 +20,15 @@ namespace HealthMonitor.BusinessLayer.Structure
                 };
             }
 
+            if (user.Id == -1)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Message = "2FA_REQUIRED"
+                };
+            }
+
             var token = UserTokenGeneration(user);
             
             return new ServiceResponse

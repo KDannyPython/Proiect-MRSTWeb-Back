@@ -1,3 +1,4 @@
+using HealthMonitor.Domain.Entities.User;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.User;
 
@@ -13,5 +14,6 @@ namespace HealthMonitor.BusinessLayer.Interfaces
         ServiceResponse ChangePassword(int userId, ChangePasswordDto password);
         ServiceResponse SendResetCode(ForgotPasswordDto request);
         ServiceResponse ResetPassword(ResetPasswordDto request);
+        UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request);
     }
 }

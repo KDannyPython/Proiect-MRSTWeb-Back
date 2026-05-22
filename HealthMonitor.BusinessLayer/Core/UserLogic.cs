@@ -1,7 +1,8 @@
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
-using HealthMonitor.Domain.Models.User;
+using HealthMonitor.Domain.Entities.User;
 using HealthMonitor.Domain.Models.Service;
+using HealthMonitor.Domain.Models.User;
 
 namespace HealthMonitor.BusinessLayer.Core
 {
@@ -129,6 +130,11 @@ namespace HealthMonitor.BusinessLayer.Core
                 IsSuccess = true,
                 Message = "Password reset succesfully."
             };
+        }
+
+        public UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request)
+        {
+            return VerifyTwoFactorAction(request);
         }
     }
 }
