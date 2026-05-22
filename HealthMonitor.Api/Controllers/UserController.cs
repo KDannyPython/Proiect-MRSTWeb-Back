@@ -132,5 +132,31 @@ namespace HealthMonitor.Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("send-reset-code")]
+        public IActionResult SendResetCode([FromBody] ForgotPasswordDto request)
+        {
+            var response = _userLogic.SendResetCode(request);
+
+            if (!response.IsSuccess)
+            { 
+                return BadRequest(response); 
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword([FromBody] ResetPasswordDto request)
+        {
+            var response = _userLogic.ResetPassword(request);
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }
