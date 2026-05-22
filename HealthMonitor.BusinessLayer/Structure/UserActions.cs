@@ -13,11 +13,14 @@ namespace HealthMonitor.BusinessLayer.Structure
     {
         private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
+        private readonly EmailLogic _emailLogic;
+
 
         public UserActions()
         { 
             _context = new AppDbContext();
             _tokenService = new TokenService();
+            _emailLogic = new EmailLogic();
         }
 
         // REGISTER
@@ -50,6 +53,10 @@ namespace HealthMonitor.BusinessLayer.Structure
             {
                 _context.Users.Add(userEntity);
                 _context.SaveChanges();
+                _emailLogic.SendEmail(
+                userDto.Email,
+                "Welcome to OmniTrack",
+                "<h1>Welcome!</h1>");
 
                 return new ServiceResponse
                 {
