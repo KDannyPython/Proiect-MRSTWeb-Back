@@ -10,5 +10,6 @@ namespace HealthMonitor.BusinessLayer.Interfaces
         Task UpdateMe(int userId, UpdateUserDto request);
         ServiceResponse UpdateUser(int id, UserCreateDto user);
         ServiceResponse DeleteUser(int id);
+        ServiceResponse ChangePassword(int userId, ChangePasswordDto password);
     }
 }

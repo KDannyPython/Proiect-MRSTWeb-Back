@@ -115,5 +115,22 @@ namespace HealthMonitor.Api.Controllers
 
             return Ok(response.Message);
         }
+
+        [Authorize]
+        [HttpPatch("change-password")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordDto request)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null) return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+
+            var response = _userLogic.ChangePassword(userId, request);
+
+            if (!response.IsSuccess) return BadRequest(response);
+
+            return Ok(response);
+        }
     }
 }
