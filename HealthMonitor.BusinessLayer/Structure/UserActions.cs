@@ -231,6 +231,63 @@ namespace HealthMonitor.BusinessLayer.Structure
             }
         }
 
+        // CHANGE PASSWORD
+        public ServiceResponse ChangePasswordAction(int userId, ChangePasswordDto request)
+        {
+            try
+            {
+                var user = _context.Users.Find(userId);
+
+                if (user == null)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "User not found"
+                    };
+                }
+
+                var currentPasswordHash = PasswordHasher.HashPassword(request.CurrentPassword);
+
+                if (user.Password != currentPasswordHash)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Current password is incorrect"
+                    };
+                }
+
+                if (request.CurrentPassword == request.NewPassword)
+                {
+                    return new ServiceResponse
+                    {
+                        IsSuccess = false,
+                        Message = "New password must be different"
+                    };
+                }
+
+                var newPasswordHash = PasswordHasher.HashPassword(request.NewPassword);
+
+                user.Password = newPasswordHash;
+
+                _context.SaveChanges();
+
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Message = "Password changed successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
         public ServiceResponse CompleteOnboardingAction(int userId, OnboardingDto dto)
         {
             var user = _context.Users.Find(userId);

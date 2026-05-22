@@ -76,5 +76,23 @@ namespace HealthMonitor.BusinessLayer.Core
                 Message = "Utilizatorul a fost șters cu succes din baza de date."
             };
         }
+
+        public ServiceResponse ChangePassword(int userId, ChangePasswordDto password)
+        {
+            var result = ChangePasswordAction(userId, password);
+            if (result == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Password change error."
+                };
+            }
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Password changed succesfully."
+            };
+        }
     }
 }
