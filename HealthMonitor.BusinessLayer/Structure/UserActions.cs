@@ -130,6 +130,37 @@ namespace HealthMonitor.BusinessLayer.Structure
         }
 
         // UPDATE
+        public async Task UpdateMeAction(int userId, UpdateUserDto request)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+                throw new Exception("User not found");
+
+            if (request.Name != null)
+                user.Name = request.Name;
+
+            if (request.Email != null)
+                user.Email = request.Email;
+            
+            if (request.Gender != null)
+                user.Gender = request.Gender;
+
+            if (request.Age.HasValue)
+                user.Age = request.Age.Value;
+
+            if (request.Height.HasValue)
+                user.Height = request.Height.Value;
+
+            if (request.Weight.HasValue)
+                user.Weight = request.Weight.Value;
+
+            if (request.Goal != null)
+                user.Goal = request.Goal;
+
+            await _context.SaveChangesAsync();
+        }
+
         public ServiceResponse UpdateUserAction(int id, UserCreateDto userDto)
         {
             var userEntity = _context.Users.Find(id);
