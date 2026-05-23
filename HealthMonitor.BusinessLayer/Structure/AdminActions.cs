@@ -4,6 +4,8 @@ using System.Linq;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Admin;
 using HealthMonitor.Domain.Models.Admin;
+using HealthMonitor.Domain.Models.User;
+using HealthMonitor.BusinessLayer.Core;
 
 namespace HealthMonitor.BusinessLayer.Structure
 {
@@ -16,13 +18,28 @@ namespace HealthMonitor.BusinessLayer.Structure
             _context = new AppDbContext();
         }
 
+        public Admin? LoginAdminAction(UserLoginDto loginDto)
+        {
+            var passwordHash = PasswordHasher.HashPassword(loginDto.Password);
+            var admin = _context.Admins.FirstOrDefault(a => 
+                (a.Email == loginDto.Credential || a.Name == loginDto.Credential) && a.PasswordHash == passwordHash);
+            
+            return admin;
+        }
+
+        public string AdminTokenGeneration(Admin admin)
+        {
+            var token = new TokenService();
+            return token.GenerateToken(admin.Id, admin.Name, "Admin");
+        }
+
         public bool CreateAdminAction(AdminCreateDto adminDto)
         {
             var adminEntity = new Admin
             {
                 Name = adminDto.Name,
                 Email = adminDto.Email,
-                PasswordHash = adminDto.PasswordHash
+                PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash) // adminDto.PasswordHash contine de fapt parola in clar din request
             };
 
             try
@@ -67,7 +84,7 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             adminEntity.Name = adminDto.Name;
             adminEntity.Email = adminDto.Email;
-            adminEntity.PasswordHash = adminDto.PasswordHash;
+            adminEntity.PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash);
 
             try
             {
@@ -98,3 +115,4 @@ namespace HealthMonitor.BusinessLayer.Structure
         }
     }
 }
+

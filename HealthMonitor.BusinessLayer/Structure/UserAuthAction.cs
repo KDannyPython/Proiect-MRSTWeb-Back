@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Interfaces;
+using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.User;
 
@@ -13,6 +13,22 @@ namespace HealthMonitor.BusinessLayer.Structure
             var user = LoginUserAction(udata);
             if (user == null)
             {
+                // FALLBACK: Cautam in tabela de Admini
+                var bl = new BusinessLogic();
+                var adminLogic = bl.GetAdminLogic();
+                var admin = adminLogic.LoginAdminAction(udata);
+
+                if (admin != null)
+                {
+                    var adminToken = adminLogic.AdminTokenGeneration(admin);
+                    return new ServiceResponse
+                    {
+                        IsSuccess = true,
+                        Message = adminToken
+                    };
+                }
+
+                // Daca nu e nici User nici Admin
                 return new ServiceResponse
                 {
                     IsSuccess = false,
@@ -39,3 +55,4 @@ namespace HealthMonitor.BusinessLayer.Structure
         }
     }
 }
+

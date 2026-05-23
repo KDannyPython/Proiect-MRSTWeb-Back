@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Core;
+using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.DataAccesLayer.Context;
@@ -42,6 +42,16 @@ namespace HealthMonitor.Api.Controllers
             }
 
             var user = _userAction.LoginUserAction(udata);
+
+            // Daca user este null, inseamna ca s-a logat un Admin (gasit in tabela Admins)
+            if (user == null)
+            {
+                return Ok(new
+                {
+                    token = result.Message,
+                    onboardingCompleted = true // Adminii nu trec prin onboarding
+                });
+            }
 
             return Ok(new
             {
