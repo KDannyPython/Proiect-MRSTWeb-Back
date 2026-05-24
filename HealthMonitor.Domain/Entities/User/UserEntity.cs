@@ -46,6 +46,9 @@ namespace HealthMonitor.Domain.Entities.User
         [MaxLength(50)]
         public string? Goal { get; set; }
 
+        [MaxLength(500)]
+        public string? Bio { get; set; }
+
         [Range(100000, 999999)]
         public string? ResetPasswordCode { get; set; }
 

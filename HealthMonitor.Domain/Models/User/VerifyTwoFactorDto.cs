@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthMonitor.Domain.Models.User;
 
 public class VerifyTwoFactorDto
 {
-    [EmailAddress]
+    [Required]
     public string Email { get; set; }
 
-    [Range(1000, 9999)]
+    [Required]
     public string Code { get; set; }
 }
