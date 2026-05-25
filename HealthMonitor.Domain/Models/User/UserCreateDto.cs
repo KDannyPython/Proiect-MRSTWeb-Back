@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using HealthMonitor.Domain.Entities.User;
 
 namespace HealthMonitor.Domain.Models.User
 {
@@ -33,5 +34,6 @@ namespace HealthMonitor.Domain.Models.User
 
         [MaxLength(50)]
         public string Goal { get; set; }
+        public UserRole Role { get; set; }
     }
 }
