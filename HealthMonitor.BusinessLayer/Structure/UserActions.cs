@@ -247,6 +247,7 @@ namespace HealthMonitor.BusinessLayer.Structure
             userEntity.Height = userDto.Height;
             userEntity.Weight = userDto.Weight;
             userEntity.Goal = userDto.Goal;
+            userEntity.Role = userDto.Role; 
 
             try
             {
