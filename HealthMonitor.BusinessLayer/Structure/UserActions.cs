@@ -167,6 +167,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Height = userEntity.Height,
                 Weight = userEntity.Weight,
                 Goal = userEntity.Goal,
+                Bio = userEntity.Bio,
                 OnboardingCompleted = userEntity.OnboardingCompleted,
                 TwoFactorEnabled = userEntity.TwoFactorEnabled,
                 Role = userEntity.Role.ToString()
@@ -186,6 +187,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Height = u.Height,
                 Weight = u.Weight,
                 Goal = u.Goal,
+                Bio = u.Bio,
                 OnboardingCompleted = u.OnboardingCompleted,
                 TwoFactorEnabled = u.TwoFactorEnabled,
                 Role = u.Role.ToString()
@@ -220,6 +222,9 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             if (request.Goal != null)
                 user.Goal = request.Goal;
+
+            if (request.Bio != null)
+                user.Bio = request.Bio;
 
             if (request.TwoFactorEnabled.HasValue)
                 user.TwoFactorEnabled = request.TwoFactorEnabled.Value;
@@ -504,13 +509,15 @@ namespace HealthMonitor.BusinessLayer.Structure
         // VERIFY 2FA
         public UserEntity? VerifyTwoFactorAction(VerifyTwoFactorDto request)
         {
+            var emailOrName = request.Email?.Trim().ToLower();
             var user = _context.Users
                 .FirstOrDefault(x =>
-                    x.Email == request.Email);
+                    x.Email.ToLower() == emailOrName ||
+                    x.Name.ToLower() == emailOrName);
 
             if (user == null) return null;
 
-            if (user.TwoFactorCode != request.Code) return null;
+            if (user.TwoFactorCode?.Trim() != request.Code?.Trim()) return null;
 
             user.TwoFactorCode = null;
 

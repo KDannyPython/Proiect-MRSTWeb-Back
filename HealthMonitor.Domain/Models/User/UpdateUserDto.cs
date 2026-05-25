@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthMonitor.Domain.Models.User;
 
@@ -18,6 +18,8 @@ public class UpdateUserDto
     public int? Weight { get; set; }
 
     public string? Goal { get; set; }
+
+    public string? Bio { get; set; }
 
     public bool? TwoFactorEnabled { get; set; }
 }

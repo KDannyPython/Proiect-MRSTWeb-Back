@@ -12,6 +12,7 @@ namespace HealthMonitor.Domain.Models.User
         public int? Height { get; set; }
         public int? Weight { get; set; }
         public string? Goal { get; set; }
+        public string? Bio { get; set; }
         public bool OnboardingCompleted { get; set; } = false;
         public bool TwoFactorEnabled { get; set; } = false;
         public string Role { get; set; }
