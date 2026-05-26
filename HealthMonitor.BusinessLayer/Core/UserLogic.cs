@@ -3,6 +3,7 @@ using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.Domain.Entities.User;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.User;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HealthMonitor.BusinessLayer.Core
 {
@@ -135,6 +136,24 @@ namespace HealthMonitor.BusinessLayer.Core
         public UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request)
         {
             return VerifyTwoFactorAction(request);
+        }
+
+        public ServiceResponse SendDeleteVerificationCode(int userId)
+        {
+            var result = SendDeleteVerificationCodeAction(userId);
+            if (result == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Couldn't generate or send the email."
+                };
+            }
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Code generated and sent succesfully."
+            };
         }
     }
 }

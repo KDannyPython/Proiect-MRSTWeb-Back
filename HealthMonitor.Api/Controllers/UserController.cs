@@ -117,6 +117,48 @@ namespace HealthMonitor.Api.Controllers
         }
 
         [Authorize]
+        [HttpPost("request-delete")]
+        public IActionResult RequestDelete()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+
+            var response = _userLogic.SendDeleteVerificationCode(userId);
+
+            if (!response.IsSuccess)
+                return BadRequest(response);
+
+            return Ok(response.Message);
+        }
+
+        [Authorize]
+        [HttpDelete("me")]
+        public IActionResult DeleteMe([FromBody] VerifyTwoFactorDto request)
+        {
+            var user = _userLogic.VerifyTwoFactor(request);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid verification code.");
+            }
+
+            var userId = user.Id;
+
+            var response = _userLogic.DeleteUser(userId);
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response.Message);
+        }
+
+        [Authorize]
         [HttpPatch("change-password")]
         public IActionResult ChangePassword([FromBody] ChangePasswordDto request)
         {
