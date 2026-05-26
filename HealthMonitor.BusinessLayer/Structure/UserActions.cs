@@ -273,6 +273,59 @@ namespace HealthMonitor.BusinessLayer.Structure
             }
         }
 
+        public ServiceResponse SendDeleteVerificationCodeAction(int userId)
+        {
+            var user = _context.Users.Find(userId);
+
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "User not found."
+                };
+            }
+
+            var random = new Random();
+
+            var code = random
+                .Next(1000, 9999)
+                .ToString();
+
+            user.TwoFactorCode = code;
+
+            _context.SaveChanges();
+
+            var emailLogic = new EmailLogic();
+
+            emailLogic.SendEmail(
+                user.Email,
+                "Two-Factor Authentication Code",
+                $@"<h1 style='color:#2E86DE;'>Two-Factor Authentication 🔐</h1>
+
+                <p>Hello,</p>
+
+                <p>Use the verification code below to complete your account deletion:</p>
+
+                <div style='margin:20px 0; padding:15px; background-color:#f4f4f4; border-radius:8px; text-align:center;'>
+                    <h2 style='letter-spacing:4px; margin:0;'>{code}</h2>
+                </div>
+
+                <p>If you did not attempt to delete your account, please ignore this email.</p>
+
+                <p style='margin-top:20px;'>
+                Best regards,<br>
+                <strong>The OmniTrack Team</strong>
+                </p>"
+            );
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Verification code sent."
+            };
+        }
+
         // DELETE
         public ServiceResponse DeleteUserAction(int id)
         {
