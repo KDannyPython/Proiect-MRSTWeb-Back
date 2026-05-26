@@ -13,7 +13,6 @@ namespace HealthMonitor.BusinessLayer.Structure
             var user = LoginUserAction(udata);
             if (user == null)
             {
-                // FALLBACK: Cautam in tabela de Admini
                 var bl = new BusinessLogic();
                 var adminLogic = bl.GetAdminLogic();
                 var admin = adminLogic.LoginAdminAction(udata);
@@ -28,7 +27,6 @@ namespace HealthMonitor.BusinessLayer.Structure
                     };
                 }
 
-                // Daca nu e nici User nici Admin
                 return new ServiceResponse
                 {
                     IsSuccess = false,

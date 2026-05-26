@@ -27,15 +27,14 @@ namespace HealthMonitor.BusinessLayer.Structure
         public ServiceResponse RegisterUserAction(RegisterDto userDto)
         {
             var existingUser = _context.Users.FirstOrDefault(u =>
-                u.Email == userDto.Email ||
-                u.Name == userDto.Name);
+                u.Email == userDto.Email);
 
             if (existingUser != null)
             {
                 return new ServiceResponse
                 {
                     IsSuccess = false,
-                    Message = "Email or username already exists."
+                    Message = "Account with this email already exists."
                 };
             }
 
@@ -300,24 +299,49 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             emailLogic.SendEmail(
                 user.Email,
-                "Two-Factor Authentication Code",
-                $@"<h1 style='color:#2E86DE;'>Two-Factor Authentication 🔐</h1>
+                "Security Verification Code",
+                $@"
+                <div style='font-family:Arial,sans-serif; color:#333; line-height:1.6;'>
+        
+                    <h2 style='color:#2E86DE; margin-bottom:10px;'>
+                        Account Deletion Verification
+                    </h2>
 
-                <p>Hello,</p>
+                    <p>Hello,</p>
 
-                <p>Use the verification code below to complete your account deletion:</p>
+                    <p>
+                        Use the verification code below to confirm your account deletion request:
+                    </p>
 
-                <div style='margin:20px 0; padding:15px; background-color:#f4f4f4; border-radius:8px; text-align:center;'>
-                    <h2 style='letter-spacing:4px; margin:0;'>{code}</h2>
-                </div>
+                    <div style='
+                        margin:24px 0;
+                        padding:16px;
+                        background:#f5f7fa;
+                        border-radius:10px;
+                        text-align:center;
+                    '>
+                        <span style='
+                            font-size:28px;
+                            font-weight:bold;
+                            letter-spacing:6px;
+                            color:#111;
+                        '>
+                            {code}
+                        </span>
+                    </div>
 
-                <p>If you did not attempt to delete your account, please ignore this email.</p>
+                    <p>
+                        If you did not request to delete your account, you can safely ignore this email.
+                    </p>
 
-                <p style='margin-top:20px;'>
-                Best regards,<br>
-                <strong>The OmniTrack Team</strong>
-                </p>"
+                    <p style='margin-top:30px;'>
+                        Best regards,<br>
+                        <strong>OmniTrack Team</strong>
+                    </p>
+
+                </div>"
             );
+
 
             return new ServiceResponse
             {
