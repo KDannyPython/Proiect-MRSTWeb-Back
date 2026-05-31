@@ -14,12 +14,12 @@ namespace HealthMonitor.Api.Controllers
     {
         private readonly BusinessLogic _businessLogic;
 
-        public WeightLogController(BusinessLogic businessLogic)
+        public WeightLogController()
         {
-            _businessLogic = businessLogic;
+            _businessLogic = new BusinessLogic();
         }
 
-        [POST]
+        [HttpPost]
         public async Task<IActionResult> LogWeight([FromBody] WeightLogDto dto)
         {
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
