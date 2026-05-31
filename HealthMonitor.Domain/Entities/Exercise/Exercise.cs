@@ -23,8 +23,7 @@ namespace HealthMonitor.Domain.Entities.Exercise
         [Required]
         public Difficulty Difficulty { get; set; }
 
-        [Required]
-        public FatigueCost FatigueCost { get; set; }
+
         
         [InverseProperty("Exercise")]
         public ICollection<WorkoutExercise.WorkoutExercise> WorkoutExercises { get; set; } 

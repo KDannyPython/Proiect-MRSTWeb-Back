@@ -9,6 +9,5 @@ namespace HealthMonitor.Domain.Models.Exercise
         public MuscleGroup PrimaryMuscleGroup { get; set; }
         public string? SecondaryMuscleGroup { get; set; }
         public Difficulty Difficulty { get; set; }
-        public FatigueCost FatigueCost { get; set; }
     }
 }
