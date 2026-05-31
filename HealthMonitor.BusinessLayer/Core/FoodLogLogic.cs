@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Interfaces;
+using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Models.Food;
@@ -71,5 +71,15 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
     public int GetTodayCalories(int userId)
     {
         return GetTodayCaloriesAction(userId);
+    }
+
+    public ServiceResponse ResetFoodLogs(int userId)
+    {
+        return ResetFoodLogsAction(userId);
+    }
+
+    public List<FoodLogResponseDto> GetTodayFoodLogs(int userId)
+    {
+        return GetTodayFoodLogsAction(userId);
     }
 }

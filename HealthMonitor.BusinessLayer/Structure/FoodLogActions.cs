@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Core;
+using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Food;
@@ -176,5 +176,61 @@ public class FoodLogActions
         ));
 
         return totalCalories;
+    }
+
+    public ServiceResponse ResetFoodLogsAction(int userId)
+    {
+        try
+        {
+            var today = DateTime.UtcNow.Date;
+            var todayLogs = _context.FoodLogs
+                .Where(x => x.UserId == userId && x.LoggedAt.Date == today)
+                .ToList();
+
+            if (todayLogs.Any())
+            {
+                _context.FoodLogs.RemoveRange(todayLogs);
+                _context.SaveChanges();
+            }
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Food logs reset successfully."
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = $"Failed to reset food logs: {ex.Message}"
+            };
+        }
+    }
+
+    public List<FoodLogResponseDto> GetTodayFoodLogsAction(int userId)
+    {
+        var today = DateTime.UtcNow.Date;
+        var todayLogs = _context.FoodLogs
+            .Include(x => x.Food)
+            .Where(x => x.UserId == userId && x.LoggedAt.Date == today)
+            .Select(x => new FoodLogResponseDto
+            {
+                Id = x.Id,
+                FoodId = x.FoodId,
+                FoodName = x.Food.Name,
+                CaloriesPer100g = x.Food.Calories,
+                ProteinPer100g = x.Food.Protein,
+                CarbsPer100g = x.Food.Carbohydrates,
+                FatPer100g = x.Food.Fat,
+                FiberPer100g = x.Food.Fiber,
+                VitaminCPer100g = x.Food.VitaminC,
+                QuantityGrams = x.QuantityGrams,
+                LoggedAt = x.LoggedAt
+            })
+            .ToList();
+
+        return todayLogs;
     }
 }

@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Structure;
+using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.Water;
@@ -46,5 +46,23 @@ public class WaterLogLogic : WaterLogActions, IWaterLogLogic
     public int GetTodayWater(int userId)
     {
         return GetTodayWaterAction(userId);
+    }
+
+    public ServiceResponse ResetWater(int userId)
+    {
+        var result = ResetWaterAction(userId);
+        if (!result.IsSuccess)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = result.Message
+            };
+        }
+        return new ServiceResponse
+        {
+            IsSuccess = true,
+            Message = "Water log reset successfully."
+        };
     }
 }
