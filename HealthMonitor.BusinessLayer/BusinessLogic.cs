@@ -24,6 +24,11 @@ public class BusinessLogic
         return new WaterLogLogic();
     }
 
+    public IWeightLogLogic GetWeightLogLogic()
+    {
+        return new WeightLogLogic();
+    }
+
     public ICalendarLogic GetCalendarLogic()
     {
         return new CalendarLogic();

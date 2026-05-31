@@ -21,6 +21,7 @@ public class AppDbContext: DbContext
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<FoodLogEntity> FoodLogs { get; set; }
     public DbSet<WaterLogEntity> WaterLogs { get; set; }
+    public DbSet<WeightLogEntity> WeightLogs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
