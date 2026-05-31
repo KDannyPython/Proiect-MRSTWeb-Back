@@ -17,8 +17,5 @@ namespace HealthMonitor.Domain.Models.Exercise
         
         [Required]
         public Difficulty Difficulty { get; set; }
-        
-        [Required]
-        public FatigueCost FatigueCost { get; set; }
     }
 }

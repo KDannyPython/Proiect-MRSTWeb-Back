@@ -25,7 +25,6 @@ public class ExerciseActions
             PrimaryMuscleGroup = exerciseDto.PrimaryMuscleGroup,
             SecondaryMuscleGroup = exerciseDto.SecondaryMuscleGroup,
             Difficulty = exerciseDto.Difficulty,
-            FatigueCost = exerciseDto.FatigueCost,
         };
 
         try
@@ -56,7 +55,6 @@ public class ExerciseActions
             PrimaryMuscleGroup = exerciseEntity.PrimaryMuscleGroup,
             SecondaryMuscleGroup = exerciseEntity.SecondaryMuscleGroup,
             Difficulty = exerciseEntity.Difficulty,
-            FatigueCost = exerciseEntity.FatigueCost,
         };
     }
 
@@ -70,7 +68,6 @@ public class ExerciseActions
             PrimaryMuscleGroup = e.PrimaryMuscleGroup,
             SecondaryMuscleGroup = e.SecondaryMuscleGroup,
             Difficulty = e.Difficulty,
-            FatigueCost = e.FatigueCost,
         }).ToList();
     }
 
@@ -84,7 +81,6 @@ public class ExerciseActions
         exerciseEntity.PrimaryMuscleGroup = exerciseDto.PrimaryMuscleGroup;
         exerciseEntity.SecondaryMuscleGroup = exerciseDto.SecondaryMuscleGroup;
         exerciseEntity.Difficulty = exerciseDto.Difficulty;
-        exerciseEntity.FatigueCost = exerciseDto.FatigueCost;
 
         try 
         {
