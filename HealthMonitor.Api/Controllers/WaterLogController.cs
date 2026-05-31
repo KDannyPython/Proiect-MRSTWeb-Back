@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer;
+using HealthMonitor.BusinessLayer;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Water;
 using Microsoft.AspNetCore.Authorization;
@@ -82,5 +82,27 @@ public class WaterLogController : ControllerBase
         {
             amountMl = amount
         });
+    }
+
+    [HttpDelete("today/reset")]
+    [Authorize]
+    public IActionResult ResetWater()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim);
+        var result = _waterLogLogic.ResetWater(userId);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+
+        return Ok(result.Message);
     }
 }

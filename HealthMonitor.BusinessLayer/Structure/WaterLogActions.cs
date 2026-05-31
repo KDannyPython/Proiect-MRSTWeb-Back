@@ -1,4 +1,4 @@
-﻿using HealthMonitor.DataAccesLayer.Context;
+using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Water;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.Water;
@@ -115,5 +115,38 @@ public class WaterLogActions
         }
 
         return waterLog.AmountMl;
+    }
+
+    public ServiceResponse ResetWaterAction(int userId)
+    {
+        try
+        {
+            var today = DateTime.UtcNow.Date;
+
+            var waterLog = _context.WaterLogs
+                .FirstOrDefault(x =>
+                    x.UserId == userId &&
+                    x.LoggedAt == today);
+
+            if (waterLog != null)
+            {
+                _context.WaterLogs.Remove(waterLog);
+                _context.SaveChanges();
+            }
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "Water intake reset successfully."
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = $"Failed to reset water intake: {ex.Message}"
+            };
+        }
     }
 }

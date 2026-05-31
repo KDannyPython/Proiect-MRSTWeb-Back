@@ -1,4 +1,4 @@
-﻿using HealthMonitor.Domain.Models.Food;
+using HealthMonitor.Domain.Models.Food;
 using HealthMonitor.Domain.Models.Service;
 
 namespace HealthMonitor.BusinessLayer.Interfaces;
@@ -9,4 +9,6 @@ public interface IFoodLogLogic
     Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int quantityGrams);
     Task<ServiceResponse> DeleteFoodLog(int foodLogId);
     int GetTodayCalories(int userId);
+    ServiceResponse ResetFoodLogs(int userId);
+    List<FoodLogResponseDto> GetTodayFoodLogs(int userId);
 }
