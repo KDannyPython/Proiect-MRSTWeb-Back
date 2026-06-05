@@ -1,13 +1,18 @@
+using HealthMonitor.BusinessLayer.Configuration;
 using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.DataAccesLayer.Context;
-using Microsoft.EntityFrameworkCore;
 using HealthMonitor.DataAccesLayer.Seeding;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<UsdaApiSettings>(
+    builder.Configuration.GetSection("UsdaApi")
+);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
