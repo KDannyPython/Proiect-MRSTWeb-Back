@@ -1,4 +1,5 @@
 ﻿using eHealthMonitor.BusinessLayer.Structure;
+using HealthMonitor.BusinessLayer.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,11 +10,16 @@ namespace HealthMonitor.BusinessLayer.Core
     public class TokenService
     {
 
-        public TokenService() { }
+
+        public TokenService()
+        { }
 
         public string GenerateToken(int userId, string userName, string role)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSettings.SecretKey));
+            var secretKey = AppConfiguration.Configuration["Jwt:SecretKey"]
+                ?? throw new Exception("JWT SecretKey not configured");
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]

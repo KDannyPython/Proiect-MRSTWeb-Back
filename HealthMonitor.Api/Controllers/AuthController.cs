@@ -55,7 +55,7 @@ namespace HealthMonitor.Api.Controllers
                 return Ok(new
                 {
                     token = result.Message,
-                    onboardingCompleted = true // Adminii nu trec prin onboarding
+                    onboardingCompleted = true
                 });
             }
 

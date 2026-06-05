@@ -14,6 +14,8 @@ builder.Services.Configure<UsdaApiSettings>(
     builder.Configuration.GetSection("UsdaApi")
 );
 
+AppConfiguration.Configuration = builder.Configuration;
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
@@ -46,6 +48,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddHttpClient<IUsdaFoodLogic, UsdaFoodLogic>();
+builder.Services.AddScoped<TokenService>();
 //builder.Services.AddScoped<IFoodLogLogic, FoodLogLogic>();
 
 //AddScoped
