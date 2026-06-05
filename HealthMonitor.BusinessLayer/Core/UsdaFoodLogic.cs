@@ -1,24 +1,27 @@
-﻿using System.Text.Json;
+﻿using HealthMonitor.BusinessLayer.Configuration;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Food;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace HealthMonitor.BusinessLayer.Core;
 
 public class UsdaFoodLogic: IUsdaFoodLogic
 {
     private readonly HttpClient _httpClient;
+    private readonly string _apiKey;
 
-    private const string ApiKey = "UsOI9NgoEXvuh4tQ1bBND2cNUt9G2vc6WhvYTPre";
     private const string BaseUrl = "https://api.nal.usda.gov/fdc/v1/";
 
-    public UsdaFoodLogic(HttpClient httpClient)
+    public UsdaFoodLogic(HttpClient httpClient, IOptions<UsdaApiSettings> settings)
     {
         _httpClient = httpClient;
+        _apiKey = settings.Value.ApiKey;
     }
-
+    
     public async Task<UsdaFoodSearchResponseDto> SearchUsdaFoodAsync(string query)
     {
-        var url = $"{BaseUrl}foods/search?query={Uri.EscapeDataString(query)}&api_key={ApiKey}";
+        var url = $"{BaseUrl}foods/search?query={Uri.EscapeDataString(query)}&api_key={_apiKey}";
 
         var response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
@@ -79,7 +82,7 @@ public class UsdaFoodLogic: IUsdaFoodLogic
 
     public async Task<UsdaFoodItemDto?> GetFoodByIdAsync(int fdcId)
     {
-        var url = $"{BaseUrl}food/{fdcId}?api_key={ApiKey}";
+        var url = $"{BaseUrl}food/{fdcId}?api_key={_apiKey}";
 
         var response = await _httpClient.GetAsync(url);
 

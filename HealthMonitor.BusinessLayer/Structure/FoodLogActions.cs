@@ -1,3 +1,4 @@
+using HealthMonitor.BusinessLayer.Configuration;
 using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.DataAccesLayer.Context;
@@ -5,6 +6,7 @@ using HealthMonitor.Domain.Entities.Food;
 using HealthMonitor.Domain.Models.Food;
 using HealthMonitor.Domain.Models.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace HealthMonitor.BusinessLayer.Structure;
 
@@ -12,11 +14,22 @@ public class FoodLogActions
 {
     private readonly AppDbContext _context;
     private readonly UsdaFoodLogic _usdaFoodLogic;
+
     public FoodLogActions()
     {
         _context = new AppDbContext();
 
-        _usdaFoodLogic = new UsdaFoodLogic(new HttpClient());
+        var configuration = new ConfigurationBuilder()
+           .AddUserSecrets<Program>()
+           .Build();
+
+        var settings = Options.Create(
+            new UsdaApiSettings
+            {
+                ApiKey = configuration["UsdaApi:ApiKey"]!
+            });
+
+        _usdaFoodLogic = new UsdaFoodLogic(new HttpClient(), settings);
     }
 
     public async Task<ServiceResponse> LogFoodAction(int userId, FoodLogDto foodLog)
