@@ -60,14 +60,25 @@ public class UsdaFoodLogic: IUsdaFoodLogic
                             case "Energy":
                                 item.Calories = value;
                                 break;
+
                             case "Protein":
                                 item.Protein = value;
                                 break;
+
                             case "Carbohydrate, by difference":
                                 item.Carbohydrates = value;
                                 break;
+
                             case "Total lipid (fat)":
                                 item.Fat = value;
+                                break;
+
+                            case "Fiber, total dietary":
+                                item.Fiber = value;
+                                break;
+
+                            case "Vitamin C, total ascorbic acid":
+                                item.VitaminC = value;
                                 break;
                         }
                     }
@@ -134,6 +145,14 @@ public class UsdaFoodLogic: IUsdaFoodLogic
 
                     case "Total lipid (fat)":
                         item.Fat = value;
+                        break;
+
+                    case "Fiber, total dietary":
+                        item.Fiber = value;
+                        break;
+
+                    case "Vitamin C, total ascorbic acid":
+                        item.VitaminC = value;
                         break;
                 }
             }
