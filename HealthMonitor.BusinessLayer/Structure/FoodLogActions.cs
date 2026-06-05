@@ -56,10 +56,12 @@ public class FoodLogActions
                 {
                     FdcId = usdaFood.FdcId,
                     Name = usdaFood.Description,
-                    Calories = (float)(usdaFood.Calories ?? 0),
-                    Protein = (float)(usdaFood.Protein ?? 0),
-                    Carbohydrates = (float)(usdaFood.Carbohydrates ?? 0),
-                    Fat = (float)(usdaFood.Fat ?? 0)
+                    Calories = usdaFood.Calories ?? 0,
+                    Protein = usdaFood.Protein ?? 0,
+                    Carbohydrates = usdaFood.Carbohydrates ?? 0,
+                    Fat = usdaFood.Fat ?? 0,
+                    Fiber = usdaFood.Fiber ?? 0,
+                    VitaminC = usdaFood.VitaminC ?? 0
                 };
 
                 await _context.Foods.AddAsync(foodEntity);

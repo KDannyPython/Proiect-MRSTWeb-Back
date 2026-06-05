@@ -6,8 +6,11 @@ public class UsdaFoodItemDto
     public string Description { get; set; } = string.Empty;
     public string? BrandName { get; set; }
     public string? DataType { get; set; }
+
     public double? Calories { get; set; }
     public double? Protein { get; set; }
     public double? Carbohydrates { get; set; }
     public double? Fat { get; set; }
+    public double? Fiber { get; set; }
+    public double? VitaminC { get; set; }
 }
