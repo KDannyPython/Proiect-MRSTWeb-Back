@@ -20,7 +20,7 @@ public class FoodLogActions
         _context = new AppDbContext();
 
         var configuration = new ConfigurationBuilder()
-           .AddUserSecrets<Program>()
+           .AddUserSecrets("1d3e39f2-3d53-4ecb-998d-cd7a036f648b")
            .Build();
 
         var settings = Options.Create(
@@ -75,6 +75,8 @@ public class FoodLogActions
                 FoodId = foodEntity.Id,
 
                 QuantityGrams = foodLog.QuantityGrams,
+
+                MealTime = foodLog.MealTime ?? "Snack",
 
                 LoggedAt = DateTime.UtcNow
             };
@@ -242,6 +244,7 @@ public class FoodLogActions
                 FiberPer100g = x.Food.Fiber,
                 VitaminCPer100g = x.Food.VitaminC,
                 QuantityGrams = x.QuantityGrams,
+                MealTime = x.MealTime,
                 LoggedAt = x.LoggedAt
             })
             .ToList();
