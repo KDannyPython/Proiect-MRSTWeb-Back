@@ -48,5 +48,21 @@ namespace HealthMonitor.Api.Controllers
             var history = await _businessLogic.GetWeightLogLogic().GetWeightHistory(userId, limit);
             return Ok(history);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWeightLog(int id)
+        {
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { IsSuccess = false, Message = "Invalid user token." });
+            }
+
+            var result = await _businessLogic.GetWeightLogLogic().DeleteWeightLog(userId, id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

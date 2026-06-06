@@ -16,5 +16,10 @@ namespace HealthMonitor.BusinessLayer.Core
         {
             return GetWeightHistoryAction(userId, limit);
         }
+
+        public Task<ServiceResponse> DeleteWeightLog(int userId, int logId)
+        {
+            return DeleteWeightLogAction(userId, logId);
+        }
     }
 }
