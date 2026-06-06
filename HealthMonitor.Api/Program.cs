@@ -139,12 +139,10 @@ app.UseAuthorization();
 app.MapControllers();
 // app.UseHttpsRedirection();
 
-//lista de exercitii predefinite
-DbInitializer.SeedExercises();
-
 using (var context = new AppDbContext())
 {
     context.Database.Migrate();
+    DbInitializer.SeedExercises();
 }
 
 app.Run();
