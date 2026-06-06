@@ -87,44 +87,44 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Auto-repair DB schema mismatch on startup
-try
-{
-    using (var context = new HealthMonitor.DataAccesLayer.Context.AppDbContext())
-    {
-        var conn = context.Database.GetDbConnection();
-        var opened = false;
-        if (conn.State != System.Data.ConnectionState.Open)
-        {
-            conn.Open();
-            opened = true;
-        }
-        using (var cmd = conn.CreateCommand())
-        {
-            cmd.CommandText = "SELECT data_type FROM information_schema.columns WHERE table_name = 'Workouts' AND column_name = 'UserId';";
-            var type = cmd.ExecuteScalar()?.ToString();
-            Console.WriteLine($"[DB Repair] Current Workouts.UserId data_type: {type}");
-            if (type == "character varying" || type == "varchar")
-            {
-                Console.WriteLine("[DB Repair] Column is varchar/character varying. Converting to integer...");
-                using (var cmdAlter = conn.CreateCommand())
-                {
-                    cmdAlter.CommandText = @"
-                        DELETE FROM ""WorkoutExercises"";
-                        DELETE FROM ""Workouts"";
-                        ALTER TABLE ""Workouts"" ALTER COLUMN ""UserId"" TYPE integer USING ""UserId""::integer;
-                    ";
-                    cmdAlter.ExecuteNonQuery();
-                }
-                Console.WriteLine("[DB Repair] Column successfully converted to integer!");
-            }
-        }
-        if (opened) conn.Close();
-    }
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"[DB Repair Error] {ex.Message}");
-}
+//try
+//{
+//    using (var context = new HealthMonitor.DataAccesLayer.Context.AppDbContext())
+//    {
+//        var conn = context.Database.GetDbConnection();
+//        var opened = false;
+//        if (conn.State != System.Data.ConnectionState.Open)
+//        {
+//            conn.Open();
+//            opened = true;
+//        }
+//        using (var cmd = conn.CreateCommand())
+//        {
+//            cmd.CommandText = "SELECT data_type FROM information_schema.columns WHERE table_name = 'Workouts' AND column_name = 'UserId';";
+//            var type = cmd.ExecuteScalar()?.ToString();
+//            Console.WriteLine($"[DB Repair] Current Workouts.UserId data_type: {type}");
+//            if (type == "character varying" || type == "varchar")
+//            {
+//                Console.WriteLine("[DB Repair] Column is varchar/character varying. Converting to integer...");
+//                using (var cmdAlter = conn.CreateCommand())
+//                {
+//                    cmdAlter.CommandText = @"
+//                        DELETE FROM ""WorkoutExercises"";
+//                        DELETE FROM ""Workouts"";
+//                        ALTER TABLE ""Workouts"" ALTER COLUMN ""UserId"" TYPE integer USING ""UserId""::integer;
+//                    ";
+//                    cmdAlter.ExecuteNonQuery();
+//                }
+//                Console.WriteLine("[DB Repair] Column successfully converted to integer!");
+//            }
+//        }
+//        if (opened) conn.Close();
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine($"[DB Repair Error] {ex.Message}");
+//}
 
 if (app.Environment.IsDevelopment())
 {
