@@ -38,11 +38,15 @@ namespace HealthMonitor.BusinessLayer.Structure
                 };
             }
 
+            var salt = PasswordHasher.GenerateSalt();
+            var hash = PasswordHasher.HashPassword(userDto.Password, salt);
+
             var userEntity = new UserEntity
             {
                 Name = userDto.Name,
                 Email = userDto.Email,
-                Password = PasswordHasher.HashPassword(userDto.Password),
+                Password = hash,
+                PasswordSalt = salt,
                 OnboardingCompleted = false,
                 TwoFactorEnabled = false,
                 Role = UserRole.User,
@@ -90,15 +94,14 @@ namespace HealthMonitor.BusinessLayer.Structure
         // LOGIN
         public UserEntity? LoginUserAction(UserLoginDto loginDto)
         {
-            var passwordHash = PasswordHasher.HashPassword(loginDto.Password);
-
             var user = _context.Users.FirstOrDefault(u =>
-                (u.Email == loginDto.Credential ||
-                 u.Name == loginDto.Credential)
-                 &&
-                 u.Password == passwordHash);
+                (u.Email == loginDto.Credential));
 
             if (user == null) return null;
+
+            var passwordHash = PasswordHasher.HashPassword(loginDto.Password, user.PasswordSalt);
+
+            if (user.Password != passwordHash) return null;
 
             if (user.TwoFactorEnabled)
             {
@@ -245,7 +248,6 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             userEntity.Name = userDto.Name;
             userEntity.Email = userDto.Email;
-            userEntity.Password = PasswordHasher.HashPassword(userDto.Password);
             userEntity.Gender = userDto.Gender;
             userEntity.Age = userDto.Age;
             userEntity.Height = userDto.Height;
@@ -395,8 +397,8 @@ namespace HealthMonitor.BusinessLayer.Structure
                         Message = "User not found"
                     };
                 }
-
-                var currentPasswordHash = PasswordHasher.HashPassword(request.CurrentPassword);
+                var currentPasswordSalt = user.PasswordSalt;
+                var currentPasswordHash = PasswordHasher.HashPassword(request.CurrentPassword, currentPasswordSalt);
 
                 if (user.Password != currentPasswordHash)
                 {
@@ -415,10 +417,12 @@ namespace HealthMonitor.BusinessLayer.Structure
                         Message = "New password must be different"
                     };
                 }
-
-                var newPasswordHash = PasswordHasher.HashPassword(request.NewPassword);
+                
+                var newPasswordSalt = PasswordHasher.GenerateSalt();
+                var newPasswordHash = PasswordHasher.HashPassword(request.NewPassword, newPasswordSalt);
 
                 user.Password = newPasswordHash;
+                user.PasswordSalt = newPasswordSalt;
 
                 _context.SaveChanges();
 
@@ -561,7 +565,9 @@ namespace HealthMonitor.BusinessLayer.Structure
                     };
                 }
 
-                user.Password = PasswordHasher.HashPassword(request.NewPassword);
+                var newPasswordSalt = PasswordHasher.GenerateSalt();
+                user.Password = PasswordHasher.HashPassword(request.NewPassword, newPasswordSalt);
+                user.PasswordSalt = newPasswordSalt;
 
                 user.ResetPasswordCode = null;
 

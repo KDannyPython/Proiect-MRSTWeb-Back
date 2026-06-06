@@ -5,11 +5,15 @@ namespace HealthMonitor.BusinessLayer.Core
 {
     public static class PasswordHasher
     {
-        private const string PasswordSuffix = "chitanu";
-
-        public static string HashPassword(string password)
+        public static string GenerateSalt()
         {
-            var input = password + PasswordSuffix;
+            return Convert.ToBase64String(
+                RandomNumberGenerator.GetBytes(16));
+        }
+
+        public static string HashPassword(string password, string salt)
+        {
+            var input = password + salt;
             var bytes = Encoding.UTF8.GetBytes(input);
             var hashBytes = SHA256.HashData(bytes);
 

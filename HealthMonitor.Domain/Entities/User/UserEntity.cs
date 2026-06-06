@@ -28,6 +28,7 @@ namespace HealthMonitor.Domain.Entities.User
 
         [Required(ErrorMessage = "Parola este obligatorie.")]
         public string Password { get; set; }
+        public string PasswordSalt { get; set; }
 
         public bool OnboardingCompleted { get; set; } = false;
 
