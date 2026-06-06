@@ -15,7 +15,7 @@ public class UpdateUserDto
 
     public int? Height { get; set; }
 
-    public int? Weight { get; set; }
+    public float? Weight { get; set; }
 
     public string? Goal { get; set; }
 

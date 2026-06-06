@@ -42,7 +42,7 @@ namespace HealthMonitor.Domain.Entities.User
         public int? Height { get; set; }
         
         [Range(10, 300, ErrorMessage = "Greutatea (kg) este incorectă.")]
-        public int? Weight { get; set; }
+        public float? Weight { get; set; }
 
         [MaxLength(50)]
         public string? Goal { get; set; }

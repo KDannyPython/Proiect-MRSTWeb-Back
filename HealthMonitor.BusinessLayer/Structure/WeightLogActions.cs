@@ -28,7 +28,7 @@ namespace HealthMonitor.BusinessLayer.Structure
                 }
 
                 // Update user profile weight
-                user.Weight = (int)Math.Round(dto.Weight);
+                user.Weight = dto.Weight;
 
                 // Add to history log
                 var log = new WeightLogEntity
