@@ -19,5 +19,8 @@ namespace HealthMonitor.Domain.Entities.Admin
 
         [Required]
         public string PasswordHash { get; set; }
+
+        [Required]
+        public string PasswordSalt { get; set; }
     }
 }

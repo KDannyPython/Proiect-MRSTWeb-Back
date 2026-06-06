@@ -20,10 +20,15 @@ namespace HealthMonitor.BusinessLayer.Structure
 
         public Admin? LoginAdminAction(UserLoginDto loginDto)
         {
-            var passwordHash = PasswordHasher.HashPassword(loginDto.Password);
-            var admin = _context.Admins.FirstOrDefault(a => 
-                (a.Email == loginDto.Credential || a.Name == loginDto.Credential) && a.PasswordHash == passwordHash);
-            
+            var admin = _context.Admins.FirstOrDefault(a =>
+                a.Email == loginDto.Credential);
+
+            if (admin == null) return null;
+
+            var passwordHash = PasswordHasher.HashPassword(loginDto.Password, admin.PasswordSalt);
+
+            if (admin.PasswordHash != passwordHash) return null;
+
             return admin;
         }
 
@@ -35,11 +40,14 @@ namespace HealthMonitor.BusinessLayer.Structure
 
         public bool CreateAdminAction(AdminCreateDto adminDto)
         {
+            var salt = PasswordHasher.GenerateSalt();
+
             var adminEntity = new Admin
             {
                 Name = adminDto.Name,
                 Email = adminDto.Email,
-                PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash) // adminDto.PasswordHash contine de fapt parola in clar din request
+                PasswordSalt = salt,
+                PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash, salt) // adminDto.PasswordHash contine de fapt parola in clar din request
             };
 
             try
@@ -84,7 +92,13 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             adminEntity.Name = adminDto.Name;
             adminEntity.Email = adminDto.Email;
-            adminEntity.PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash);
+            if (!string.IsNullOrWhiteSpace(adminDto.PasswordHash))
+            {
+                var salt = PasswordHasher.GenerateSalt();
+
+                adminEntity.PasswordSalt = salt;
+                adminEntity.PasswordHash = PasswordHasher.HashPassword(adminDto.PasswordHash, salt);
+            }
 
             try
             {
