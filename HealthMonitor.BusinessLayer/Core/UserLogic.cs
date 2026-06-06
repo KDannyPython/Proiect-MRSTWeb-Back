@@ -133,6 +133,11 @@ namespace HealthMonitor.BusinessLayer.Core
             };
         }
 
+        public ServiceResponse ResetUserData(int userId)
+        {
+            return ResetUserDataAction(userId);
+        }
+
         public UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request)
         {
             return VerifyTwoFactorAction(request);
