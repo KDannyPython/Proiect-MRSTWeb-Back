@@ -34,11 +34,6 @@ public class BusinessLogic
         return new CalendarLogic();
     }
 
-    //NotificationLogic
-    public INotificationLogic GetNotificationLogic()
-    {
-        return new NotificationLogic();
-    }
 
     // WorkoutLogic
     public IWorkoutLogic GetWorkoutLogic()
