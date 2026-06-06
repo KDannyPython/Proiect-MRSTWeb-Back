@@ -15,14 +15,15 @@ namespace HealthMonitor.DataAccesLayer.Migrations
             migrationBuilder.Sql("DELETE FROM \"Workouts\";");
 
             // Convertim coloana UserId din varchar -> integer
-            migrationBuilder.AlterColumn<int>(
-                name: "UserId",
-                table: "Workouts",
-                type: "integer",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "character varying(450)",
-                oldMaxLength: 450);
+            migrationBuilder.Sql("""
+                DELETE FROM "WorkoutExercises";
+                DELETE FROM "Workouts";
+
+                ALTER TABLE "Workouts"
+                ALTER COLUMN "UserId"
+                TYPE integer
+                USING "UserId"::integer;
+                """);
         }
 
         /// <inheritdoc />
