@@ -6,6 +6,7 @@ using HealthMonitor.Domain.Entities.Admin;
 using HealthMonitor.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using HealthMonitor.Domain.Entities.Water;
+using Microsoft.Extensions.Configuration;
 
 namespace HealthMonitor.DataAccesLayer.Context;
 
@@ -25,7 +26,15 @@ public class AppDbContext: DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=healthmonitor;Username=postgres;Password=postgres");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var connectionString =
+                configuration.GetConnectionString("DefaultConnection");
+
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 }

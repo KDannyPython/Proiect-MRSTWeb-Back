@@ -62,7 +62,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("http://localhost:5173", "https://omnitrackfront.vercel.app")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -78,9 +78,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("AlabalaPortocalaCineMi_aFuratBanana")
-            )
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
         };
     });
 
