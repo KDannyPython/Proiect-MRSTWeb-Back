@@ -7,5 +7,6 @@ namespace HealthMonitor.BusinessLayer.Interfaces
     {
         Task<ServiceResponse> LogWeight(int userId, WeightLogDto dto);
         Task<List<WeightLogResponseDto>> GetWeightHistory(int userId, int? limit);
+        Task<ServiceResponse> DeleteWeightLog(int userId, int logId);
     }
 }

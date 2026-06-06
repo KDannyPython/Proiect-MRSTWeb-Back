@@ -86,5 +86,27 @@ namespace HealthMonitor.BusinessLayer.Structure
                 return new List<WeightLogResponseDto>();
             }
         }
+
+        protected async Task<ServiceResponse> DeleteWeightLogAction(int userId, int logId)
+        {
+            try
+            {
+                using var _context = new AppDbContext();
+                var log = await _context.WeightLogs.FirstOrDefaultAsync(w => w.Id == logId && w.UserId == userId);
+                if (log == null)
+                {
+                    return new ServiceResponse { IsSuccess = false, Message = "Weight log not found or unauthorized." };
+                }
+
+                _context.WeightLogs.Remove(log);
+                await _context.SaveChangesAsync();
+
+                return new ServiceResponse { IsSuccess = true, Message = "Weight log deleted successfully." };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse { IsSuccess = false, Message = $"Error: {ex.Message}" };
+            }
+        }
     }
 }
