@@ -1,4 +1,4 @@
-﻿namespace HealthMonitor.Domain.Models.Food;
+namespace HealthMonitor.Domain.Models.Food;
 
 public class FoodLogResponseDto
 {
@@ -21,6 +21,8 @@ public class FoodLogResponseDto
     public double VitaminCPer100g { get; set; }
 
     public int QuantityGrams { get; set; }
+
+    public string MealTime { get; set; } = "Snack";
 
     public DateTime LoggedAt { get; set; }
 }

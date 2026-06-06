@@ -1,4 +1,4 @@
-﻿using HealthMonitor.BusinessLayer.Configuration;
+using HealthMonitor.BusinessLayer.Configuration;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Food;
 using Microsoft.Extensions.Options;
@@ -53,7 +53,12 @@ public class UsdaFoodLogic: IUsdaFoodLogic
                     foreach (var nutrient in nutrients.EnumerateArray())
                     {
                         var name = nutrient.GetProperty("nutrientName").GetString();
-                        var value = nutrient.GetProperty("value").GetDouble();
+                        
+                        double value = 0;
+                        if (nutrient.TryGetProperty("value", out var valueEl))
+                        {
+                            value = valueEl.GetDouble();
+                        }
 
                         switch (name)
                         {

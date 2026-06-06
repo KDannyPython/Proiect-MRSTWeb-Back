@@ -1,4 +1,4 @@
-﻿using HealthMonitor.Domain.Entities.User;
+using HealthMonitor.Domain.Entities.User;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,6 +18,7 @@ namespace HealthMonitor.Domain.Entities.Food
         [ForeignKey("FoodId")]
         public FoodEntity Food { get; set; } = null!;
         public int QuantityGrams { get; set; }
+        public string MealTime { get; set; } = "Snack";
         public DateTime LoggedAt { get; set; }
     }
 }
