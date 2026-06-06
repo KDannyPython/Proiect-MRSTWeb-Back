@@ -142,4 +142,9 @@ app.MapControllers();
 //lista de exercitii predefinite
 DbInitializer.SeedExercises();
 
+using (var context = new AppDbContext())
+{
+    context.Database.Migrate();
+}
+
 app.Run();
