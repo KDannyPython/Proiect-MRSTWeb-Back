@@ -1,7 +1,8 @@
-﻿using HealthMonitor.DataAccesLayer.Context;
+using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Models.Calendar;
 using HealthMonitor.Domain.Models.Service;
 using HealthMonitor.Domain.Models.Workout;
+using HealthMonitor.Domain.Models.WorkoutExercise;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthMonitor.BusinessLayer.Structure;
@@ -91,6 +92,8 @@ public class CalendarAction
             .Where(w =>
                 w.UserId == userId &&
                 w.Date.Date == date.Date)
+            .Include(w => w.WorkoutExercises)
+            .ThenInclude(we => we.Exercise)
             .ToListAsync();
 
         return new CalendarDayDetailsDto
@@ -111,7 +114,18 @@ public class CalendarAction
                 Date = w.Date,
                 Duration = w.Duration,
                 Type = w.Type,
-                Label = w.Label
+                Label = w.Label,
+                WorkoutExercises = w.WorkoutExercises.Select(we => new WorkoutExerciseInfoDto
+                {
+                    ExerciseId = we.ExerciseId,
+                    ExerciseName = we.Exercise.Name,
+                    PrimaryMuscleGroup = we.Exercise.PrimaryMuscleGroup,
+                    SecondaryMuscleGroup = we.Exercise.SecondaryMuscleGroup,
+                    Difficulty = we.Exercise.Difficulty,
+                    Sets = we.Sets,
+                    Reps = we.Reps,
+                    Weight = we.Weight,
+                }).ToList()
             }).ToList()
         };
     }

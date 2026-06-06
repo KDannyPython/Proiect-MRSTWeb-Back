@@ -30,7 +30,7 @@ namespace HealthMonitor.Domain.Models.User
         public int Height { get; set; }
 
         [Range(10, 300, ErrorMessage = "Weight (kg) is incorrect.")]
-        public int Weight { get; set; }
+        public float Weight { get; set; }
 
         [MaxLength(50)]
         public string Goal { get; set; }

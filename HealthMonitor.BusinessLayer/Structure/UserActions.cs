@@ -220,7 +220,19 @@ namespace HealthMonitor.BusinessLayer.Structure
                 user.Height = request.Height.Value;
 
             if (request.Weight.HasValue)
-                user.Weight = request.Weight.Value;
+            {
+                if (user.Weight != request.Weight.Value)
+                {
+                    user.Weight = request.Weight.Value;
+                    var weightLog = new HealthMonitor.Domain.Entities.User.WeightLogEntity
+                    {
+                        UserId = userId,
+                        Weight = request.Weight.Value,
+                        LoggedAt = DateTime.UtcNow
+                    };
+                    _context.WeightLogs.Add(weightLog);
+                }
+            }
 
             if (request.Goal != null)
                 user.Goal = request.Goal;
