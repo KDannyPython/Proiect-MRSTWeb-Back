@@ -14,6 +14,7 @@ public interface IUserLogic
     ServiceResponse ChangePassword(int userId, ChangePasswordDto password);
     ServiceResponse SendResetCode(ForgotPasswordDto request);
     ServiceResponse ResetPassword(ResetPasswordDto request);
+    ServiceResponse ResetUserData(int userId);
     UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request);
     ServiceResponse SendDeleteVerificationCode(int userId);
 }

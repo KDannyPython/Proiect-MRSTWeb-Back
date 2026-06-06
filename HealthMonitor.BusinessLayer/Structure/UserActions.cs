@@ -608,5 +608,30 @@ namespace HealthMonitor.BusinessLayer.Structure
 
             return user;
         }
+
+        public ServiceResponse ResetUserDataAction(int userId)
+        {
+            try
+            {
+                var foodLogs = _context.FoodLogs.Where(f => f.UserId == userId);
+                _context.FoodLogs.RemoveRange(foodLogs);
+
+                var waterLogs = _context.WaterLogs.Where(w => w.UserId == userId);
+                _context.WaterLogs.RemoveRange(waterLogs);
+
+                var weightLogs = _context.WeightLogs.Where(w => w.UserId == userId);
+                _context.WeightLogs.RemoveRange(weightLogs);
+
+                var workouts = _context.Workouts.Where(w => w.UserId == userId);
+                _context.Workouts.RemoveRange(workouts);
+
+                _context.SaveChanges();
+                return new ServiceResponse { IsSuccess = true, Message = "User data reset successfully." };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse { IsSuccess = false, Message = ex.Message };
+            }
+        }
     }
 }

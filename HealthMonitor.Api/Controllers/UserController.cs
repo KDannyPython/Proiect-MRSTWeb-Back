@@ -159,6 +159,36 @@ namespace HealthMonitor.Api.Controllers
         }
 
         [Authorize]
+        [HttpDelete("me-direct")]
+        public IActionResult DeleteMeDirect()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null) return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+            var response = _userLogic.DeleteUser(userId);
+
+            if (!response.IsSuccess) return BadRequest(response);
+
+            return Ok(response.Message);
+        }
+
+        [Authorize]
+        [HttpDelete("reset-data")]
+        public IActionResult ResetData()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null) return Unauthorized();
+
+            int userId = int.Parse(userIdClaim.Value);
+            var response = _userLogic.ResetUserData(userId);
+
+            if (!response.IsSuccess) return BadRequest(response);
+
+            return Ok(response.Message);
+        }
+
+        [Authorize]
         [HttpPatch("change-password")]
         public IActionResult ChangePassword([FromBody] ChangePasswordDto request)
         {
