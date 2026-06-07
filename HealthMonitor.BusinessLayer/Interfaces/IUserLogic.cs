@@ -18,4 +18,5 @@ public interface IUserLogic
     UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request);
     ServiceResponse SendDeleteVerificationCode(int userId);
     string GetUserEmailByCredential(string credential);
+    ServiceResponse CompleteOnboarding(int userId, OnboardingDto dto);
 }

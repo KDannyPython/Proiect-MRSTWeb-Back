@@ -165,5 +165,10 @@ namespace HealthMonitor.BusinessLayer.Core
         {
             return GetUserEmailByCredentialAction(credential);
         }
+
+        public ServiceResponse CompleteOnboarding(int userId, OnboardingDto dto)
+        {
+            return CompleteOnboardingAction(userId, dto);
+        }
     }
 }
