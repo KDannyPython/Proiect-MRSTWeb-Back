@@ -143,6 +143,7 @@ using (var context = new AppDbContext())
 {
     context.Database.Migrate();
     DbInitializer.SeedExercises();
+    DbInitializer.SeedAdmin();
 }
 
 app.Run();
