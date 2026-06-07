@@ -1,7 +1,6 @@
 using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
-using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -103,22 +102,10 @@ namespace HealthMonitor.Api.Controllers
 
             int userId = int.Parse(idClaim.Value);
 
-            var context = new AppDbContext();
+            var response = _userLogic.CompleteOnboarding(userId, dto);
 
-            var user = context.Users.Find(userId);
-
-            if (user == null)
-                return NotFound();
-
-            user.Gender = dto.Gender;
-            user.Age = dto.Age;
-            user.Height = dto.Height;
-            user.Weight = dto.Weight;
-            user.Goal = dto.Goal;
-
-            user.OnboardingCompleted = true;
-
-            context.SaveChanges();
+            if (!response.IsSuccess)
+                return NotFound(response.Message);
 
             return Ok();
         }
