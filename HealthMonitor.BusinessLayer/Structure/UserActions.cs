@@ -654,5 +654,38 @@ namespace HealthMonitor.BusinessLayer.Structure
                 u.Name.ToLower() == emailOrName);
             return user?.Email ?? credential;
         }
+
+        public ServiceResponse SetUserRoleAction(int userId, UserRole role)
+        {
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "User not found."
+                };
+            }
+
+            user.Role = role;
+
+            try
+            {
+                _context.SaveChanges();
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Message = "User role updated successfully."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

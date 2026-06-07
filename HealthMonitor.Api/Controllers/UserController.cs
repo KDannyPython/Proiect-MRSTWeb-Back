@@ -104,6 +104,18 @@ namespace HealthMonitor.Api.Controllers
             return Ok(response.Message);
         }
 
+        [HttpPut("SetRole/{id}")]
+        public IActionResult SetUserRole(int id, [FromQuery] string role)
+        {
+            var response = _userLogic.SetUserRole(id, role);
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response.Message);
+        }
+
         [HttpDelete("DeleteUser/{id}")]
         public IActionResult DeleteUser(int id)
         {

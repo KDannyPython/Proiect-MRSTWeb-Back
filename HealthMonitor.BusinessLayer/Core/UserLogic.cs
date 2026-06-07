@@ -170,5 +170,19 @@ namespace HealthMonitor.BusinessLayer.Core
         {
             return CompleteOnboardingAction(userId, dto);
         }
+
+        public ServiceResponse SetUserRole(int userId, string role)
+        {
+            if (!Enum.TryParse<UserRole>(role, ignoreCase: true, out var parsedRole))
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = $"Invalid role: '{role}'. Accepted values: User, Admin."
+                };
+            }
+
+            return SetUserRoleAction(userId, parsedRole);
+        }
     }
 }

@@ -19,4 +19,5 @@ public interface IUserLogic
     ServiceResponse SendDeleteVerificationCode(int userId);
     string GetUserEmailByCredential(string credential);
     ServiceResponse CompleteOnboarding(int userId, OnboardingDto dto);
+    ServiceResponse SetUserRole(int userId, string role);
 }
