@@ -34,11 +34,7 @@ namespace HealthMonitor.Api.Controllers
 
             if (result.Message == "2FA_REQUIRED")
             {
-                var context = new AppDbContext();
-                var userEntity = context.Users.FirstOrDefault(u => 
-                    u.Email.ToLower() == udata.Credential.Trim().ToLower() || 
-                    u.Name.ToLower() == udata.Credential.Trim().ToLower());
-                var actualEmail = userEntity?.Email ?? udata.Credential;
+                var actualEmail = _userLogic.GetUserEmailByCredential(udata.Credential);
 
                 return Ok(new
                 {

@@ -160,5 +160,10 @@ namespace HealthMonitor.BusinessLayer.Core
                 Message = "Code generated and sent succesfully."
             };
         }
+
+        public string GetUserEmailByCredential(string credential)
+        {
+            return GetUserEmailByCredentialAction(credential);
+        }
     }
 }
