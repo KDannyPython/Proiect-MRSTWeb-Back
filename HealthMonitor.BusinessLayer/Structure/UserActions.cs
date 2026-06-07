@@ -645,5 +645,14 @@ namespace HealthMonitor.BusinessLayer.Structure
                 return new ServiceResponse { IsSuccess = false, Message = ex.Message };
             }
         }
+
+        public string GetUserEmailByCredentialAction(string credential)
+        {
+            var emailOrName = credential?.Trim().ToLower();
+            var user = _context.Users.FirstOrDefault(u => 
+                u.Email.ToLower() == emailOrName || 
+                u.Name.ToLower() == emailOrName);
+            return user?.Email ?? credential;
+        }
     }
 }

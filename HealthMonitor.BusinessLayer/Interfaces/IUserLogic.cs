@@ -17,4 +17,5 @@ public interface IUserLogic
     ServiceResponse ResetUserData(int userId);
     UserEntity? VerifyTwoFactor(VerifyTwoFactorDto request);
     ServiceResponse SendDeleteVerificationCode(int userId);
+    string GetUserEmailByCredential(string credential);
 }
