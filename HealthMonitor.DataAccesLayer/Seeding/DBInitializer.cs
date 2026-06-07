@@ -1,10 +1,27 @@
 using HealthMonitor.DataAccesLayer.Context;
 using HealthMonitor.Domain.Entities.Exercise;
+using HealthMonitor.Domain.Entities.User;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HealthMonitor.DataAccesLayer.Seeding;
 
 public static class DbInitializer
 {
+    // Hash SHA256 identic cu logica din PasswordHasher.cs din BusinessLayer
+    private static string GenerateSalt()
+        => Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
+
+    private static string HashPassword(string password, string salt)
+    {
+        var bytes = Encoding.UTF8.GetBytes(password + salt);
+        var hashBytes = SHA256.HashData(bytes);
+        var sb = new StringBuilder();
+        foreach (var b in hashBytes)
+            sb.Append(b.ToString("x2"));
+        return sb.ToString();
+    }
+
     public static void SeedExercises()
     {
         using var context = new AppDbContext();
@@ -98,5 +115,30 @@ public static class DbInitializer
             }
         }
         context.SaveChanges();
+    }
+
+    public static void SeedAdmin()
+    {
+        using var context = new AppDbContext();
+
+        if (!context.Users.Any(u => u.Role == UserRole.Admin))
+        {
+            var salt = GenerateSalt();
+            var hash = HashPassword("admin123", salt);
+
+            context.Users.Add(new UserEntity
+            {
+                Name = "Admin",
+                Email = "admin@healthmonitor.com",
+                Password = hash,
+                PasswordSalt = salt,
+                Role = UserRole.Admin,
+                OnboardingCompleted = true,
+                TwoFactorEnabled = false,
+                RegisteredOn = DateTime.UtcNow
+            });
+
+            context.SaveChanges();
+        }
     }
 }

@@ -8,7 +8,7 @@ public class BusinessLogic
 {
     public BusinessLogic() { }
 
-    //FoodLogic
+    // FoodLogic
     public IFoodLogic GetFoodLogic()
     {
         return new FoodLogic();
@@ -34,7 +34,6 @@ public class BusinessLogic
         return new CalendarLogic();
     }
 
-
     // WorkoutLogic
     public IWorkoutLogic GetWorkoutLogic()
     {
@@ -52,20 +51,16 @@ public class BusinessLogic
     {
         return new UserAuthAction();
     }
+
     // UserRegLogic
     public IUserRegLogic GetUserRegLogic()
     {
         return new UserRegLogic();
     }
+
     // UserLogic
     public IUserLogic GetUserLogic()
     {
         return new UserLogic();
     }
-    // AdminLogic
-    public IAdminLogic GetAdminLogic()
-    {
-        return new AdminLogic();
-    }
-
 }
