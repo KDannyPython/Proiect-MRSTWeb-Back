@@ -52,6 +52,7 @@ namespace HealthMonitor.Api.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetUserById/{id}")]
         public IActionResult GetUserById(int id)
         {
@@ -64,6 +65,7 @@ namespace HealthMonitor.Api.Controllers
             return Ok(response.Data);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllUsers")]
         public IActionResult GetUserList()
         {
@@ -87,6 +89,7 @@ namespace HealthMonitor.Api.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateUser/{id}")]
         public IActionResult UpdateUser(int id, [FromBody] UserCreateDto userDto)
         {
@@ -104,6 +107,7 @@ namespace HealthMonitor.Api.Controllers
             return Ok(response.Message);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("SetRole/{id}")]
         public IActionResult SetUserRole(int id, [FromQuery] string role)
         {
@@ -116,6 +120,7 @@ namespace HealthMonitor.Api.Controllers
             return Ok(response.Message);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteUser/{id}")]
         public IActionResult DeleteUser(int id)
         {
