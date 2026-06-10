@@ -16,6 +16,7 @@ namespace HealthMonitor.Domain.Models.User
         public bool OnboardingCompleted { get; set; } = false;
         public bool TwoFactorEnabled { get; set; } = false;
         public string Role { get; set; }
+        public DateTime RegisteredOn { get; set; }
 
     }
 }

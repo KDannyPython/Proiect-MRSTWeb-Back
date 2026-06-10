@@ -172,7 +172,8 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Bio = userEntity.Bio,
                 OnboardingCompleted = userEntity.OnboardingCompleted,
                 TwoFactorEnabled = userEntity.TwoFactorEnabled,
-                Role = userEntity.Role.ToString()
+                Role = userEntity.Role.ToString(),
+                RegisteredOn = userEntity.RegisteredOn
             };
         }
 
@@ -192,7 +193,8 @@ namespace HealthMonitor.BusinessLayer.Structure
                 Bio = u.Bio,
                 OnboardingCompleted = u.OnboardingCompleted,
                 TwoFactorEnabled = u.TwoFactorEnabled,
-                Role = u.Role.ToString()
+                Role = u.Role.ToString(),
+                RegisteredOn = u.RegisteredOn
             }).ToList();
         }
 
