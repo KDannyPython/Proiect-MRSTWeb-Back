@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer;
 using HealthMonitor.Domain.Models.Food;
@@ -16,6 +17,8 @@ public class FoodController : ControllerBase
         var bl = new BusinessLogic();
         _foodLogic = bl.GetFoodLogic();
     }
+
+    // ── READ (public — orice utilizator poate citi baza de date cu alimente) ──
 
     [HttpGet("{Id}")]
     public IActionResult GetFoodById(int Id)
@@ -50,6 +53,9 @@ public class FoodController : ControllerBase
         return Ok(result.Data);
     }
 
+    // ── WRITE (protejat — doar Admin poate crea, modifica sau sterge alimente) ──
+
+    [Authorize(Roles = "Admin")]
     [HttpPost("create")]
     public IActionResult CreateFood([FromBody] FoodCreateDto food)
     {
@@ -61,17 +67,7 @@ public class FoodController : ControllerBase
         return Ok(result.Message);
     }
 
-    [HttpDelete("{Id}")]
-    public IActionResult DeleteFoodById(int Id)
-    {
-        var result = _foodLogic.DeleteFoodById(Id);
-        if (!result.IsSuccess)
-        {
-            return BadRequest(result.Message);
-        }
-        return Ok(result.Message);
-    }
-
+    [Authorize(Roles = "Admin")]
     [HttpPut("{Id}")]
     public IActionResult UpdateFoodById(int Id, FoodUpdateDto food)
     {
@@ -83,8 +79,15 @@ public class FoodController : ControllerBase
         return Ok(result.Message);
     }
 
-
-
-    //HttpPut / HttpPatch
-    //HttpDelete
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{Id}")]
+    public IActionResult DeleteFoodById(int Id)
+    {
+        var result = _foodLogic.DeleteFoodById(Id);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+        return Ok(result.Message);
+    }
 }
