@@ -16,14 +16,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
             return new ServiceResponse
             {
                 IsSuccess = false, 
-                Message = "A eșuat salvarea antrenamentului."
+                Message = "Failed to save the workout."
             };
         }
         
         return new ServiceResponse
         {
             IsSuccess = true,
-            Message = "Antrenamentul a fost salvat cu succes în Postgres!"
+            Message = "Workout saved successfully."
         };
     }
     
@@ -66,14 +66,14 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
             return new ServiceResponse 
             {
                 IsSuccess = false, 
-                Message = "Eșec la modificare (Id invalid?)."
+                Message = "Failed to update workout (invalid id?)."
             };
         }
 
         return new ServiceResponse 
         {
             IsSuccess = true, 
-            Message = "Antrenamentul a fost modificat!"
+            Message = "Workout updated successfully."
         };
     }
 

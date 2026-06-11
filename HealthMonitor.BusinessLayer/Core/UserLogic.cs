@@ -17,7 +17,7 @@ namespace HealthMonitor.BusinessLayer.Core
                 return new ServiceResponse
                 {
                     IsSuccess = false,
-                    Message = "Utilizatorul nu a fost găsit în baza de date."
+                    Message = "User not found."
                 };
             }
 
@@ -51,13 +51,13 @@ namespace HealthMonitor.BusinessLayer.Core
                 return new ServiceResponse
                 {
                     IsSuccess = false,
-                    Message = "Utilizatorul nu a fost găsit sau a apărut o eroare la actualizare."
+                    Message = "User not found or an error occurred while updating."
                 };
             }
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Informațiile utilizatorului au fost actualizate cu succes."
+                Message = "User information updated successfully."
             };
         }
 
@@ -69,13 +69,13 @@ namespace HealthMonitor.BusinessLayer.Core
                 return new ServiceResponse
                 {
                     IsSuccess = false,
-                    Message = "Utilizatorul nu a putut fi șters sau nu a fost găsit."
+                    Message = "User could not be deleted or was not found."
                 };
             }
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Utilizatorul a fost șters cu succes din baza de date."
+                Message = "User deleted successfully."
             };
         }
 
@@ -93,7 +93,7 @@ namespace HealthMonitor.BusinessLayer.Core
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Password changed succesfully."
+                Message = "Password changed successfully."
             };
         }
 
@@ -111,7 +111,7 @@ namespace HealthMonitor.BusinessLayer.Core
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Reset code sent succesfully."
+                Message = "Reset code sent successfully."
             };
         }
 
@@ -129,7 +129,7 @@ namespace HealthMonitor.BusinessLayer.Core
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Password reset succesfully."
+                Message = "Password reset successfully."
             };
         }
 
@@ -157,7 +157,7 @@ namespace HealthMonitor.BusinessLayer.Core
             return new ServiceResponse
             {
                 IsSuccess = true,
-                Message = "Code generated and sent succesfully."
+                Message = "Code generated and sent successfully."
             };
         }
 
