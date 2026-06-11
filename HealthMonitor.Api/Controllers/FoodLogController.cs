@@ -23,10 +23,6 @@ public class FoodLogController : ControllerBase
     [Authorize]
     public async Task<IActionResult> CreateFoodLog([FromBody] FoodLogDto food)
     {
-        foreach (var claim in User.Claims)
-        {
-            Console.WriteLine($"{claim.Type}: {claim.Value}");
-        }
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
         if (userIdClaim == null)
@@ -49,7 +45,11 @@ public class FoodLogController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateFoodQuantity(int foodLogId, [FromBody] FoodLogUpdateDto food)
     {
-        var result = await _foodLogLogic.UpdateFoodQuantity(foodLogId, food.QuantityGrams);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null) return Unauthorized();
+
+        int userId = int.Parse(userIdClaim.Value);
+        var result = await _foodLogLogic.UpdateFoodQuantity(foodLogId, userId, food.QuantityGrams);
 
         if (!result.IsSuccess)
         {
@@ -63,7 +63,11 @@ public class FoodLogController : ControllerBase
     [Authorize]
     public async Task<IActionResult> DeleteFoodLog(int foodLogId)
     {
-        var result = await _foodLogLogic.DeleteFoodLog(foodLogId);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null) return Unauthorized();
+
+        int userId = int.Parse(userIdClaim.Value);
+        var result = await _foodLogLogic.DeleteFoodLog(foodLogId, userId);
 
         if (!result.IsSuccess)
         {

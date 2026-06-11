@@ -54,13 +54,13 @@ public class WorkoutActions
         }
     }
 
-    //READ by id (R)
-    public WorkoutInfoDto? GetWorkoutByIdAction(int id)
+    //READ by id (R) — verificam ca workout-ul apartine userului
+    public WorkoutInfoDto? GetWorkoutByIdAction(int id, int userId)
     {
         var workoutEntity = _context.Workouts
         .Include(w => w.WorkoutExercises)
         .ThenInclude(we => we.Exercise)
-        .FirstOrDefault(w => w.Id == id);
+        .FirstOrDefault(w => w.Id == id && w.UserId == userId);
         if (workoutEntity == null)
         {
             return null;
@@ -158,10 +158,11 @@ public class WorkoutActions
         }
     }
 
-    //DELETE (D)
-    public bool DeleteWorkoutAction(int id)
+    //DELETE (D) — verificam ca workout-ul apartine userului
+    public bool DeleteWorkoutAction(int id, int userId)
     {
-        var workoutEntity = _context.Workouts.Find(id);
+        var workoutEntity = _context.Workouts
+            .FirstOrDefault(w => w.Id == id && w.UserId == userId);
         if (workoutEntity == null) {
             return false;
         }

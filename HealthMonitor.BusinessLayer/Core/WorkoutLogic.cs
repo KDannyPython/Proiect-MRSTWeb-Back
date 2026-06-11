@@ -28,15 +28,15 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     }
     
     //READ BY ID (R)
-    public ServiceResponse GetWorkoutById(int id)
+    public ServiceResponse GetWorkoutById(int id, int userId)
     {
-        var workout = GetWorkoutByIdAction(id);
+        var workout = GetWorkoutByIdAction(id, userId);
         if (workout == null)
         {
             return new ServiceResponse
             {
                 IsSuccess = false,
-                Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
+                Message = "Workout not found or access denied."
             };
         }
 
@@ -78,22 +78,22 @@ public class WorkoutLogic : WorkoutActions, IWorkoutLogic
     }
 
     //DELETE (D)
-    public ServiceResponse DeleteWorkout(int id)
+    public ServiceResponse DeleteWorkout(int id, int userId)
     {
-        var result = DeleteWorkoutAction(id);
+        var result = DeleteWorkoutAction(id, userId);
         if (result == false)
         {
             return new ServiceResponse 
             {
                 IsSuccess = false, 
-                Message = "Antrenamentul nu a putut fi găsit (Id invalid)."
+                Message = "Workout not found or access denied."
             };
         }
 
         return new ServiceResponse 
         {
             IsSuccess = true, 
-            Message = "Antrenamentul a fost șters permanent!"
+            Message = "Workout deleted successfully."
         };
     }
 

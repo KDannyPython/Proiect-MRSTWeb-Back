@@ -101,7 +101,7 @@ public class FoodLogActions
         }
     }
 
-    public async Task<ServiceResponse> UpdateFoodQuantityAction(int foodLogId, int quantityGrams)
+    public async Task<ServiceResponse> UpdateFoodQuantityAction(int foodLogId, int userId, int quantityGrams)
     {
         try
         {
@@ -113,6 +113,16 @@ public class FoodLogActions
                 {
                     IsSuccess = false,
                     Message = "Food log not found."
+                };
+            }
+
+            // Verificam ca log-ul apartine utilizatorului curent
+            if (foodLog.UserId != userId)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Access denied: you can only modify your own food logs."
                 };
             }
 
@@ -136,7 +146,7 @@ public class FoodLogActions
         }
     }
 
-    public async Task<ServiceResponse> DeleteFoodLogAction(int foodLogId)
+    public async Task<ServiceResponse> DeleteFoodLogAction(int foodLogId, int userId)
     {
         try
         {
@@ -149,6 +159,16 @@ public class FoodLogActions
                 {
                     IsSuccess = false,
                     Message = "Food log not found."
+                };
+            }
+
+            // Verificam ca log-ul apartine utilizatorului curent
+            if (foodLog.UserId != userId)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Access denied: you can only delete your own food logs."
                 };
             }
 

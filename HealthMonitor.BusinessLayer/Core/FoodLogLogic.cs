@@ -28,9 +28,9 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
         };
     }
 
-    public async Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int quantityGrams)
+    public async Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int userId, int quantityGrams)
     {
-        var result = await UpdateFoodQuantityAction(foodLogId, quantityGrams);
+        var result = await UpdateFoodQuantityAction(foodLogId, userId, quantityGrams);
 
         if (!result.IsSuccess)
         {
@@ -48,9 +48,9 @@ public class FoodLogLogic : FoodLogActions, IFoodLogLogic
         };
     }
 
-    public async Task<ServiceResponse> DeleteFoodLog(int foodLogId)
+    public async Task<ServiceResponse> DeleteFoodLog(int foodLogId, int userId)
     {
-        var result = await DeleteFoodLogAction(foodLogId);
+        var result = await DeleteFoodLogAction(foodLogId, userId);
 
         if (!result.IsSuccess)
         {

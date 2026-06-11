@@ -6,8 +6,8 @@ namespace HealthMonitor.BusinessLayer.Interfaces;
 public interface IFoodLogLogic
 {
     Task<ServiceResponse> AddFoodLog(int userId, FoodLogDto foodLog);
-    Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int quantityGrams);
-    Task<ServiceResponse> DeleteFoodLog(int foodLogId);
+    Task<ServiceResponse> UpdateFoodQuantity(int foodLogId, int userId, int quantityGrams);
+    Task<ServiceResponse> DeleteFoodLog(int foodLogId, int userId);
     int GetTodayCalories(int userId);
     ServiceResponse ResetFoodLogs(int userId);
     List<FoodLogResponseDto> GetTodayFoodLogs(int userId);

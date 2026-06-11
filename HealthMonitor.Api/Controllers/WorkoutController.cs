@@ -42,7 +42,11 @@ public class WorkoutController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetWorkoutById(int id)
     {
-        var result = _workoutLogic.GetWorkoutById(id);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim == null) return Unauthorized();
+
+        int userId = int.Parse(userIdClaim);
+        var result = _workoutLogic.GetWorkoutById(id, userId);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Data);
     }
@@ -85,7 +89,11 @@ public class WorkoutController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteWorkout(int id)
     {
-        var result = _workoutLogic.DeleteWorkout(id);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim == null) return Unauthorized();
+
+        int userId = int.Parse(userIdClaim);
+        var result = _workoutLogic.DeleteWorkout(id, userId);
         if (!result.IsSuccess) return BadRequest(result.Message);
         return Ok(result.Message);
     }
