@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using HealthMonitor.BusinessLayer;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.Domain.Models.Exercise;
@@ -17,14 +18,7 @@ public class ExerciseController : ControllerBase
         _exerciseLogic = bl.GetExerciseLogic();
     }
 
-    // CREATE (C)
-    [HttpPost("create")]
-    public IActionResult CreateExercise([FromBody] ExerciseCreateDto exercise)
-    {
-        var result = _exerciseLogic.CreateExercise(exercise);
-        if (!result.IsSuccess) return BadRequest(result.Message);
-        return Ok(result.Message);
-    }
+    // ── READ (public — orice utilizator poate citi lista de exercitii) ──
 
     // READ BY ID (R)
     [HttpGet("{id}")]
@@ -44,7 +38,20 @@ public class ExerciseController : ControllerBase
         return Ok(result.Data);
     }
 
+    // ── WRITE (protejat — doar Admin poate crea, modifica sau sterge exercitii) ──
+
+    // CREATE (C)
+    [Authorize(Roles = "Admin")]
+    [HttpPost("create")]
+    public IActionResult CreateExercise([FromBody] ExerciseCreateDto exercise)
+    {
+        var result = _exerciseLogic.CreateExercise(exercise);
+        if (!result.IsSuccess) return BadRequest(result.Message);
+        return Ok(result.Message);
+    }
+
     // UPDATE (U)
+    [Authorize(Roles = "Admin")]
     [HttpPut("update/{id}")]
     public IActionResult UpdateExercise(int id, [FromBody] ExerciseCreateDto exercise)
     {
@@ -54,6 +61,7 @@ public class ExerciseController : ControllerBase
     }
 
     // DELETE (D)
+    [Authorize(Roles = "Admin")]
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteExercise(int id)
     {
