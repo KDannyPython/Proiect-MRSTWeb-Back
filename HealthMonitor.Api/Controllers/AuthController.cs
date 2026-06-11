@@ -2,8 +2,8 @@ using HealthMonitor.BusinessLayer.Core;
 using HealthMonitor.BusinessLayer.Interfaces;
 using HealthMonitor.BusinessLayer.Structure;
 using HealthMonitor.Domain.Models.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace HealthMonitor.Api.Controllers
@@ -70,27 +70,16 @@ namespace HealthMonitor.Api.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost("complete-onboarding")]
         public IActionResult CompleteOnboarding([FromBody] OnboardingDto dto)
         {
-            var authHeader = Request.Headers["Authorization"].ToString();
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
-            if (string.IsNullOrEmpty(authHeader))
+            if (userIdClaim == null)
                 return Unauthorized();
 
-            var token = authHeader.Replace("Bearer ", "");
-
-            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-
-            var idClaim = jwt.Claims.FirstOrDefault(x =>
-                x.Type == ClaimTypes.NameIdentifier);
-
-            if (idClaim == null)
-            { 
-                return Unauthorized(); 
-            }
-
-            int userId = int.Parse(idClaim.Value);
+            int userId = int.Parse(userIdClaim.Value);
 
             var response = _userLogic.CompleteOnboarding(userId, dto);
 
